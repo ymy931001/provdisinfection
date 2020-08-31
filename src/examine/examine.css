@@ -1,0 +1,88 @@
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+
+#examine .ant-card-body{
+    padding-top: 0;
+}
+
+
+.checkline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    line-height: 25px;
+    height: 25px;
+}
+
+.cabinetline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    line-height: 35px;
+    height: 35px;
+}
+
+.successline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.healthlines{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.checklines{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.modelword{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.clearlisttitle{
+    text-align: center;
+    font-size: 14px;
+    font-weight:bold ;
+    margin-bottom: 10px;
+}
+
+.cabinettitle{
+    text-align: center;
+    font-size: 14px;
+    font-weight:bold ;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+ .treelists{
+    width: 100%;
+    min-height: 400px;
+}

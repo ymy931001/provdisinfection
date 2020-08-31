@@ -1,0 +1,62 @@
+#blockchain .topheader{
+    widows: 100%;
+    background: white;
+    height: 110px;
+    padding: 10px;
+}
+
+#blockchain .headerleft{
+    width: 30%;
+    height: 90px;
+    background: #574B90 url(./back1.png) no-repeat center center;
+    background-size:50% ;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+#blockchain .headerleft1{
+    width: 30%;
+    height: 90px;
+    background: #DC3545 url(./back2.png) no-repeat center center;
+    background-size:50% ;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+#blockchain .headerleft2{
+    width: 30%;
+    height: 90px;
+    background: #FFC107 url(./back3.png) no-repeat center center;
+    background-size:50% ;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+#blockchain .headerleft3{
+    width: 30%;
+    height: 90px;
+    background: #28A745 url(./back4.png) no-repeat center center;
+    background-size:50% ;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+
+
+#blockchain .headerright{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10%;
+}
+
+#blockchain .headertitle{
+    color:#999;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#blockchain  .titlecolor{
+    color:#000;
+    font-weight: bold;
+    font-size: 24px;
+}

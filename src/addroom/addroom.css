@@ -1,0 +1,49 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+#NodeManage th{
+    text-align: center;
+}
+
+#NodeManage td{
+    text-align: center;
+}
+
+.addinput{
+    width: 80%;
+    margin:0 auto;
+    margin-bottom: 20px;
+}
+ .addinput span{
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+}
+ .addtextarea{
+    width: 65%;
+    margin:0 auto;
+}
+
+#userbody .ant-select-arrow .ant-select-arrow-icon{
+    text-align: right;
+}

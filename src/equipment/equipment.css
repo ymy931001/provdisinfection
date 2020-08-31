@@ -1,0 +1,118 @@
+#equipment {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+#NodeManage th{
+    text-align: center;
+}
+
+#NodeManage td{
+    text-align: center;
+}
+
+.ant-modal-body{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#equipment .ant-tabs-bar{
+    border-bottom: none;
+}
+
+#equipment .ant-tabs-tab-active{
+    background: white;
+}
+
+#equipment  .ant-card-body{
+    padding-top: 0;
+    padding-top: 1px;
+}
+
+#equipment .circle{
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #08c04d;
+    margin-right: 2px;
+}
+
+#equipment .circle1{
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #e72e2e;
+    margin-right: 2px;
+}
+
+#equipment .ant-card-bordered{
+    min-height: 90vh;
+    box-shadow: 1px 1px 5px 1px #999;
+  }
+
+  #equipment  th{
+      background: #f4f4f4 !important; 
+  }
+
+  .ant-modal .ant-input-group{
+    margin: 0;
+    
+  }
+
+#equipment .ant-tabs{
+    background: white;
+    min-height: 700px;
+    /* padding: 10px;
+    padding-top: 0px !important; */
+}
+
+#equipment .ant-tabs-content{
+    padding: 10px;
+    padding-top: 0;
+}
+
+
+#equipment .ant-tabs-tab{
+    margin: 0;
+}
+
+
+
+.ant-layout{
+    background: #f4f4f4
+}
+.ant-card-bordered{
+    border:none;
+}
+
+ .drawermain{
+    display: flex;
+    justify-content: space-between;
+}
+
+ .treelist{
+    width: 360px;
+    border-right: 1px solid #bebebe;
+    min-height: 400px;
+    padding-right: 50px;
+}

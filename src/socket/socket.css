@@ -1,0 +1,46 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+#NodeManage th{
+    text-align: center;
+}
+
+#NodeManage td{
+    text-align: center;
+}
+
+/* .ant-modal-body{
+    padding-top: 10px;
+} */
+
+.daybtn{
+    margin-left: 20px;
+    margin-bottom: 10px;
+    width: 40px;
+    font-size: 12px;
+    height: 25px;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+    padding: 0;
+}

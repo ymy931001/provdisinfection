@@ -1,0 +1,295 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+
+#arealist  .areatitle{
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font-size: 20px;
+    letter-spacing: 10px;
+    font-weight: bold;
+}
+
+#arealist  .weekmonthyear{
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+#arealist  .recentweek{
+    margin-right: 20px;
+}
+
+#arealist  .recentmonth{
+    margin-right: 20px;
+    background: green;
+    border:1px solid green
+}
+
+
+#arealist  .recentyear{
+    margin-right: 20px;
+    background: orange;
+    border:1px solid orange
+}
+
+#arealist .ant-card-body{
+    padding: 10px;
+}
+
+#arealist  .ant-row{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 20px;
+}
+
+/* #arealist .ant-layout-content{
+    padding: 0;
+} */
+
+#arealist  .ranktitle{
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#arealist .sevenday{
+    font-size: 14px;
+    color:#2c94f4;
+    margin-right: 10px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+#arealist .monthday{
+    font-size: 14px;
+    color:#666666;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+#arealist  .firstcircle{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: red;
+    color:white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#arealist  .twocircle{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: orange;
+    color:white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#arealist  .threecircle{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: green;
+    color:white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#arealist  .othercircle{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border:1px solid #333;
+    color:#333;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#arealist .firsttitle{
+    display: flex;
+    justify-content: center;
+}
+
+/*去掉排序标记*/
+#arealist  .ant-table-column-sorter-inner{
+    display: none;
+}
+
+#arealist .ant-table-thead > tr > th.ant-table-column-sort{
+    background: #fafafa;
+}
+#arealist .ant-table-tbody > tr > td.ant-table-column-sort{
+    background: white;
+}
+
+
+
+#arealist .dashmain{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 130px;
+    box-shadow: 1px 1px 5px 1px #d3d3d3;
+    border-radius: 5px;
+    padding: 10px;
+    color:white;
+}
+
+#arealist .tongji1{
+    background: url(./tongji1.png) no-repeat  center center;
+    background-size: cover;
+}
+
+#arealist .tongji2{
+    background: url(./tongji2.png) no-repeat center center;
+    background-size: cover;
+}
+
+#arealist .tongji3{
+    background: url(./tongji3.png) no-repeat  center center;
+    background-size: cover;
+}
+
+#arealist .tongji4{
+    background: url(./tongji4.png) no-repeat  center center;
+    background-size: cover;
+}
+
+#arealist .tongji5{
+    background: url(./tongji5.png) no-repeat  center center;
+    background-size: cover;
+}
+
+#arealist  .dashimg{
+    width: 20%;
+    /* height: 40px; */
+}
+
+#arealist  .dashleft{
+    font-size: 16px; 
+    /* color:#666666;  */
+}
+
+#arealist .dashtxt{
+    font-size: 36px;
+    /* color:#333333; */
+}
+
+#arealist .dashdw{
+    font-size: 14px;
+    /* color:#999999; */
+}
+
+#arealist  .linemain{
+    box-shadow: 0px 0px 2px 1px #e8e5e5;
+    min-height: 420px;
+    padding-top: 10px;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+}
+
+
+#arealist .ant-table-pagination.ant-pagination{
+    margin-bottom: 10px;
+}
+
+
+@media screen and (max-width: 1600px) {
+    #arealist .dashtxt{
+        font-size: 30px;
+    }
+}
+@media screen and (max-width: 1400px) {
+    #arealist  .ant-col-5{
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+    
+    #arealist  .ant-col-6{
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+    
+    #arealist  .ant-col-4{
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+    
+    
+    #arealist  .dashleft{
+        font-size: 14px; 
+    }
+    #arealist .dashtxt{
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 1300px) {
+    #arealist .dashtxt{
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #arealist  .dashimg{
+        width: 16%;
+        /* height: 40px; */
+    }
+    #arealist  .dashleft{
+        font-size: 14px; 
+    }
+    #arealist .dashtxt{
+        font-size: 16px;
+    }
+}
+
+
+@media screen and (max-width: 1175px) {
+    #arealist  .dashleft{
+        font-size: 12px; 
+    }
+    #arealist .dashtxt{
+        font-size: 12px;
+    }
+}

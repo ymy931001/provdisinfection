@@ -1,0 +1,31 @@
+
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+
+#tempstatistic  .areatitle{
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font-size: 20px;
+    letter-spacing: 10px;
+    font-weight: bold;
+}
+
+

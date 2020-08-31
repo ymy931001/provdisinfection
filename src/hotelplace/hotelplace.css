@@ -1,0 +1,139 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+#NodeManage th{
+    text-align: center;
+
+}
+
+#NodeManage td{
+    text-align: center;
+
+}
+#cuplistpc .header{
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+#publicplace table{
+    width: 80%;
+    margin:0 auto;
+    margin-top: 50px;
+}
+
+#publicplace table td{
+    font-size: 18px;
+    line-height: 50px;
+}
+
+#hotelplace .tabletab{
+    position: absolute;
+    right: -30px;
+    width: 15%;
+    top:-30px;
+}
+
+
+
+#publicplace .resulttitle{
+    height: 80px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#hotelplace .reportmain{
+    width: 950px;
+    min-height: 1023px;
+    margin:0 auto;
+    margin-top: 20px;
+    background: url(./report1.png) no-repeat top;
+    background-size: 100%;
+    padding: 25px;
+    padding-left: 70px;
+    position: relative;
+}
+
+#hotelplace .reporttitle{
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#hotelplace .conttitle{
+    font-size: 14px;
+    color:#999;
+}
+#hotelplace .contheader{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+#hotelplace .contwidth{
+    width: 30%;
+}
+
+#hotelplace .tabletitle{
+    color:#333;
+    font-size: 16px;
+    font-weight: bold;
+    height: 40px;
+    line-height: 40px;
+}
+
+#hotelplace .tabletd{
+    height: 40px;
+    line-height: 40px;
+}
+
+#hotelplace .tablescroll{
+    padding-right: 0px;
+    min-height: 100px;
+    max-height: 130px;
+    overflow: auto;
+}
+
+#hotelplace .tablescrolls{
+    padding-right: 45px;
+}
+
+#hotelplace .tablescroll::-webkit-scrollbar {display:none}
+
+#hotelplace .reportresult{
+    color:#333;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1300px) {
+    #publicplace table td{
+        font-size: 16px;
+    }
+    
+} 

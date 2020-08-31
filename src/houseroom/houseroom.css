@@ -1,0 +1,35 @@
+
+
+#houseroom .ant-card-bordered{
+    min-height: 90vh;
+    box-shadow: 1px 1px 5px 1px #999;
+    background: white;
+  }
+
+  #houseroom .ant-card-body{
+      padding-top: 14px;
+      background: white;
+  }
+
+  #houseroom  th{
+      background: #f4f4f4 !important; 
+  }
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+

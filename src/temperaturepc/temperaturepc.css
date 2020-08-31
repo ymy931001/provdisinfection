@@ -1,0 +1,146 @@
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+#NodeManage th{
+    text-align: center;
+}
+
+#NodeManage td{
+    text-align: center;
+}
+
+
+
+#temppc  .ranktitle{
+    text-align: left;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    height: 40px;
+    background: #F6F8F8;
+    color:#23B7E5;
+    border-radius: 10px 10px 0 0;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+
+
+#temppc  .firstcircle{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    /* border:1px solid black; */
+    background: red; 
+    color:white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#temppc  .twocircle{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    /* border:1px solid black; */
+    background: orange;
+    color:white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#temppc  .threecircle{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    /* border:1px solid black; */
+    background: green;
+    color:white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#temppc  .othercircle{
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border:1px solid #333;
+    color:#333;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#temppc .firsttitle{
+    display: flex;
+    justify-content: center;
+}
+
+/*去掉排序标记*/
+#temppc  .ant-table-column-sorter-inner{
+    display: none;
+}
+
+#temppc .ant-table-thead > tr > th.ant-table-column-sort{
+    background: #fafafa;
+}
+#temppc .ant-table-tbody > tr > td.ant-table-column-sort{
+    background: white;
+}
+#ranktable table{
+    border:none;
+}
+#ranktable  table  tr:nth-child(even)  td {
+    background:white;
+} 
+
+#ranktable td{
+    padding: 8px;
+    font-size: 15px;
+}
+
+#ranktables table{
+    border:none;
+}
+
+#ranktables  td{
+    padding: 8px;
+    font-size: 15px;
+}
+
+#temppc .lefttitle{
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 15px;
+}

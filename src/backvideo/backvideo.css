@@ -1,0 +1,49 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+#NodeManage th{
+    text-align: center;
+}
+
+#NodeManage td{
+    text-align: center;
+}
+
+
+.ant-carousel .slick-dots-bottom{
+    bottom: 30px;
+}
+
+.ant-carousel .slick-dots li button{
+    width: 30px;
+    height: 10px;
+    background: black;
+}
+
+.ant-carousel .slick-dots li.slick-active button{
+    width: 30px;
+}
+
+/* #root{
+    background:  url(/static/media/sidebar.2c023442.jpg) no-repeat;
+} */

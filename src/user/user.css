@@ -1,0 +1,63 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+
+
+
+
+#user .ant-tabs-bar{
+    border-bottom: none;
+}
+
+#user  .ant-card-body{
+    padding-top: 0;
+    background: rgb(240, 242, 245);
+}
+
+#user .ant-tabs{
+    background: white;
+    min-height: 700px;
+    /* padding: 10px;
+    padding-top: 0px !important; */
+}
+
+#user .ant-tabs-nav-scroll{
+    background: rgb(240, 242, 245);
+    padding-top: 10px;
+}
+
+#user .ant-tabs-content{
+    padding: 10px;
+    padding-top: 0;
+}
+#user .ant-tabs-ink-bar{
+    background: white;
+}
+
+#user .ant-tabs-tab-active{
+    background: white;
+}
+#user .ant-tabs-tab{
+    margin: 0;
+}
+

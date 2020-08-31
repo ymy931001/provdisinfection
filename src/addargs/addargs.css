@@ -1,0 +1,61 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+#addarges .gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+#addarges .gutter-box-nodemanage {
+    text-align:left;
+}
+
+#addarges .ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+#addarges .ant-input-group{
+    margin: 8px;
+}
+
+#addarges .ant-card-body{
+    text-align: center;
+    padding-top: 14px;
+    background: white;
+}
+
+
+#addarges .ant-card-bordered{
+    min-height: 90vh;
+    box-shadow: 1px 1px 5px 1px #999;
+    background: white;
+  }
+
+#NodeManage th{
+    text-align: center;
+}
+
+#NodeManage td{
+    text-align: center;
+}
+
+#addarges .addargsinput{
+    margin:0 auto;
+    margin-bottom: 20px;
+}
+ #addarges .addargsinput span{
+    display: inline-block;
+    width: 250px;
+    text-align: right;
+}
+#addarges.addtextarea{
+    width: 65%;
+    margin:0 auto;
+}
+
+ #addarges .ant-select-arrow .ant-select-arrow-icon{
+    text-align: right;
+}

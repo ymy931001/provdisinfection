@@ -1,0 +1,50 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+#NodeManage th{
+    text-align: center;
+}
+
+#NodeManage td{
+    text-align: center;
+}
+
+.cameraimg{
+    text-align: left;
+    width:100%;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+
+.imgtext{
+    display: inline-block;
+    width:110px;
+    text-align: right;
+    margin-right: 15px;
+}
+
+.textinput{
+    width:260px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

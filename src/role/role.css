@@ -1,0 +1,45 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+#role .ant-card-bordered{
+    min-height: 90vh;
+    box-shadow: 1px 1px 5px 1px #999;
+    background: white;
+  }
+
+  #role .ant-card-body{
+      padding-top: 14px;
+      background: white;
+  }
+
+  #role  th{
+      background: #f4f4f4 !important; 
+  }
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+#NodeManage th{
+    text-align: center;
+}
+
+#NodeManage td{
+    text-align: center;
+}
