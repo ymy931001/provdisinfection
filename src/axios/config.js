@@ -5,8 +5,8 @@
 // export const requestIp = "http://47.94.211.109:9090";
 // export const requestIp = "http://192.168.3.7:9090";
 // export const requestIp = "http://2695627dm6.qicp.vip";
-// export const requestIp = "http://iva.terabits.cn:9090";
-export const requestIp = "http://47.110.230.84:9090";
+export const requestIp = "http://iva.terabits.cn:9090";
+// export const requestIp = "http://47.110.230.84:9090";
 
 
 export const downUrl = requestIp//下载报告地址
