@@ -3,30 +3,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import 'antd-mobile/dist/antd-mobile.css';
 import SignIn from "./SignIn/SignIn";
-import mobile from "./mobile/mobile";
-// import temperature from "./temperature/temperature";
-import mobilenext from "./mobilenext/mobilenext";
-import mobilesuccess from "./mobilesuccess/mobilesuccess";
-import addcup from "./addcup/addcup";
-import cuplist from "./cuplist/cuplist";
-import mobilelogin from "./mobilelogin/mobilelogin";
-import mobileuser from "./mobileuser/mobileuser";
-import register from "./register/register";
-import houseinfo from "./houseinfo/houseinfo";
-import cupdispose from "./cupdispose/cupdispose";
-import cleanerinfo from "./cleanerinfo/cleanerinfo";
-import disinfectionroom from "./disinfectionroom/disinfectionroom";
-import cuplistwork from "./cuplistwork/cuplistwork";
-import explainroom from "./explainroom/explainroom";
-import mobilesocket from "./mobilesocket/mobilesocket";
-import cleanerinfoadd from "./cleanerinfoadd/cleanerinfoadd";
-import cupchange from "./cupchange/cupchange";
-import cleanerchange from "./cleanerchange/cleanerchange";
-import cleanerchangeadd from "./cleanerchangeadd/cleanerchangeadd";
-import housechange from "./housechange/housechange";
-import housechangeadd from "./housechangeadd/housechangeadd";
-import mobileaddsuccess from "./mobileaddsuccess/mobileaddsuccess";
-
 import {
   ConfigProvider
 } from "antd";
@@ -123,34 +99,7 @@ ReactDOM.render(
   <Router>
     <ConfigProvider locale={zhCN}>
       <Switch>
-        {/* <Route exact path="/" component={SignIn} />
-      <Route path="/app" component={App} /> */}
-        {/* <Route exact path="/" component={SignupAuthentication(SignIn)} /> */}
         <Route exact path="/" component={SignIn} />
-        <Route path="/mobile" component={mobile} />
-        {/* <Route path="/temperature" component={temperature} /> */}
-        <Route path="/mobilenext" component={mobilenext} />
-        <Route path="/mobilesuccess" component={mobilesuccess} />
-        <Route path="/addcup" component={addcup} />
-        <Route path="/cuplist" component={cuplist} />
-        <Route path="/mobilelogin" component={mobilelogin} />
-        <Route path="/mobileuser" component={mobileuser} />
-        <Route path="/register" component={register} />
-        <Route path="/houseinfo" component={houseinfo} />
-        <Route path="/cupdispose" component={cupdispose} />
-        <Route path="/cleanerinfo" component={cleanerinfo} />
-        <Route path="/disinfectionroom" component={disinfectionroom} />
-        <Route path="/cuplistwork" component={cuplistwork} />
-        <Route path="/explainroom" component={explainroom} />
-        <Route path="/mobilesocket" component={mobilesocket} />
-        <Route path="/cleanerinfoadd" component={cleanerinfoadd} />
-        <Route path="/cupchange" component={cupchange} />
-        <Route path="/cleanerchange" component={cleanerchange} />
-        <Route path="/cleanerchangeadd" component={cleanerchangeadd} />
-        <Route path="/housechange" component={housechange} />
-        <Route path="/housechangeadd" component={housechangeadd} />
-        <Route path="/mobileaddsuccess" component={mobileaddsuccess} />
-
         <Route path="/app" component={requireAuthentication(App)} />
       </Switch>
     </ConfigProvider>

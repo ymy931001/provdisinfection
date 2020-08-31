@@ -1018,7 +1018,7 @@ class App extends React.Component {
           <div style={{ textAlign: 'center' }}>
             <div className="custom-image">
               <QRCode
-                value={'http://mobileprovdis.terabits.cn/mobilelogin?deviceid?=' + item.code}
+                value={'http://provdisinfection.terabits.cn/mobilelogin?deviceid?=' + item.code}
                 size="200"
               />
             </div>
@@ -1283,7 +1283,7 @@ class App extends React.Component {
                   <div style={{ textAlign: 'center' }}>
                     <div className="custom-image">
                       <QRCode
-                        value={'http://mobileprovdis.terabits.cn/mobilelogin?deviceid?=' + this.state.erweimacode}
+                        value={'http://provdisinfection.terabits.cn/mobilelogin?deviceid?=' + this.state.erweimacode}
                         size="200"
                       />
                     </div>

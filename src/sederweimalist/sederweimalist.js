@@ -110,7 +110,7 @@ class App extends React.Component {
                 <div style={{ textAlign: 'center' }}>
                   <div className="custom-image">
                     <QRCode
-                      value={'http://mobileprovdis.terabits.cn/mobilelogin?deviceid?=' + item.code}
+                      value={'http://provdisinfection.terabits.cn/mobilelogin?deviceid?=' + item.code}
                       size="200"
                       style={{width:'100%'}}
                     />
@@ -127,7 +127,7 @@ class App extends React.Component {
                 <div style={{ textAlign: 'center' }}>
                   <div className="custom-image">
                     <QRCode
-                      value={'http://mobileprovdis.terabits.cn/mobilelogin?deviceid?=' + item.code}
+                      value={'http://provdisinfection.terabits.cn/mobilelogin?deviceid?=' + item.code}
                       size="200"
                       style={{width:'100%'}}
                     />
@@ -165,7 +165,7 @@ class App extends React.Component {
         <div style={{ textAlign: 'center' }}>
           <div className="custom-image">
             <QRCode
-              value={'http://mobileprovdis.terabits.cn/mobilelogin?deviceid?=' + item.cardid}
+              value={'http://provdisinfection.terabits.cn/mobilelogin?deviceid?=' + item.cardid}
               size="200"
             />
           </div>
