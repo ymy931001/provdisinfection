@@ -466,7 +466,7 @@ class App extends React.Component {
         console.log(res.data.data)
         var arr = 0
         for (var i in res.data.data) {
-          arr += parseInt(res.data.data[i].boardQuantity,10) + parseInt(res.data.data[i].cameraQuantity,10)
+          arr += parseInt(res.data.data[i].boardQuantity, 10) + parseInt(res.data.data[i].cameraQuantity, 10)
         }
         this.setState({
           one: res.data.data.length,
@@ -777,19 +777,8 @@ class App extends React.Component {
                       </div>
                     </Col>
                     <Col span={5}>
-                      <div className="dashmain  tongji3">
-                        <img src={require('./tongji31.png')} alt="" className="dashimg" />
-                        <div style={{ textAlign: 'center' }}>
-                          <span className="dashtxt">{this.state.three}</span><span className="dashdw">分</span>
-                          <div className="dashleft">
-                            昨日保洁时长
-                        </div>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={5}>
                       <div className="dashmain  tongji4">
-                        <img src={require('./tongji41.png')} alt="" className="dashimg" />
+                        <img src={require('./tongji61.png')} alt="" className="dashimg" />
                         <div style={{ textAlign: 'center' }}>
                           <span className="dashtxt">{this.state.four}</span><span className="dashdw">分</span>
                           <div className="dashleft">
@@ -800,11 +789,22 @@ class App extends React.Component {
                     </Col>
                     <Col span={5}>
                       <div className="dashmain  tongji5">
-                        <img src={require('./tongji51.png')} alt="" className="dashimg" />
+                        <img src={require('./tongji71.png')} alt="" className="dashimg" />
                         <div style={{ textAlign: 'center' }}>
                           <span className="dashtxt">{this.state.five}</span><span className="dashdw">分</span>
                           <div className="dashleft">
                             昨日消毒柜工作时长
+                        </div>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col span={5}>
+                      <div className="dashmain  tongji3">
+                        <img src={require('./tongji11.png')} alt="" className="dashimg" />
+                        <div style={{ textAlign: 'center' }}>
+                          <span className="dashtxt">{this.state.three}</span><span className="dashdw">分</span>
+                          <div className="dashleft">
+                            昨日保洁时长
                         </div>
                         </div>
                       </div>
