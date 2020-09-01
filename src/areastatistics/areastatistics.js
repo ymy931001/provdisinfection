@@ -782,7 +782,7 @@ class App extends React.Component {
                         <div style={{ textAlign: 'center' }}>
                           <span className="dashtxt">{this.state.four}</span><span className="dashdw">分</span>
                           <div className="dashleft">
-                            昨日消毒时长
+                            昨日洗消时长
                         </div>
                         </div>
                       </div>
