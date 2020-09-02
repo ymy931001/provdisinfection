@@ -8,7 +8,6 @@ import {
 import {
   newdetection,
   detectioncuprecord,
-  detectionService,
   getDeviceList
 } from "../axios";
 import "./hotelplace.css";
@@ -77,13 +76,19 @@ class App extends React.Component {
       unreport: 'none',
       cameradis: 'none',
       resultyes: 'none',
+      xiaodudis: 'none',
+      zhuapaidis: 'none',
       resultno: 'none',
       imgdis: 'none',
       timedisone: 'none',
+      workerdiss: 'none',
+      cupboarddiss: 'none',
       time1list: [],
       time2list: [],
       timeresult: [],
-      cupnum: []
+      cupnum: [],
+      worktime: 0.00,
+      runtime: 0.00
     };
   }
 
@@ -147,9 +152,11 @@ class App extends React.Component {
           timelist: !res.data.data.readings ? [] : JSON.parse(res.data.data.readings),
           timelist1: !res.data.data.timepairs ? [] : JSON.parse(res.data.data.timepairs),
           detection: res.data.data,
+          worktime: parseFloat(res.data.data.worktime / 60).toFixed(2),
+          runtime: parseFloat(res.data.data.runtime / 60).toFixed(2),
           roomlist: res.data.data,
           readout: JSON.parse(res.data.data.readings),
-          decendingdatas: JSON.parse(res.data.data.timepairs),
+          decendingdatas: !res.data.data.timepairs ? [] : JSON.parse(res.data.data.timepairs),
         }, function () {
           this.setState({
             timeresult: this.state.readout
@@ -188,6 +195,7 @@ class App extends React.Component {
           } else {
             this.setState({
               xiaodudis: 'block',
+              cupboarddiss: 'inline-block',
             })
           }
 
@@ -200,6 +208,7 @@ class App extends React.Component {
           } else {
             this.setState({
               zhuapaidis: 'block',
+              workerdiss: 'inline-block',
             })
           }
 
@@ -307,76 +316,7 @@ class App extends React.Component {
   }
 
 
-  //选择时间
-  onChange = (value, dateString) => {
-    console.log(value, dateString)
-    this.setState({
-      time: dateString,
-    });
-  }
-
-  //设备位置选择
-  addresschange = (e) => {
-    console.log(e)
-    this.setState({
-      site: e[0],
-      name: e[1],
-      addresslist: e
-    });
-  }
-
-  //查询
-  query = () => {
-    detectionService([
-      this.state.pageNum,
-      this.state.pageNumSize,
-      this.state.site,
-      this.state.name,
-      this.state.time,
-      this.state.time,
-    ]).then(res => {
-      if (res.data && res.data.message === "success") {
-        if (res.data.data.detectionVOList.length === 0) {
-          this.setState({
-            unreport: 'block',
-            chazuo: 'none',
-            cameradis: 'none',
-          })
-        } else {
-          this.setState({
-            unreport: 'none',
-            chazuo: 'none',
-            cameradis: 'block',
-            detection: res.data.data,
-            roomlist: res.data.data,
-          }, function () {
-            if (this.state.detection.result === 0) {
-              this.setState({
-                resdis: 'none',
-                unresdis: 'block',
-                unreport: 'none',
-              })
-            }
-            if (this.state.detection.result === 1) {
-              this.setState({
-                resdis: 'block',
-                unresdis: 'none',
-                unreport: 'none',
-              })
-            }
-            console.log(this.state.roomlist)
-            console.log(this.state.detection)
-          })
-        }
-      }
-    })
-  }
-
-
-
   render() {
-    const { roomlist, detection } = this.state;
-
     const time1line = this.state.time1list.map((province) =>
       <Tooltip title={province.time}>
         <span style={{ position: 'absolute', width: province.width, left: province.left, height: '10px', top: 0, background: '#b10be8' }} >
@@ -466,13 +406,13 @@ class App extends React.Component {
                   </div>
                   <div className="contheader">
                     <div className="contwidth">
-                      <span className="conttitle">监测单位：</span>{roomlist.siteName}
+                      <span className="conttitle">监测单位：</span>{localStorage.getItem('hotelname')}
                     </div>
                     <div className="contwidth">
-                      <span className="conttitle">监测日期：</span>{moment(new Date(detection.date)).format('YYYY-MM-DD')}
+                      <span className="conttitle">监测日期：</span>{localStorage.getItem('reportdate')}
                     </div>
                     <div className="contwidth">
-                      <span className="conttitle">监测地点：</span>{roomlist.name}
+                      <span className="conttitle">监测地点：</span>{localStorage.getItem('roomname')}
                     </div>
                   </div>
                   <div className="contheader">
@@ -497,10 +437,12 @@ class App extends React.Component {
                   </div>
                   <div className="contheader">
                     <div className="contwidth">
-                      <span className="conttitle">保洁人员工作时长(分)：</span>{parseFloat(detection.worktime / 60).toFixed(2)}
+                      <span className="conttitle">保洁人员工作时长(分)：</span>{this.state.worktime}
+                      {/* {parseFloat(detection.worktime / 60).toFixed(2)} */}
                     </div>
                     <div className="contwidth">
-                      <span className="conttitle">消毒柜工作时长(分)：</span>{parseFloat(detection.runtime / 60).toFixed(2)}
+                      <span className="conttitle">消毒柜工作时长(分)：</span>{this.state.runtime}
+                      {/* {parseFloat(detection.runtime / 60).toFixed(2)} */}
                     </div>
                     <div className="contwidth">
 

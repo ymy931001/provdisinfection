@@ -292,6 +292,8 @@ class App extends React.Component {
     localStorage.setItem('detectionId', record.id)
     localStorage.setItem('reportdate', moment(new Date(record.date)).format('YYYY-MM-DD'))
     localStorage.setItem('reportsite', record.siteId)
+    localStorage.setItem('hotelname', record.siteName)
+    localStorage.setItem('roomname', record.name)
     localStorage.setItem('reportroomId', record.roomId)
     localStorage.setItem('cameraid', record.cameraId)
     setTimeout(function () {
