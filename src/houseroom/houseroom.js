@@ -101,6 +101,7 @@ class App extends React.Component {
       cameralist: [],
       boardlist: [],
       cleanerdata: [],
+      roomdata: [],
     };
   }
 
@@ -136,31 +137,20 @@ class App extends React.Component {
       }
     });
 
-    // var newarr = []
-    // var arrlist = {}
-    // getscene().then(res => {
-    //   for (var i in res.data.data) {
-    //     newarr.push({
-    //       'id': res.data.data[i].id,
-    //       'value': res.data.data[i].name
-    //     })
-    //     arrlist[res.data.data[i].id] = res.data.data[i].name
-    //   }
-    //   console.log(arrlist)
-    //   this.setState({
-    //     scenelist: newarr,
-    //     scenetype: arrlist
-    //   }, function () {
-    //     console.log(this.state.scenetype[2])
-    //   });
-    // });
-
     roomlist([
       localStorage.getItem('hotelid')
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        var arr = []
+        for (var i in res.data.data) {
+          arr.push({
+            "id": res.data.data[i].id,
+            "name": res.data.data[i].name,
+          })
+        }
         this.setState({
-          roomlist: res.data.data
+          roomlist: res.data.data,
+          roomdata: arr
         }, function () {
           if (res.data.data.length < 10) {
             this.setState({
@@ -236,7 +226,7 @@ class App extends React.Component {
         const dataSource = [...this.state.roomlist];
         this.setState({
           roomlist: dataSource.filter(item => item.id !== this.state.roomid),
-          deletevisible:false,
+          deletevisible: false,
         });
       } else {
         message.error(res.data.data)
@@ -553,6 +543,8 @@ class App extends React.Component {
       this.state.cleanerid,
       this.state.standard,
       this.state.remark,
+      this.state.otherroom,
+      this.state.otherroomname,
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
         message.success('房间添加成功');
@@ -597,10 +589,29 @@ class App extends React.Component {
     })
   }
 
+  //关联房间选择
+  otherroom = (value) => {
+    this.setState({
+      otherroom: value
+    })
+  }
+
+  //合并房间名输入
+  otherroomname = (e) => {
+    this.setState({
+      otherroomname: e.target.value
+    })
+  }
+
+
+
+
+
 
 
   render() {
     const prooptions = this.state.cleanerdata.map((province) => <Option key={province.id}  >{province.name}</Option>);
+    const roomlistion = this.state.roomdata.map((province) => <Option key={province.id}  >{province.name}</Option>);
     const cleanercolumn = [{
       title: '保洁员姓名',
       dataIndex: 'name',
@@ -632,28 +643,6 @@ class App extends React.Component {
         editable: true,
         width: 120
       },
-      // {
-      //   title: "保洁员",
-      //   dataIndex: "cleanerName",
-      //   // editable: true,
-      //   render: (text, record, index) => {
-      //     const editable = this.isEditing(record);
-      //     if (text === null) {
-      //       return (
-      //         <div>
-      //           无
-      //         </div>
-      //       )
-      //     } else {
-
-      //       return (
-      //         <div>
-      //           {text}
-      //         </div>
-      //       )
-      //     }
-      //   }
-      // }, 
       {
         title: "报警阈值",
         dataIndex: "standard",
@@ -683,54 +672,6 @@ class App extends React.Component {
           );
         }
       },
-      // {
-      //   title: "所属场景",
-      //   dataIndex: "sceneId",
-      //   render: (text, record, index) => {
-      //     const editable = this.isEditing(record);
-      //     if (text === null) {
-      //       return (
-      //         <div>
-      //           {editable ? (
-      //             <Select
-      //               style={{ width: '60%', marginRight: '20px' }}
-      //               placeholder="请选择房间场景"
-      //               onChange={this.scenechange}
-      //               value={this.state.scenetype[this.state.sceneId]}
-      //             >
-      //               {sceneoptions}
-      //             </Select>
-      //           ) : (
-      //               <span>
-      //                 无
-      //               </span>
-      //             )}
-
-      //         </div>
-      //       )
-      //     } else {
-      //       return (
-      //         <div>
-      //           {editable ? (
-      //             <Select
-      //               style={{ width: '60%', marginRight: '20px' }}
-      //               placeholder="请选择房间场景"
-      //               onChange={this.scenechange}
-      //               value={this.state.scenetype[this.state.sceneId]}
-      //             >
-      //               {sceneoptions}
-      //             </Select>
-      //           ) : (
-      //               <span>
-      //                 {this.state.scenetype[text]}
-      //               </span>
-      //             )}
-
-      //         </div>
-      //       )
-      //     }
-      //   }
-      // },
       {
         title: "摄像头",
         dataIndex: "sceneId",
@@ -930,6 +871,22 @@ class App extends React.Component {
                   <Option key="2" >2天</Option>
                   <Option key="3" >3天</Option>
                 </Select>
+                <span>关联房间：</span>
+                <Select
+                  style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+                  placeholder="请选择关联房间"
+                  onChange={this.otherroom}
+                  value={this.state.otherroom}
+                >
+                  {roomlistion}
+                </Select>
+                <span>合并房间名：</span>
+                <Input placeholder="请输入合并房间名"
+                  style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+                  autoComplete="off"
+                  onChange={this.otherroomname}
+                  value={this.state.otherroomname}
+                />
                 <span>备注：</span>
                 <TextArea rows={4} style={{ marginTop: '10px' }}
                   onChange={this.remarkchange}
@@ -1017,57 +974,6 @@ class App extends React.Component {
               />
             </div>
           </Drawer>
-
-
-          {/* <Modal
-            title="摄像头绑定"
-            visible={this.state.socketvisible}
-            onOk={this.socketOk}
-            onCancel={this.handleCancel}
-            okText="确认"
-            destroyOnClose
-            width="400px"
-            mask={false}
-          >
-            <div>
-              <div>
-                <span>摄像头列表：</span>
-                <Select
-                  style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
-                  placeholder="请选择摄像头"
-                  onChange={this.camerachange}
-                  value={this.state.cameraid}
-                >
-                  {cameraoptions}
-                </Select>
-              </div>
-            </div>
-          </Modal> */}
-
-          {/* <Modal
-            title="插座绑定"
-            visible={this.state.boardvisible}
-            onOk={this.boardOk}
-            onCancel={this.handleCancel}
-            okText="确认"
-            destroyOnClose
-            width="400px"
-            mask={false}
-          >
-            <div>
-              <div>
-                <span>插座列表：</span>
-                <Select
-                  style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
-                  placeholder="请选择插座"
-                  onChange={this.boardchange}
-                  value={this.state.boardid}
-                >
-                  {boardoptions}
-                </Select>
-              </div>
-            </div>
-          </Modal> */}
         </Layout>
       </Layout >
     );

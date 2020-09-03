@@ -606,7 +606,6 @@ class App extends React.Component {
   state = { historyvisible: false }
   showhistory = (text, record, index) => {
     console.log(record)
-
     newdetection([
       record.id
     ]).then(res => {

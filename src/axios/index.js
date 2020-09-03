@@ -43,8 +43,13 @@ export const newdetectionsearch = (params) => http.get(config.requestIp + "/dete
 });
 
 
-//单条检测记录
+//检测报告单条记录
 export const newdetection = (params) => http.get(config.requestIp + "/detection/report/" + params[0], {
+
+});
+
+//视频检测单条记录
+export const detectionvison = (params) => http.get(config.requestIp + "/detection/vison/" + params[0], {
 
 });
 
@@ -585,6 +590,8 @@ export const insertroom = params =>
     standard: params[3],
     remark: params[4],
     sceneid: params[5],
+    bindRoom: params[6],
+    bindName: params[7],
   });
 
 

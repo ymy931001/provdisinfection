@@ -107,18 +107,33 @@ class App extends React.Component {
             cameradis: 'none',
           })
         } else {
-          this.setState({
-            handledata: res.data.data.detectionVOList[0],
-            picturelist: res.data.data.detectionVOList[0].picture != undefined ? JSON.parse(res.data.data.detectionVOList[0].picture) : [],  //eslint-disable-line
-          }, function () {
-            console.log(this.state.handledata.date)
-            console.log(this.state.picturelist)
-            if (this.state.picturelist.length === 0) {
-              this.setState({
-                imgdis: 'block'
-              })
+          if (res.data.data.detectionVOList[0].picture != undefined) {   //eslint-disable-line
+            var arr = []
+            for (var i in JSON.parse(res.data.data.detectionVOList[0].picture)) {
+              if (i < 4) {
+                arr.push(JSON.parse(res.data.data.detectionVOList[0].picture)[i])
+              }
             }
-          })
+            console.log(arr)
+            this.setState({
+              handledata: res.data.data.detectionVOList[0],
+              picturelist: arr,  //eslint-disable-line
+            }, function () {
+              console.log(this.state.handledata.date)
+              console.log(this.state.picturelist)
+              if (this.state.picturelist.length === 0) {
+                this.setState({
+                  imgdis: 'block'
+                })
+              }
+            })
+          } else {
+            this.setState({
+              handledata: res.data.data.detectionVOList[0],
+              picturelist: []
+            })
+          }
+
         }
       }
     })
