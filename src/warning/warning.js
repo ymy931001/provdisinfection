@@ -9,7 +9,8 @@ import {
   message,
   Cascader,
   Button,
-  DatePicker
+  DatePicker,
+  Tooltip
 } from "antd";
 
 import {
@@ -249,17 +250,63 @@ class App extends React.Component {
       },
       {
         title: "房间位置",
-        dataIndex: "name",
+        dataIndex: "roomName",
+        render: (text, record, index) => {
+          if (!text) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                {text}
+              </div>
+            )
+          }
+        }
       },
       {
         title: "报警原因",
         dataIndex: "message",
         render: (text, record, index) => {
-          return (
-            <div style={{ color: 'red' }}>
-              {text}
-            </div>
-          )
+          if (record.type === 3) {
+            return (
+              <div style={{ color: 'red', cursor: "pointer" }}>
+                <Tooltip placement="topLeft" title={"离线时间：" + record.duration + "小时"}>
+                  {text}
+                </Tooltip>
+              </div>
+            )
+          }
+          else if (record.type === 0) {
+            if (!record.duration) {
+              return (
+                <div style={{ color: 'red' }}>
+                  {text}
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ color: 'red', cursor: "pointer" }}>
+                  <Tooltip placement="topLeft" title={"未消毒天数：" + record.duration + "天"}>
+                    {text}
+                  </Tooltip>
+                </div>
+
+              )
+            }
+
+          }
+          else {
+            return (
+              <div style={{ color: 'red' }} >
+                {text}
+              </div >
+            )
+          }
+
         }
       }, {
         title: "报警级别",

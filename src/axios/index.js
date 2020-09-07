@@ -141,6 +141,14 @@ export const addcamera = params =>
   });
 
 
+//获取设备上下线记录
+export const boardonlinestatus = params =>
+  http.get(config.requestIp + "/board/onlinestatus", {
+    deviceId: params[0],
+    start: params[1],
+    stop: params[2],
+  });
+
 
 
 //获取结果视频地址

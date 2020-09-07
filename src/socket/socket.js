@@ -22,7 +22,8 @@ import {
   andsmartdevice,
   patchboard,
   roomlist,
-  delectboard
+  delectboard,
+  boardonlinestatus
 } from "../axios";
 import "./socket.css";
 import moment from 'moment';
@@ -77,6 +78,34 @@ class App extends React.Component {
         title: '上报时间',
         dataIndex: 'gmtcreate',
       }],
+
+      socketcolumns: [{
+        title: 'MAC',
+        dataIndex: 'mac',
+      }, {
+        title: '设备状态',
+        dataIndex: 'status',
+        render: (text, record, index) => {
+          if (text === true) {
+            return (
+              <div style={{ color: 'green', cursor: 'pointer' }}>
+                上线
+              </div>
+            )
+          }
+          if (text === false) {
+            return (
+              <div style={{ color: 'red', cursor: 'pointer' }}>
+                离线
+              </div>
+            )
+          }
+        }
+      }, {
+        title: '上报时间',
+        dataIndex: 'date',
+      }],
+
     };
 
 
@@ -106,14 +135,14 @@ class App extends React.Component {
         render: (text, record, index) => {
           if (text === true) {
             return (
-              <div style={{ color: 'green' }}>
+              <div style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
                 在线
               </div>
             )
           }
           if (text === false) {
             return (
-              <div style={{ color: 'red' }}>
+              <div style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
                 离线
               </div>
             )
@@ -125,7 +154,7 @@ class App extends React.Component {
       //   dataIndex: "tec",
       // }
       , {
-        title: '上下线记录',
+        title: '工作记录',
         dataIndex: 'id',
         render: (text, record, index) =>
           <div>
@@ -338,13 +367,40 @@ class App extends React.Component {
     })
   }
 
-  timeonChange = (data, dateString) => {
-    console.log(dateString[0].split('/').join('-'))
-    this.setState({
-      begintime: dateString[0].split('/').join('-'),
-      endtime: dateString[1].split('/').join('-'),
-    });
+  //时间筛选
+  timeonChange = (value, dateString) => {
+    if (value.length === 0) {
+      this.setState({
+        begintime: undefined,
+        endtime: undefined,
+      });
+    } else {
+      this.setState({
+        begintime: moment(dateString[0]),
+        endtime: moment(dateString[1]),
+      });
+    }
   }
+
+  //时间筛选
+  timeonChanges = (value, dateString) => {
+    if (value.length === 0) {
+      this.setState({
+        begintimes: undefined,
+        endtimes: undefined,
+      });
+    } else {
+      this.setState({
+        begintimes: moment(dateString[0]),
+        endtimes: moment(dateString[1]),
+      });
+    }
+
+  }
+
+
+
+
 
 
   handleCancel = (e) => {
@@ -354,6 +410,7 @@ class App extends React.Component {
       visible: false,
       yuzhivisible: false,
       deletevisible: false,
+      socketlinevisible: false,
     });
   }
 
@@ -363,10 +420,14 @@ class App extends React.Component {
     localStorage.setItem('mac', record.mac)
     this.setState({
       historyvisible: true,
-      socketmac: record.mac
+      socketmac: record.mac,
+      begintime: moment(new Date().getTime() - 24 * 60 * 60 * 1000 * 7),
+      endtime: moment(new Date().getTime()),
     });
     readinglist([
       record.mac,
+      moment(new Date().getTime() - 24 * 60 * 60 * 1000 * 7).format("YYYY-MM-DD"),
+      moment(new Date().getTime()).format("YYYY-MM-DD"),
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
         this.setState({
@@ -385,55 +446,66 @@ class App extends React.Component {
     });
   }
 
+  showonlinehistory = (text, record, index) => {
+    this.setState({
+      socketlinevisible: true,
+      begintimes: moment(new Date().getTime() - 24 * 60 * 60 * 1000 * 7),
+      endtimes: moment(new Date().getTime()),
+      socketId: record.id
+    });
+    boardonlinestatus([
+      record.id,
+      moment(new Date().getTime() - 24 * 60 * 60 * 1000 * 7).format("YYYY-MM-DD"),
+      moment(new Date().getTime()).format("YYYY-MM-DD"),
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+        this.setState({
+          socketline: res.data.data,
+        });
+        if (res.data.data.length < 10) {
+          this.setState({
+            linepages: false
+          })
+        } else {
+          this.setState({
+            linepages: true
+          })
+        }
+      }
+    });
+  }
 
-  // dayquery = () => {
-  //   readinglist([
-  //     localStorage.getItem('mac'),
-  //     moment(new Date().format('YYYY-MM-DD').startOf('day'))
-  //   ]).then(res => {
-  //     if (res.data && res.data.message === "success") {
-  //       this.setState({
-  //         readout: res.data.data
-  //       })
-  //     }
-  //   });
-  // }
 
-  // saomiao = () => {
-  //   scanboard(
+  linequery = () => {
+    boardonlinestatus([
+      this.state.socketId,
+      this.state.begintimes === undefined ? undefined : moment(this.state.begintimes).format('YYYY-MM-DD'),
+      this.state.endtimes === undefined ? undefined : moment(this.state.endtimes).format('YYYY-MM-DD'),
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+        this.setState({
+          socketline: res.data.data,
+        });
+        if (res.data.data.length < 10) {
+          this.setState({
+            linepages: false
+          })
+        } else {
+          this.setState({
+            linepages: true
+          })
+        }
+      }
+    });
+  }
 
-  //   ).then(res => {
-  //     console.log(res)
-  //     if (res.data && res.data.message === "success") {
-  //       message.success('扫描成功')
-  //       boardlist().then(res => {
-  //         if (res.data && res.data.message === "success") {
-  //           console.log(res.data.data)
-  //           this.setState({
-  //             userlist: res.data.data
-  //           }, function () {
-  //             console.log(this.state.userlist)
-  //             if (res.data.data.length < 10) {
-  //               this.setState({
-  //                 page: false
-  //               })
-  //             } else {
-  //               this.setState({
-  //                 page: true
-  //               })
-  //             }
-  //           });
-  //         }
-  //       });
-  //     }
-  //   })
-  // }
+
 
   timequery = () => {
     readinglist([
       this.state.socketmac,
-      this.state.begintime,
-      this.state.endtime
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? undefined : moment(this.state.endtime).format('YYYY-MM-DD'),
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
         this.setState({
@@ -665,8 +737,8 @@ class App extends React.Component {
   yuzhiOk = () => {
     patchboard([
       this.state.modelid,
-      parseInt(this.state.thresholddown,10),
-      parseInt(this.state.thresholdup,10),
+      parseInt(this.state.thresholddown, 10),
+      parseInt(this.state.thresholdup, 10),
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         message.success("修改成功")
@@ -843,7 +915,7 @@ class App extends React.Component {
             </Card>
 
             <Modal
-              title="上下线记录"
+              title="工作记录"
               width='600px'
               destroyOnClose
               // maskStyle={{ background: "black", opacity: '0.1' }}
@@ -860,7 +932,7 @@ class App extends React.Component {
                 format={dateFormat}
                 ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
                 onChange={this.timeonChange}
-              // value={[moment(this.state.begintime, dateFormat), moment(this.state.endtime, dateFormat)]}
+                value={[this.state.begintime, this.state.endtime]}
               />
               <Button type="primary" onClick={this.timequery}>查询</Button>
               <Table
@@ -872,6 +944,38 @@ class App extends React.Component {
                 style={{ marginTop: '5px' }}
               />
             </Modal>
+
+            <Modal
+              title="上下线记录"
+              width='500px'
+              destroyOnClose
+              visible={this.state.socketlinevisible}
+              centered
+              footer={null}
+              onCancel={this.handleCancel}
+              mask={false}
+            >
+              时间&nbsp;:
+                    <RangePicker
+                style={{ marginLeft: '20px', marginRight: '20px', width: '300px' }}
+                format={dateFormat}
+                ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
+                onChange={this.timeonChanges}
+                value={[this.state.begintimes, this.state.endtimes]}
+              />
+              <Button type="primary" onClick={this.linequery}>查询</Button>
+              <Table
+                bordered
+                dataSource={this.state.socketline}
+                columns={this.state.socketcolumns}
+                pagination={this.state.linepages}
+                rowClassName="editable-row"
+                style={{ marginTop: '5px' }}
+              />
+            </Modal>
+
+
+
             <Modal
               title="阈值修改"
               width='300px'
@@ -944,17 +1048,6 @@ class App extends React.Component {
                     {alldevicelist}
                   </Select>
                 </div>
-
-                {/* <div>
-                  <span>MAC：</span>
-                  <Input placeholder="请输入mac"
-                    style={{ width: '100%', marginBottom: "10px", marginTop: '10px', textAlign: 'left' }}
-                    autoComplete="off"
-                    onChange={this.macvalue}
-                    value={this.state.macvalue}
-                    disabled
-                  />
-                </div> */}
                 <div>
                   <span>额定功率：</span>
                   <Input placeholder="请输入额定功率"

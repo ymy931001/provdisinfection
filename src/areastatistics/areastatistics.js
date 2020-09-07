@@ -107,7 +107,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              {text === undefined ? 0 : text} 分
+              {text === undefined ? 0 : (text/60).toFixed(1)} 分
             </div>
           )
         }

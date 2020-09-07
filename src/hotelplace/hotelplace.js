@@ -158,6 +158,7 @@ class App extends React.Component {
           readout: JSON.parse(res.data.data.readings),
           decendingdatas: !res.data.data.timepairs ? [] : JSON.parse(res.data.data.timepairs),
         }, function () {
+          console.log(this.state.decendingdatas)
           this.setState({
             timeresult: this.state.readout
           }, function () {
@@ -232,10 +233,8 @@ class App extends React.Component {
           //获取图片
           var imgarr = []
           for (var i in this.state.timelist1) {
-            for (var j in this.state.timelist1[i].timePiarsInfo) {
-              if (this.state.timelist1[i].timePiarsInfo[j].file != undefined) { //eslint-disable-line
-                imgarr.push(this.state.timelist1[i].timePiarsInfo[j])
-              }
+            if (this.state.timelist1[i].timePiarsInfo[0].file != undefined) { //eslint-disable-line
+              imgarr.push(this.state.timelist1[i].timePiarsInfo[0])
             }
           }
           console.log(imgarr)
