@@ -65,46 +65,69 @@ class App extends React.Component {
       begintime: year + '-' + month + '-' + day,
       devicelists: [],
       devicedis: 'none',
-      readouts: [{
-        title: 'MAC',
-        dataIndex: 'mac',
-      }, {
-        title: '电流',
-        dataIndex: 'electricity',
-      }, {
-        title: '功率',
-        dataIndex: 'power',
-      }, {
-        title: '上报时间',
-        dataIndex: 'gmtcreate',
-      }],
+      readouts: [
+        //   {
+        //   title: 'MAC',
+        //   dataIndex: 'mac',
+        // },
+        {
+          title: '电流',
+          dataIndex: 'electricity',
+        }, {
+          title: '功率',
+          dataIndex: 'power',
+        }, {
+          title: '开关状态',
+          dataIndex: 'loadStatus',
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div style={{ color: 'green', cursor: 'pointer' }}>
+                  开启
+                </div>
+              )
+            }
+            if (text === false) {
+              return (
+                <div style={{ color: 'red', cursor: 'pointer' }}>
+                  关闭
+                </div>
+              )
+            }
+          }
+        }, {
+          title: '上报时间',
+          dataIndex: 'gmtcreate',
+        }],
 
-      socketcolumns: [{
-        title: 'MAC',
-        dataIndex: 'mac',
-      }, {
-        title: '设备状态',
-        dataIndex: 'status',
-        render: (text, record, index) => {
-          if (text === true) {
-            return (
-              <div style={{ color: 'green', cursor: 'pointer' }}>
-                上线
-              </div>
-            )
+      socketcolumns: [
+        //   {
+        //   title: 'MAC',
+        //   dataIndex: 'mac',
+        // }, 
+        {
+          title: '设备状态',
+          dataIndex: 'status',
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div style={{ color: 'green', cursor: 'pointer' }}>
+                  上线
+                </div>
+              )
+            }
+            if (text === false) {
+              return (
+                <div style={{ color: 'red', cursor: 'pointer' }}>
+                  离线
+                </div>
+              )
+            }
           }
-          if (text === false) {
-            return (
-              <div style={{ color: 'red', cursor: 'pointer' }}>
-                离线
-              </div>
-            )
-          }
-        }
-      }, {
-        title: '上报时间',
-        dataIndex: 'date',
-      }],
+        }, {
+          title: '上报时间',
+          dataIndex: 'date',
+        }],
 
     };
 
@@ -126,10 +149,11 @@ class App extends React.Component {
         title: "imei",
         dataIndex: "imei",
       },
+      // {
+      //   title: "mac",
+      //   dataIndex: "mac",
+      // },
       {
-        title: "mac",
-        dataIndex: "mac",
-      }, {
         title: "设备状态",
         dataIndex: "onlineStatus",
         render: (text, record, index) => {
