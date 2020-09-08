@@ -22,7 +22,7 @@ import {
 import "./hotelvideo.css";
 import moment from 'moment';
 
-const { Content} = Layout;
+const { Content } = Layout;
 const { RangePicker } = DatePicker;
 
 
@@ -612,7 +612,7 @@ class App extends React.Component {
       if (res.data && res.data.message === "success") {
         var arr = []
         for (var i in JSON.parse(res.data.data.timepairs)) {
-          if ((JSON.parse(res.data.data.timepairs)[i].end - JSON.parse(res.data.data.timepairs)[i].start) > 30000) {
+          if ((JSON.parse(res.data.data.timepairs)[i].end - JSON.parse(res.data.data.timepairs)[i].start) > 0) {
             arr.push(JSON.parse(res.data.data.timepairs)[i])
           }
         }
