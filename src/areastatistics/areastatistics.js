@@ -23,6 +23,12 @@ const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 
 
+function disabledDate(current) {
+  // Can not select days before today and today
+  return current && current > moment().endOf('day');
+}
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -107,7 +113,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              {text === undefined ? 0 : (text/60).toFixed(1)} 分
+              {text === undefined ? 0 : (text / 60).toFixed(1)} 分
             </div>
           )
         }
@@ -825,6 +831,8 @@ class App extends React.Component {
                       ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
                       onChange={this.timeonChange}
                       value={[this.state.begintime, this.state.endtime]}
+                      disabledDate={disabledDate}
+                      picker="month"
                     />
                     <Button type="primary" onClick={this.query}>查询</Button>
                   </div>

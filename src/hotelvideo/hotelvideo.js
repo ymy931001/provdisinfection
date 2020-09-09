@@ -611,17 +611,18 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         var arr = []
-        for (var i in JSON.parse(res.data.data.timepairs)) {
-          if ((JSON.parse(res.data.data.timepairs)[i].end - JSON.parse(res.data.data.timepairs)[i].start) > 0) {
-            arr.push(JSON.parse(res.data.data.timepairs)[i])
+        if (res.data.data.timepairs !== undefined) {
+          for (var i in JSON.parse(res.data.data.timepairs)) {
+            if ((JSON.parse(res.data.data.timepairs)[i].end - JSON.parse(res.data.data.timepairs)[i].start) > 0) {
+              arr.push(JSON.parse(res.data.data.timepairs)[i])
+            }
           }
         }
         this.setState({
           historyvisible: true,
           imgid: res.data.data.id,
-          readout: JSON.parse(res.data.data.readings),
+          readout: res.data.data.readings === undefined ? [] : JSON.parse(res.data.data.readings),
           decendingdatas: arr,
-          // decendingdatas: JSON.parse(res.data.data.timepairs),
           time1: Math.ceil(res.data.data.runtime / 60),
           time2: Math.ceil(res.data.data.worktime / 60)
         }, function () {
