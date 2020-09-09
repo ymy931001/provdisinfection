@@ -233,8 +233,10 @@ class App extends React.Component {
           //获取图片
           var imgarr = []
           for (var i in this.state.timelist1) {
-            if (this.state.timelist1[i].timePiarsInfo[0].file != undefined) { //eslint-disable-line
-              imgarr.push(this.state.timelist1[i].timePiarsInfo[0])
+            if (this.state.timelist1[i].timePiarsInfo != undefined) {//eslint-disable-line
+              if (this.state.timelist1[i].timePiarsInfo[0].file != undefined) { //eslint-disable-line
+                imgarr.push(this.state.timelist1[i].timePiarsInfo[0])
+              }
             }
           }
           console.log(imgarr)
