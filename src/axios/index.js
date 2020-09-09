@@ -597,9 +597,9 @@ export const insertroom = params =>
     cleanerid: params[2],
     standard: params[3],
     remark: params[4],
-    sceneid: params[5],
-    bindRoom: params[6],
-    bindName: params[7],
+    bindRoom: params[5],
+    bindName: params[6],
+    sceneid: params[7],
   });
 
 

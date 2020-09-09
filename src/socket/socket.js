@@ -667,7 +667,7 @@ class App extends React.Component {
   //额定功率填写
   threshold = (e) => {
     this.setState({
-      threshold: e.target.value
+      threshold: e.target.value.replace(/[^0-9.]/g, '')
     })
   }
 

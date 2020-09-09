@@ -12,6 +12,7 @@ import {
   Switch,
   Form,
   InputNumber,
+  Tooltip
 } from "antd";
 import {
   roomlist,
@@ -545,6 +546,7 @@ class App extends React.Component {
       this.state.remark,
       this.state.otherroom,
       this.state.otherroomname,
+      this.state.sceneId
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
         message.success('房间添加成功');
@@ -555,8 +557,16 @@ class App extends React.Component {
           localStorage.getItem('hotelid')
         ]).then(res => {
           if (res.data && res.data.message === "success") {
+            var arr = []
+            for (var i in res.data.data) {
+              arr.push({
+                "id": res.data.data[i].id,
+                "name": res.data.data[i].name,
+              })
+            }
             this.setState({
-              roomlist: res.data.data
+              roomlist: res.data.data,
+              roomdata: arr
             }, function () {
               if (res.data.data.length < 10) {
                 this.setState({
@@ -644,6 +654,39 @@ class App extends React.Component {
         width: 120
       },
       {
+        title: "房间类型",
+        dataIndex: "sceneId",
+        render: (text, record, index) => {
+          if (text === 1) {
+            return (
+              <div style={{ cursor: 'pointer' }}>
+                <Tooltip title={"摄像头和插座都具有"}>
+                  <span>类型一</span>
+                </Tooltip>
+              </div>
+            )
+          }
+          if (text === 3) {
+            return (
+              <div style={{ cursor: 'pointer' }}>
+                <Tooltip title={"只有插座"}>
+                  <span>类型二</span>
+                </Tooltip>
+              </div>
+            )
+          }
+          if (text === 4) {
+            return (
+              <div style={{ cursor: 'pointer' }}>
+                <Tooltip title={"只有摄像头"}>
+                  <span>类型三</span>
+                </Tooltip>
+              </div>
+            )
+          }
+        }
+      },
+      {
         title: "报警阈值",
         dataIndex: "standard",
         render: (text, record, index) => {
@@ -724,27 +767,6 @@ class App extends React.Component {
           )
         }
       },
-      // {
-      //   title: "备注",
-      //   dataIndex: "remark",
-      //   editable: true,
-      //   width: 200,
-      //   render: (text, record, index) => {
-      //     if (text === null || text === "") {
-      //       return (
-      //         <div>
-      //           无
-      //         </div>
-      //       )
-      //     } else {
-      //       return (
-      //         <div>
-      //           {text}
-      //         </div>
-      //       )
-      //     }
-      //   }
-      // },
       {
         title: '操作',
         dataIndex: 'id',
@@ -851,6 +873,17 @@ class App extends React.Component {
                   onChange={this.roomname}
                   value={this.state.roomname}
                 />
+                <span> <span style={{ color: 'red' }}>*</span> 房间类型：</span>
+                <Select
+                  style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+                  placeholder="请选择房间类型"
+                  onChange={this.scenechange}
+                  value={this.state.sceneId}
+                >
+                  <Option key="1" >摄像头插座都有</Option>
+                  <Option key="3" >只有插座</Option>
+                  <Option key="4" >只有摄像头</Option>
+                </Select>
                 <span> <span style={{ color: 'red' }}>*</span> 负责保洁员：</span>
                 <Select
                   style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
