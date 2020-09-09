@@ -102,8 +102,8 @@ class App extends React.Component {
       {
         title: "保洁时长",
         dataIndex: "housekeeping",
-        sortOrder: 'descend',
-        sorter: (a, b) => a.workcount - b.workcount,
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.housekeeping - b.housekeeping,
         render: (text, record, index) => {
           return (
             <div>
