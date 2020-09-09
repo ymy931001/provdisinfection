@@ -611,18 +611,14 @@ class App extends React.Component {
       record.id
     ]).then(res => {
       if (res.data && res.data.message === "success") {
-        console.log(JSON.parse(res.data.data.timepairs))
         var arr = []
         if (res.data.data.timepairs !== undefined) {
-          console.log(444)
           for (var i in JSON.parse(res.data.data.timepairs)) {
             if ((JSON.parse(res.data.data.timepairs)[i].end - JSON.parse(res.data.data.timepairs)[i].start) > 0) {
-              console.log(111)
               arr.push(JSON.parse(res.data.data.timepairs)[i])
             }
           }
         }
-        console.log(arr)
         this.setState({
           historyvisible: true,
           imgid: res.data.data.id,
