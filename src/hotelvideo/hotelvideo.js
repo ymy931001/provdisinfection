@@ -141,11 +141,12 @@ class App extends React.Component {
 
 
 
-      readouts: [{
-        title: 'MAC',
-        dataIndex: 'mac',
-      }
-        ,
+      readouts: [
+      //   {
+      //   title: 'MAC',
+      //   dataIndex: 'mac',
+      // }
+      //   ,
       {
         title: '开始时间',
         dataIndex: 'begin',
