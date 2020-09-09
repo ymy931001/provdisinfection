@@ -142,32 +142,32 @@ class App extends React.Component {
 
 
       readouts: [
-      //   {
-      //   title: 'MAC',
-      //   dataIndex: 'mac',
-      // }
-      //   ,
-      {
-        title: '开始时间',
-        dataIndex: 'begin',
-        render: (text, record, index) => {
-          return (
-            <div>
-              {moment(new Date(text)).format('YYYY-MM-DD HH:mm:ss')}
-            </div>
-          )
-        }
-      }, {
-        title: '结束时间',
-        dataIndex: 'end',
-        render: (text, record, index) => {
-          return (
-            <div>
-              {moment(new Date(text)).format('YYYY-MM-DD HH:mm:ss')}
-            </div>
-          )
-        }
-      }]
+        //   {
+        //   title: 'MAC',
+        //   dataIndex: 'mac',
+        // }
+        //   ,
+        {
+          title: '开始时间',
+          dataIndex: 'begin',
+          render: (text, record, index) => {
+            return (
+              <div>
+                {moment(new Date(text)).format('YYYY-MM-DD HH:mm:ss')}
+              </div>
+            )
+          }
+        }, {
+          title: '结束时间',
+          dataIndex: 'end',
+          render: (text, record, index) => {
+            return (
+              <div>
+                {moment(new Date(text)).format('YYYY-MM-DD HH:mm:ss')}
+              </div>
+            )
+          }
+        }]
     };
     this.nodeInfoTableColumns = [
       {
@@ -611,14 +611,18 @@ class App extends React.Component {
       record.id
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        console.log(JSON.parse(res.data.data.timepairs))
         var arr = []
         if (res.data.data.timepairs !== undefined) {
+          console.log(444)
           for (var i in JSON.parse(res.data.data.timepairs)) {
             if ((JSON.parse(res.data.data.timepairs)[i].end - JSON.parse(res.data.data.timepairs)[i].start) > 0) {
+              console.log(111)
               arr.push(JSON.parse(res.data.data.timepairs)[i])
             }
           }
         }
+        console.log(arr)
         this.setState({
           historyvisible: true,
           imgid: res.data.data.id,
@@ -627,6 +631,7 @@ class App extends React.Component {
           time1: Math.ceil(res.data.data.runtime / 60),
           time2: Math.ceil(res.data.data.worktime / 60)
         }, function () {
+          console.log(this.state.readout)
           if (this.state.time1 === 0) {
             this.setState({
               cupboarddis: 'none',
@@ -638,8 +643,8 @@ class App extends React.Component {
               cupboarddiss: 'inline-block',
             })
           }
-          if (JSON.parse(res.data.data.readings) != null) {
-            if (JSON.parse(res.data.data.readings).length < 10) {
+          if (this.state.readout != null) {
+            if (this.state.readout.length < 10) {
               this.setState({
                 pages: false
               })
@@ -900,46 +905,6 @@ class App extends React.Component {
                 </div>
                 <div style={{ width: '100%' }}>
                   <img src={this.state.lookimgurl} alt="" style={{ width: '100%' }} />
-                </div>
-              </Modal>
-
-
-              <Modal
-                title="交易信息"
-                visible={this.state.pleadingvisible}
-                onCancel={this.handleCancel}
-                footer={null}
-                destroyOnClose
-                centered
-                mask={false}
-                width='650px'
-              >
-                <div>
-                  交易ID：{this.state.txid}
-                </div>
-                <br />
-                <div>
-                  块号：{this.state.blocknumber}
-                </div>
-                <br />
-                <div>
-                  块大小：{this.state.blocksize}
-                </div>
-                <br />
-                <div>
-                  当前块交易数量：{this.state.blocktxcount}
-                </div>
-                <br />
-                <div>
-                  块Hash：{this.state.blockhash}
-                </div>
-                <br />
-                <div>
-                  上一个块Hash：{this.state.preblockhash}
-                </div>
-                <br />
-                <div>
-                  创建时间：{this.state.date}
                 </div>
               </Modal>
             </Card>
