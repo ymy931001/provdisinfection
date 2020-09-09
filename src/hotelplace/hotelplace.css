@@ -117,11 +117,53 @@
     overflow: auto;
 }
 
+#hotelplace .resultline{
+    padding-right: 0px;
+    min-height: 60px;
+    display: inline-block;
+    max-height: 60px;
+    overflow: auto;
+    width: 600px;
+    margin-bottom: 10px;
+}
+
+#hotelplace .cupscroll{
+    min-height: 40px;
+    max-height: 40px;
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
+
+#hotelplace .cupscroll::-webkit-scrollbar {
+    overflow-y: scroll;
+　　scrollbar-color: transparent transparent;
+　　scrollbar-track-color: transparent;
+　　-ms-scrollbar-track-color: transparent;
+    display:none
+}
+
+
+#hotelplace .resultline::-webkit-scrollbar {
+    overflow-y: scroll;
+　　scrollbar-color: transparent transparent;
+　　scrollbar-track-color: transparent;
+　　-ms-scrollbar-track-color: transparent;
+    display:none
+}
+
+
 #hotelplace .tablescrolls{
     padding-right: 45px;
 }
 
-#hotelplace .tablescroll::-webkit-scrollbar {display:none}
+#hotelplace .tablescroll::-webkit-scrollbar {
+    overflow-y: scroll;
+　　scrollbar-color: transparent transparent;
+　　scrollbar-track-color: transparent;
+　　-ms-scrollbar-track-color: transparent;
+    display:none
+}
 
 #hotelplace .reportresult{
     color:#333;

@@ -449,14 +449,17 @@ class App extends React.Component {
 
                     </div>
                   </div>
+
                   <div style={{ fontWeight: 'bold', verticalAlign: 'top', color: '#666', display: this.state.timedis }}>经分析得出：该单位于 </div>
                   <div style={{ display: this.state.timedisone, color: 'red', marginBottom: '20px' }}>经分析得出：该单位无消毒记录</div>
-                  <div style={{ display: 'inline-block', color: '#d61919', marginBottom: '20px' }}>
-                    {timeoption}
+                  <div className="resultline">
+                    <div style={{ display: 'inline-block', color: '#d61919', marginBottom: '20px' }}>
+                      {timeoption}
+                    </div>
                   </div>
                   <div style={{ width: '100%', marginBottom: '20px' }}>
                     <div style={{ display: 'inline-block', verticalAlign: 'top', color: '#666', fontWeight: 'bold', }}>杯具添加记录：</div>
-                    <div style={{ display: 'inline-block', }}>
+                    <div style={{ display: 'inline-block', }} className="cupscroll" >
                       {this.state.cuplist.length > 0 ? cupoption : "无"}
                     </div>
                   </div>
