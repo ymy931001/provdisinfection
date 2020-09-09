@@ -18,7 +18,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 
-const { Content} = Layout;
+const { Content } = Layout;
 const { RangePicker } = DatePicker;
 
 const { Option } = Select;
@@ -124,7 +124,7 @@ class App extends React.Component {
                 </div>
               )
             }
-          }else{
+          } else {
             return (
               <div>
                 {text}
@@ -267,21 +267,15 @@ class App extends React.Component {
 
 
   sitechange = (text, record, index) => {
-    console.log(record.siteId)
-    // window.location.href = "/app/hotelreport";
-    this.setState({
-      hotelname: record.siteId
-    }, function () {
-      siteStatistics([
-        this.state.hotelname
-      ]).then(res => {
-        if (res.data && res.data.message === "success") {
-          this.setState({
-            sitelist: res.data.data
-          })
-        }
-      });
-    })
+    siteStatistics([
+      record.siteId
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          sitelist: res.data.data
+        })
+      }
+    });
   }
 
 

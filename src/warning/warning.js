@@ -26,9 +26,6 @@ const { TabPane } = Tabs;
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
-function callback(key) {
-  console.log(key);
-}
 
 
 class App extends React.Component {
@@ -103,10 +100,18 @@ class App extends React.Component {
           this.setState({
             page: false
           })
+        } else {
+          this.setState({
+            page: true
+          })
         }
         if (newarr.length < 10) {
           this.setState({
             pages: false
+          })
+        } else {
+          this.setState({
+            pages: true
           })
         }
       })
@@ -171,8 +176,8 @@ class App extends React.Component {
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
-      this.state.begintime,
-      this.state.endtime,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
     ]).then(res => {
       var arr = []
       var newarr = []
@@ -191,10 +196,18 @@ class App extends React.Component {
           this.setState({
             page: false
           })
+        } else {
+          this.setState({
+            page: true
+          })
         }
         if (newarr.length < 10) {
           this.setState({
             pages: false
+          })
+        } else {
+          this.setState({
+            pages: true
           })
         }
       })
@@ -396,12 +409,12 @@ class App extends React.Component {
                   format={dateFormat}
                   ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
                   onChange={this.timeonChange}
-                // value={[this.state.begintime, this.state.endtime]}
+                  value={[this.state.begintime, this.state.endtime]}
                 />
                 <Button type="primary" onClick={this.query}>查询</Button>
                 <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>
               </div>
-              <Tabs defaultActiveKey="1" onChange={callback}>
+              <Tabs defaultActiveKey="1">
                 <TabPane tab="当前" key="1">
                   <div style={{ marginTop: 5 }}>
                     <Table

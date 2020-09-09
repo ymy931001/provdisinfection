@@ -12,7 +12,7 @@ import {
   hotellist,
   getAreaMap,
   rolelist,
-  
+
 } from "../axios";
 import "./adduser.css";
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ class App extends React.Component {
     userdis: 'none',
     superdis: 'none',
     arealist: [],
-    areaid:[]
+    areaid: []
   };
 
   componentWillMount() {
@@ -133,7 +133,6 @@ class App extends React.Component {
 
 
   submit = () => {
-    let telphone = document.getElementById('telphone').value;
     let realname = document.getElementById('realname').value;
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
@@ -142,11 +141,10 @@ class App extends React.Component {
     var reg = /^([a-zA-Z]|[0-9])(\w)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
     var telrule = /^[1][3,4,5,7,8][0-9]{9}$/;
     var namerule = /^[\u4e00-\u9fa5]+$/;
-    telphone.toString();
     if (!namerule.test(realname)) {
       message.error('请输入您的真实姓名');
     }
-    else if (!telrule.test(telphone)) {
+    else if (!telrule.test(this.state.telphone)) {
       message.error('您输入的手机号码不合法');
     }
     else if (!reg.test(email)) {
@@ -160,7 +158,7 @@ class App extends React.Component {
     } else {
       adduser([
         realname,
-        telphone,
+        this.state.telphone,
         username,
         password,
         this.state.siteid,
@@ -227,6 +225,15 @@ class App extends React.Component {
     })
   }
 
+  //手机号码输入
+  telphone = (e) => {
+    this.setState({
+      telphone: e.target.value.replace(/[^0-9.]/g, '')
+    })
+  }
+
+
+
 
 
 
@@ -236,10 +243,10 @@ class App extends React.Component {
     // const arealistions = this.state.arealist.map((province) => <Option key={province.id}  >{province.name}</Option>);
 
     return (
-      <Layout  id="userbody">
+      <Layout id="userbody">
         <Layout>
           <Content style={{ margin: "16px 16px" }} >
-            <Card title="添加用户"  headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
+            <Card title="添加用户" headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
               extra={
                 <Button type="primary" style={{ background: '#0070CC', border: '1px solid #0070CC', marginRight: '20px' }}>
                   <Link to="/app/user">返回</Link>
@@ -255,7 +262,7 @@ class App extends React.Component {
               </div>
               <div className='addinput'>
                 <span>手机：</span>
-                <Input placeholder="请输入您的手机号" style={{ width: '60%' }} id="telphone" />
+                <Input placeholder="请输入您的手机号" style={{ width: '60%' }} value={this.state.telphone} onChange={this.telphone} />
               </div>
               <div className='addinput'>
                 <span>邮箱：</span>
