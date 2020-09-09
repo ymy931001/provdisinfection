@@ -492,8 +492,12 @@ class App extends React.Component {
                             <td className="tabletitle" style={{ width: '163px' }}>监测结束时间</td>
                             <td className="tabletitle" style={{ width: '78px' }}>监测时长</td>
                           </tr>
-                          {timeoption1}
                         </table>
+                        <div className="tablescroll">
+                          <table border="1" style={{ width: '100%', textAlign: 'center', border: '1px solid #cacaca', borderTop: 'none' }} align="center">
+                            {timeoption1}
+                          </table>
+                        </div>
                       </div>
                     </div>
                     <div style={{ display: this.state.zhuapaidis }}>
