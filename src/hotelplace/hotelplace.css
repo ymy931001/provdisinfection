@@ -136,20 +136,20 @@
 
 
 #hotelplace .cupscroll::-webkit-scrollbar {
-    overflow-y: scroll;
+    /* overflow-y: scroll;
 　　scrollbar-color: transparent transparent;
 　　scrollbar-track-color: transparent;
-　　-ms-scrollbar-track-color: transparent;
-    display:none
+　　-ms-scrollbar-track-color: transparent; */
+    display:none;
 }
 
 
 #hotelplace .resultline::-webkit-scrollbar {
-    overflow-y: scroll;
+    /* overflow-y: scroll;
 　　scrollbar-color: transparent transparent;
 　　scrollbar-track-color: transparent;
-　　-ms-scrollbar-track-color: transparent;
-    display:none
+　　-ms-scrollbar-track-color: transparent; */
+    display:none;
 }
 
 
@@ -158,10 +158,10 @@
 }
 
 #hotelplace .tablescroll::-webkit-scrollbar {
-    overflow-y: scroll;
+    /* overflow-y: scroll;
 　　scrollbar-color: transparent transparent;
 　　scrollbar-track-color: transparent;
-　　-ms-scrollbar-track-color: transparent;
+　　-ms-scrollbar-track-color: transparent; */
     display:none
 }
 
@@ -170,7 +170,7 @@
     font-weight: bold;
     font-size: 16px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 @media screen and (max-width: 1300px) {

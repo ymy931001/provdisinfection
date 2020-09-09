@@ -525,7 +525,7 @@ class App extends React.Component {
                   </div>
 
 
-                  <div className="reportresult" style={{ marginTop: '20px' }} >
+                  <div className="reportresult" style={{ marginTop: '10px' }} >
                     监测图片
                   </div>
                   <div style={{ paddingRight: '45px', textAlign: 'center' }}>
