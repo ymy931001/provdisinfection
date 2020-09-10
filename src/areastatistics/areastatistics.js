@@ -169,7 +169,7 @@ class App extends React.Component {
       {
         title: "报警次数",
         dataIndex: "alarmCount",
-        sortOrder: 'descend',
+        defaultSortOrder: 'descend',
         sorter: (a, b) => a.workcount - b.workcount,
         render: (text, record, index) => {
           return (
@@ -229,8 +229,8 @@ class App extends React.Component {
       {
         title: "消毒时长",
         dataIndex: "runtime",
-        sortOrder: 'descend',
-        sorter: (a, b) => a.worktime - b.worktime,
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.runtime - b.runtime,
         render: (text, record, index) => {
           if (text === undefined) {
             return (
@@ -298,8 +298,8 @@ class App extends React.Component {
       {
         title: "洗消时长",
         dataIndex: "worktime",
-        sortOrder: 'descend',
-        sorter: (a, b) => a.runtime - b.runtime,
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.worktime - b.worktime,
         render: (text, record, index) => {
           if (text === undefined) {
             return (
