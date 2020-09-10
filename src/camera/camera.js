@@ -280,10 +280,10 @@ class App extends React.Component {
         <Layout>
           <Content style={{ margin: "16px 16px" }} >
             <Card title="摄像头参数" headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
-              extra={
-                <div>
-                  <Button type="primary" size='large' onClick={this.freshen} style={{ marginLeft: '20px' }}>刷新封面</Button>
-                </div>}
+              // extra={
+              //   <div>
+              //     <Button type="primary" size='large' onClick={this.freshen} style={{ marginLeft: '20px' }}>刷新封面</Button>
+              //   </div>}
             >
               <div>
                 <div style={{ display: 'block', textAlign: 'center' }}>

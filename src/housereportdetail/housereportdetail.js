@@ -130,7 +130,8 @@ class App extends React.Component {
           } else {
             this.setState({
               handledata: res.data.data.detectionVOList[0],
-              picturelist: []
+              picturelist: [],
+              imgdis: 'block'
             })
           }
 
