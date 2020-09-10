@@ -840,7 +840,7 @@ class App extends React.Component {
                     <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingTop: '0px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
-                          每日客房保洁时长统计
+                          客房保洁时长统计
                         </div>
                         <div style={{ padding: '10px' }}>
                           <Table
@@ -854,7 +854,7 @@ class App extends React.Component {
                     <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px', paddingTop: '0px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
-                          每日平均消毒柜开启时间统计
+                          消毒柜开启时长统计
                         </div>
                         <div style={{ padding: '10px' }}>
                           <Table
@@ -868,7 +868,7 @@ class App extends React.Component {
                     <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px', paddingTop: '0px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
-                          每日平均洗消时间统计
+                          洗消时长统计
                         </div>
                         <div style={{ padding: '10px' }}>
                           <Table
@@ -886,7 +886,7 @@ class App extends React.Component {
                     <Col span={8} style={{ padding: '10px', paddingRight: '25px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
-                          各酒店设备数量统计
+                          设备数量统计
                         </div>
                         <div style={{ padding: '10px' }}>
                           <Table
@@ -900,7 +900,7 @@ class App extends React.Component {
                     <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
-                          各酒店设备在线率统计
+                          设备在线率统计
                         </div>
                         <div style={{ padding: '10px' }}>
                           <Table
@@ -914,7 +914,7 @@ class App extends React.Component {
                     <Col span={8} style={{ padding: '10px', paddingLeft: '25px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
-                          各酒店报警次数统计
+                          报警次数统计
                         </div>
                         <div style={{ padding: '10px' }}>
                           <Table

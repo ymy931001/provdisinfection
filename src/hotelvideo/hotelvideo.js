@@ -17,7 +17,8 @@ import {
   imageExist,
   getchaincode,
   newdetectionsearch,
-  getregion
+  getregion,
+  detectionvison
 } from "../axios";
 import "./hotelvideo.css";
 import moment from 'moment';
@@ -351,6 +352,12 @@ class App extends React.Component {
         }
       }
     });
+
+    // detectionvison([
+    //   1192
+    // ]).then(res => {
+
+    // })
 
     // hotellist().then(res => {
     //   var arr = []
