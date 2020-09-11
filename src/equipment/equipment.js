@@ -28,7 +28,8 @@ import {
   getbackUrl,
   roomlist,
   deletecamera,
-  addhandheld
+  addhandheld,
+  geisctUrl
 } from "../axios";
 import "./equipment.css";
 import moment from 'moment';
@@ -780,14 +781,20 @@ class App extends React.Component {
   }
 
   findvideo(text, record, index) {
-    console.log(text)
-    localStorage.setItem('videoid', text)
-    localStorage.setItem('hotelnames', record.siteName)
-    if (text === null || text === '') {
-      message.error('暂无视频')
-    } else {
-      window.location.href = "/app/onlinevideo"
-    }
+    geisctUrl(
+      record,
+    ).then(res => {
+      console.log(text)
+      localStorage.setItem('videoid', res.data)
+      localStorage.setItem('hotelnames', record.siteName)
+      if (!res.data) {
+        message.error('暂无视频')
+      } else {
+        window.location.href = "/app/onlinevideo"
+      }
+    });
+
+
   }
 
   findlastvideo(text, record, index) {

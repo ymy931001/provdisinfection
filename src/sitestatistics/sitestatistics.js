@@ -56,8 +56,8 @@ class App extends React.Component {
           )
         }
       }, {
-        title: <Tooltip title={'消毒人员平均每次工作时长'}>
-          <span> 平均工作时长（分）</span>
+        title: <Tooltip title={'消毒人员每天累计工作时长'}>
+          <span> 累计工作时长（分）</span>
         </Tooltip>,
         dataIndex: "worktime",
         // sorter: (a, b) => (Math.ceil(a.worktime / 60) / (a.qualifiedRoomCount)) > (Math.ceil(b.worktime / 60) / (b.qualifiedRoomCount)) ? 1 : -1,
@@ -71,8 +71,8 @@ class App extends React.Component {
         }
       },
       {
-        title: <Tooltip title={'消毒柜平均每次工作时长'}>
-          <span> 平均运行时长（分）</span>
+        title: <Tooltip title={'消毒柜每天累计工作时长'}>
+          <span> 累计运行时长（分）</span>
         </Tooltip>,
         dataIndex: "runtime",
         sorter: (a, b) => a.runtime - b.runtime,
@@ -104,7 +104,7 @@ class App extends React.Component {
         title: "未达标",
         dataIndex: "unqualifiedRoomCount",
         render: (text, record, index) => {
-          if (!record.unqualifiedRooms) {
+          if (record.unqualifiedRooms) {
             if (JSON.parse(record.unqualifiedRooms).length === 0) {
               return (
                 <div>
@@ -115,11 +115,11 @@ class App extends React.Component {
               return (
                 <div>
                   <Tooltip placement="topLeft" title={JSON.parse(record.unqualifiedRooms).join(',')}>
-                    <Link to="/app/hotelvideo" >
-                      <span>
-                        <a onClick={() => this.notstandard(text, record, index)}
-                        >{text}</a></span>
-                    </Link>
+                    {/* <Link to="/app/hotelvideo" > */}
+                    <span>
+                      <a onClick={() => this.notstandard(text, record, index)}
+                      >{text}</a></span>
+                    {/* </Link> */}
                   </Tooltip>
                 </div>
               )
