@@ -254,7 +254,7 @@ class App extends React.Component {
       render: (text, record, index) => {
         return (
           <div>
-            <span onClick={() => this.openerweimacard(text, record, index)}>
+            <span onClick={() => this.openphoto(text, record, index)}>
               <a>查看</a>
             </span>
           </div>
@@ -544,6 +544,7 @@ class App extends React.Component {
       previewVisible: false,
       erweimamodels: false,
       workvisible: false,
+      xiaoduvisible: false,
     })
   }
 
@@ -1024,7 +1025,7 @@ class App extends React.Component {
             </div>
             <div className="custom-card">
               <h3 style={{ textAlign: "center", fontWeight: "700" }}>
-                设备编号  {parseInt(item.id,10) > 9 ? "0000" + item.id : "00000" + item.id}
+                设备编号  {parseInt(item.id, 10) > 9 ? "0000" + item.id : "00000" + item.id}
               </h3>
               <h3 style={{ textAlign: "center", fontWeight: "700" }}>
                 所属消毒间 {item.roomName === undefined ? "所有" : item.roomName}
@@ -1052,6 +1053,16 @@ class App extends React.Component {
       qrcodeTypeEnum: record.qrcodeTypeEnum,
     })
   }
+
+  //查看消毒柜图片
+  openphoto = (text, record, index) => {
+    console.log(record)
+    this.setState({
+      xiaoduvisible: true,
+      photo: record.photo,
+    })
+  }
+
 
 
   //删除保洁员
@@ -1232,6 +1243,19 @@ class App extends React.Component {
           </Modal>
 
           <Modal
+            title="消毒柜图片"
+            visible={this.state.xiaoduvisible}
+            // onOk={this.deleteOk}
+            width="400px"
+            // okText="删除"
+            centered
+            footer={null}
+            onCancel={this.handleCancel}
+          >
+            <img src={this.state.photo} alt="" style={{ width: '100%' }} />
+          </Modal>
+
+          <Modal
             title="健康证"
             visible={this.state.healthvisible}
             // onOk={this.deleteOk}
@@ -1289,7 +1313,7 @@ class App extends React.Component {
                     </div>
                     <div className="custom-card">
                       <p style={{ textAlign: "center", fontWeight: "700" }}>
-                        设备编号：{parseInt(this.state.cardid,10) > 9 ? "0000" + this.state.cardid : "00000" + this.state.cardid}
+                        设备编号：{parseInt(this.state.cardid, 10) > 9 ? "0000" + this.state.cardid : "00000" + this.state.cardid}
                       </p>
                       <p style={{ textAlign: "center", fontWeight: "700" }}>
                         所属消毒间：{this.state.roomname === undefined ? "所有" : this.state.roomname}

@@ -625,6 +625,12 @@ class App extends React.Component {
               arr.push(JSON.parse(res.data.data.timepairs)[i])
             }
           }
+        } else {
+          for (var j in res.data.data.timePiarsList) {
+            if ((res.data.data.timePiarsList[j].end - res.data.data.timePiarsList[j].start) > 0) {
+              arr.push(res.data.data.timePiarsList[j])
+            }
+          }
         }
         this.setState({
           historyvisible: true,
@@ -703,16 +709,16 @@ class App extends React.Component {
           if (this.state.decendingdatas != null) {
             if (this.state.decendingdatas.length != 0 && this.state.decendingdatas != null) {  //eslint-disable-line
               var newarr = []
-              for (var k in JSON.parse(res.data.data.timepairs)) {
-                var num3 = moment(JSON.parse(res.data.data.timepairs)[k].start).format('HH:mm:ss')
-                var num4 = moment(JSON.parse(res.data.data.timepairs)[k].end).format('HH:mm:ss')
+              for (var k in this.state.decendingdatas) {
+                var num3 = moment(this.state.decendingdatas[k].start).format('HH:mm:ss')
+                var num4 = moment(this.state.decendingdatas[k].end).format('HH:mm:ss')
                 newarr.push({
                   'left': ((Number(num3.split(':')[0] * 3600) + Number(num3.split(':')[1] * 60) + Number(num3.split(':')[2])) / 86400).toFixed(5) * 452 + "px",
                   'width': ((Number(num4.split(':')[0] * 3600) + Number(num4.split(':')[1] * 60) + Number(num4.split(':')[2]) -
                     Number(num3.split(':')[0] * 3600) - Number(num3.split(':')[1] * 60) - Number(num3.split(':')[2])) / 864).toFixed(1) <= 0.1 ?
                     '1px' : ((Number(num4.split(':')[0] * 3600) + Number(num4.split(':')[1] * 60) + Number(num4.split(':')[2]) -
                       Number(num3.split(':')[0] * 3600) - Number(num3.split(':')[1] * 60) - Number(num3.split(':')[2])) / 864).toFixed(1) + "%",
-                  'time': moment(JSON.parse(res.data.data.timepairs)[k].start).format('HH:mm:ss') + " ~ " + moment(JSON.parse(res.data.data.timepairs)[k].end).format('HH:mm:ss')
+                  'time': moment(this.state.decendingdatas[k].start).format('HH:mm:ss') + " ~ " + moment(this.state.decendingdatas[k].end).format('HH:mm:ss')
                 })
               }
               console.log(newarr)
