@@ -157,35 +157,35 @@ class App extends React.Component {
               timedis: 'none',
             })
           } else {
-            var arrs = []
-            console.log(this.state.readout)
-            if (this.state.readout.length > 1) {
-              for (var g = 0; g < this.state.readout.length - 1; g += 2) {
-                if ((this.state.readout[g + 1].end - this.state.readout[g].begin) < (1000 * 3600)) {
-                  if ((this.state.readout[g + 2].end - this.state.readout[g].begin) < (1000 * 3600)) {
-                    arrs.push({
-                      'begin': this.state.readout[g].begin,
-                      'end': this.state.readout[g + 2].end,
-                    })
-                  } else {
-                    arrs.push({
-                      'begin': this.state.readout[g].begin,
-                      'end': this.state.readout[g + 1].end,
-                    }, {
-                      'begin': this.state.readout[g + 2].begin,
-                      'end': this.state.readout[g + 2].end,
-                    })
-                  }
-                } else {
-                  arrs.push({
-                    'begin': this.state.readout[g + 1].begin,
-                    'end': this.state.readout[g + 1].end,
-                  })
-                }
-              }
-            } else {
-              arrs = this.state.readout
-            }
+            // var arrs = []
+            // console.log(this.state.readout)
+            // if (this.state.readout.length > 1) {
+            //   for (var g = 0; g < this.state.readout.length - 1; g += 2) {
+            //     if ((this.state.readout[g + 1].end - this.state.readout[g].begin) < (1000 * 3600)) {
+            //       if ((this.state.readout[g + 2].end - this.state.readout[g].begin) < (1000 * 3600)) {
+            //         arrs.push({
+            //           'begin': this.state.readout[g].begin,
+            //           'end': this.state.readout[g + 2].end,
+            //         })
+            //       } else {
+            //         arrs.push({
+            //           'begin': this.state.readout[g].begin,
+            //           'end': this.state.readout[g + 1].end,
+            //         }, {
+            //           'begin': this.state.readout[g + 2].begin,
+            //           'end': this.state.readout[g + 2].end,
+            //         })
+            //       }
+            //     } else {
+            //       arrs.push({
+            //         'begin': this.state.readout[g + 1].begin,
+            //         'end': this.state.readout[g + 1].end,
+            //       })
+            //     }
+            //   }
+            // } else {
+            //   arrs = this.state.readout
+            // }
 
             // for (var a in this.state.readout) {
             //   // for (var b in this.state.readout) {
@@ -197,9 +197,9 @@ class App extends React.Component {
             //   }
             //   // }
             // }
-            console.log(arrs)
+            // console.log(arrs)
             this.setState({
-              timeresult: arrs,
+              timeresult: this.state.readout,
               timedisone: 'none',
               timedis: 'inline-block',
             })
