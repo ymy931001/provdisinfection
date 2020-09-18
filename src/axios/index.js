@@ -20,7 +20,7 @@ export const getDeviceList = (params) => http.get(config.requestIp + "/directory
 
 
 //获取设备列表
-export const detectionService = (params) => http.get(config.requestIp + "/detection/vison", {
+export const detectionService = (params) => http.get(config.requestIp + "/detection/report", {
   pageNum: params[0],
   pageSize: params[1],
   siteid: params[2],
@@ -30,8 +30,10 @@ export const detectionService = (params) => http.get(config.requestIp + "/detect
   sceneid: params[6],
 });
 
+
+
 //获取设备列表
-export const newdetectionsearch = (params) => http.get(config.requestIp + "/detection/vison", {
+export const newdetectionsearch = (params) => http.get(config.requestIp + "/detection/report", {
   pageNum: params[0],
   pageSize: params[1],
   city: params[2],

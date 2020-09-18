@@ -8,7 +8,6 @@ import {
 import {
   newdetection,
   detectioncuprecord,
-  getDeviceList
 } from "../axios";
 import "./hotelplace.css";
 import moment from 'moment';
@@ -95,12 +94,6 @@ class App extends React.Component {
 
   componentWillMount() {
     document.title = "酒店消毒--监测报告";
-    getDeviceList().then(res => {
-      this.setState({
-        deviceList: res.data.data
-      })
-    });
-
     detectioncuprecord([
       localStorage.getItem('detectionId')
     ]).then(res => {
@@ -155,27 +148,62 @@ class App extends React.Component {
           worktime: parseFloat(res.data.data.worktime / 60).toFixed(2),
           runtime: parseFloat(res.data.data.runtime / 60).toFixed(2),
           roomlist: res.data.data,
-          readout: JSON.parse(res.data.data.readings),
+          readout: !res.data.data.readings ? [] : JSON.parse(res.data.data.readings),
           decendingdatas: !res.data.data.timepairs ? [] : JSON.parse(res.data.data.timepairs),
         }, function () {
-          console.log(this.state.decendingdatas)
-          this.setState({
-            timeresult: this.state.readout
-          }, function () {
-            console.log(this.state.timeresult)
-            if (this.state.timeresult.length === 0) {
-              this.setState({
-                timedisone: 'inline-block',
-                timedis: 'none',
-              })
+          if (this.state.readout.length === 0) {
+            this.setState({
+              timedisone: 'inline-block',
+              timedis: 'none',
+            })
+          } else {
+            var arrs = []
+            console.log(this.state.readout)
+            if (this.state.readout.length > 1) {
+              for (var g = 0; g < this.state.readout.length - 1; g += 2) {
+                if ((this.state.readout[g + 1].end - this.state.readout[g].begin) < (1000 * 3600)) {
+                  if ((this.state.readout[g + 2].end - this.state.readout[g].begin) < (1000 * 3600)) {
+                    arrs.push({
+                      'begin': this.state.readout[g].begin,
+                      'end': this.state.readout[g + 2].end,
+                    })
+                  } else {
+                    arrs.push({
+                      'begin': this.state.readout[g].begin,
+                      'end': this.state.readout[g + 1].end,
+                    }, {
+                      'begin': this.state.readout[g + 2].begin,
+                      'end': this.state.readout[g + 2].end,
+                    })
+                  }
+                } else {
+                  arrs.push({
+                    'begin': this.state.readout[g + 1].begin,
+                    'end': this.state.readout[g + 1].end,
+                  })
+                }
+              }
             } else {
-              this.setState({
-                timedisone: 'none',
-                timedis: 'inline-block',
-              })
+              arrs = this.state.readout
             }
-          })
-          // console.log(timearr)
+
+            // for (var a in this.state.readout) {
+            //   // for (var b in this.state.readout) {
+            //   if ((this.state.readout[a + 1].end - this.state.readout[a].begin) > (1000 * 3600)) {
+            //     arr.push({
+            //       'begin': this.state.readout[a].begin,
+            //       'end': this.state.readout[a + 1].end,
+            //     })
+            //   }
+            //   // }
+            // }
+            console.log(arrs)
+            this.setState({
+              timeresult: arrs,
+              timedisone: 'none',
+              timedis: 'inline-block',
+            })
+          }
           if (this.state.roomlist.sceneId === 2) {
             this.setState({
               cameradis: 'block',

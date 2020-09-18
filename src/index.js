@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import 'antd-mobile/dist/antd-mobile.css';
 import SignIn from "./SignIn/SignIn";
+import SignIns from "./SignIns/SignIns";
 import {
   ConfigProvider
 } from "antd";
@@ -100,6 +101,7 @@ ReactDOM.render(
     <ConfigProvider locale={zhCN}>
       <Switch>
         <Route exact path="/" component={SignIn} />
+        <Route path="/SignIns" component={SignIns} />
         <Route path="/app" component={requireAuthentication(App)} />
       </Switch>
     </ConfigProvider>

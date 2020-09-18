@@ -353,11 +353,11 @@ class App extends React.Component {
       }
     });
 
-    // detectionvison([
-    //   1192
-    // ]).then(res => {
+    detectionvison([
+      1192
+    ]).then(res => {
 
-    // })
+    })
 
     // hotellist().then(res => {
     //   var arr = []
