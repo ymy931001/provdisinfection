@@ -14,16 +14,17 @@ class SignIn extends Component {
 
   componentwillMount = () => {
     let url = window.location.href;
-    url = url.split('=', 2);
-    localStorage.setItem("authorization", url)
-    window.location.href = "http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + url;
-
+    let urls = url.split('=', 2);
+    console.log(urls)
+    localStorage.setItem("authorization", urls)
+    window.location.href = "http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + urls;
   }
   componentDidMount = () => {
     let url = window.location.href;
-    url = url.split('=', 2);
-    localStorage.setItem("authorization", url)
-    window.location.href = "http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + url;
+    let urls = url.split('=', 2);
+    console.log(urls)
+    localStorage.setItem("authorization", urls)
+    window.location.href = "http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + urls;
   };
   render() {
     return (
