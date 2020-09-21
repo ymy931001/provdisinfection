@@ -23,17 +23,18 @@ export const getDeviceList = (params) => http.get(config.requestIp + "/directory
 export const detectionService = (params) => http.get(config.requestIp + "/detection/report", {
   pageNum: params[0],
   pageSize: params[1],
-  siteid: params[2],
-  roomid: params[3],
-  start: params[4],
-  stop: params[5],
-  sceneid: params[6],
+  city: params[2],
+  area: params[3],
+  siteid: params[4],
+  start: params[5],
+  stop: params[6],
+  key: params[7],
 });
 
 
 
 //获取设备列表
-export const newdetectionsearch = (params) => http.get(config.requestIp + "/detection/report", {
+export const newdetectionsearch = (params) => http.get(config.requestIp + "/detection/vison", {
   pageNum: params[0],
   pageSize: params[1],
   city: params[2],
@@ -51,7 +52,7 @@ export const newdetection = (params) => http.get(config.requestIp + "/detection/
 });
 
 //视频检测单条记录
-export const detectionvison = (params) => http.get(config.requestIp + "/detection/vison/" + params[0], {
+export const detectionvison = (params) => http.get(config.requestIp + "/detection/vision/" + params[0], {
 
 });
 

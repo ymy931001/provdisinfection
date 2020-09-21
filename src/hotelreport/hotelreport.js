@@ -11,7 +11,7 @@ import {
 } from "antd";
 import {
   getregion,
-  newdetectionsearch
+  detectionService
 } from "../axios";
 import "./hotelreport.css";
 import moment from 'moment';
@@ -136,7 +136,7 @@ class App extends React.Component {
   }
 
   detectionService = () => {
-    newdetectionsearch([
+    detectionService([
       this.state.pageNum,
       this.state.pageNumSize,
       null,
@@ -165,7 +165,7 @@ class App extends React.Component {
     this.setState({
       keytext: text
     })
-    newdetectionsearch([
+    detectionService([
       this.state.pageNum,
       this.state.pageNumSize,
       null,
@@ -221,7 +221,7 @@ class App extends React.Component {
 
   //查询
   query = () => {
-    newdetectionsearch([
+    detectionService([
       this.state.pageNum,
       this.state.pageNumSize,
       this.state.cityid,
@@ -256,7 +256,7 @@ class App extends React.Component {
       pageNum: page,
       pageNumSize: num,
     }, function () {
-      newdetectionsearch([
+      detectionService([
         this.state.pageNum,
         this.state.pageNumSize,
         this.state.cityid,
