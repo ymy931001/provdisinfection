@@ -108,7 +108,7 @@ class App extends React.Component {
             if (JSON.parse(record.unqualifiedRooms).length === 0) {
               return (
                 <div>
-                  {text}
+                  无
                 </div>
               )
             } else {
@@ -127,7 +127,7 @@ class App extends React.Component {
           } else {
             return (
               <div>
-                {text}
+                无
               </div>
             )
           }
