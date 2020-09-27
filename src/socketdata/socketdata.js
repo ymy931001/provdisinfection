@@ -8,7 +8,7 @@ import {
   Cascader,
   DatePicker,
   Pagination,
-  Input
+  Input, message
 } from "antd";
 import {
   newdetectionsearch,
@@ -270,22 +270,32 @@ class App extends React.Component {
       record.id,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
-        this.setState({
-          historyvisible: true,
-          readout: res.data.data.readings === null ? [] : JSON.parse(res.data.data.readings)
-        }
-          , function () {
-            if (this.state.readout.length < 10) {
-              this.setState({
-                pages: false
-              })
-            } else {
-              this.setState({
-                pages: true
-              })
+        if (res.data.data.readings === undefined) {
+          message.error('暂无插座数据')
+        } else {
+          if (JSON.parse(res.data.data.readings).length === 0) {
+            message.error('暂无插座数据')
+          } else {
+            this.setState({
+              historyvisible: true,
+              readout: res.data.data.readings === null ? [] : JSON.parse(res.data.data.readings)
             }
+              , function () {
+                if (this.state.readout.length < 10) {
+                  this.setState({
+                    pages: false
+                  })
+                } else {
+                  this.setState({
+                    pages: true
+                  })
+                }
+              }
+            );
           }
-        );
+
+        }
+
       }
     })
   }

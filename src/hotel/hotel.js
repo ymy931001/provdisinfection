@@ -347,7 +347,7 @@ class App extends React.Component {
             )
           } else {
             return (
-              <div onClick={() => this.opencleanerlist(text, record, index)} style={{ color: '#1890ff' }}>
+              <div onClick={() => this.opencleanerlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
                 {text}
               </div>
             )
@@ -363,7 +363,6 @@ class App extends React.Component {
               <Tooltip title={"插座数量：" + record.boardQuantity + "个  ~ 摄像头数量：" + record.cameraQuantity + "个"}>
                 <span style={{ color: '#1890ff' }}>{record.boardQuantity + record.cameraQuantity} </span>
               </Tooltip>
-
             </div>
           )
         }
@@ -373,7 +372,7 @@ class App extends React.Component {
         dataIndex: "borard",
         render: (text, record, index) => {
           return (
-            <div onClick={() => this.openlicence(text, record, index)} style={{ color: '#1890ff' }}>
+            <div onClick={() => this.openlicence(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
               查看
             </div>
           )
@@ -384,7 +383,7 @@ class App extends React.Component {
         dataIndex: "roomQuantity",
         render: (text, record, index) => {
           return (
-            <div onClick={() => this.openroomlist(text, record, index)} style={{ color: '#1890ff' }}>
+            <div onClick={() => this.openroomlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
               查看
             </div>
           )
@@ -395,7 +394,7 @@ class App extends React.Component {
         dataIndex: "roomQuantity",
         render: (text, record, index) => {
           return (
-            <div onClick={() => this.lookerweima(text, record, index)} style={{ color: '#1890ff' }}>
+            <div onClick={() => this.lookerweima(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
               查看
             </div>
           )
@@ -1011,7 +1010,7 @@ class App extends React.Component {
   //打开选中二维码
   blurs = () => {
     console.log(this.state.selectlist)
-    if (this.state.selectlist === undefined) {
+    if (this.state.selectlist === undefined || this.state.selectlist.length === 0) {
       message.error('请勾选要生成的二维码编号')
     } else {
       const erweimalist = this.state.selectlist.map((item, i) => {

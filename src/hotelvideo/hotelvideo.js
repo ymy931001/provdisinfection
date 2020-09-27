@@ -416,7 +416,7 @@ class App extends React.Component {
           // ]).then(res => {
 
           // })
-          window.open('http://47.110.230.84:9090/download/image?zipAddress=' + res.data.data.zipAddress, '_self')
+          window.open('http://iva.terabits.cn:9090/download/image?zipAddress=' + res.data.data.zipAddress, '_self')
         } else {
           message.error('暂无图片')
         }

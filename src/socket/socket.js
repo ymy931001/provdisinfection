@@ -606,62 +606,73 @@ class App extends React.Component {
     // }]
     console.log(this.state.socketid)
     console.log(this.state.macvalue)
-    var arr = []
-    for (var i in this.state.socketid) {
-      if (this.state.macvalue === undefined || this.state.macvalue === "" || this.state.macvalue === null) {
-        arr.push({
-          "roomid": this.state.roomid,
-          "threshold": this.state.threshold,
-          "type": "3",
-          "imei": this.state.socketid[i],
-        })
-      } else {
-        arr.push({
-          "mac": this.state.macvalue.split(',')[i],
-          "roomid": this.state.roomid,
-          "threshold": this.state.threshold,
-          "type": "3",
-          "imei": this.state.socketid[i],
-        })
+    if (this.state.socketid.length === 0) {
+      message.error('请选择IMEI号')
+    } else if (!this.state.threshold) {
+      message.error('请输入额定功率')
+    } else if (!this.state.roomid) {
+      message.error('请选择所属房间')
+    } else {
+      var arr = []
+      for (var i in this.state.socketid) {
+        if (this.state.macvalue === undefined || this.state.macvalue === "" || this.state.macvalue === null) {
+          arr.push({
+            "roomid": this.state.roomid,
+            "threshold": this.state.threshold,
+            "type": "3",
+            "imei": this.state.socketid[i],
+          })
+        } else {
+          arr.push({
+            "mac": this.state.macvalue.split(',')[i],
+            "roomid": this.state.roomid,
+            "threshold": this.state.threshold,
+            "type": "3",
+            "imei": this.state.socketid[i],
+          })
+        }
       }
+
+
+
+      insertboard(
+        JSON.stringify(arr)
+      ).then(res => {
+        if (res.data && res.data.message === "success") {
+          message.success('添加成功')
+          boardlists([
+
+          ]).then(res => {
+            if (res.data && res.data.message === "success") {
+              console.log(res.data.data)
+              localStorage.removeItem('roomid')
+              this.setState({
+                userlist: res.data.data
+              }, function () {
+                console.log(this.state.userlist)
+                if (res.data.data.length < 10) {
+                  this.setState({
+                    page: false
+                  })
+                } else {
+                  this.setState({
+                    page: true
+                  })
+                }
+              });
+            }
+          });
+          this.setState({
+            visible: false,
+          })
+        }
+        if (res.data && res.data.code === -1) {
+          message.error(res.data.data)
+        }
+
+      });
     }
 
-    insertboard(
-      JSON.stringify(arr)
-    ).then(res => {
-      if (res.data && res.data.message === "success") {
-        message.success('添加成功')
-        boardlists([
-
-        ]).then(res => {
-          if (res.data && res.data.message === "success") {
-            console.log(res.data.data)
-            localStorage.removeItem('roomid')
-            this.setState({
-              userlist: res.data.data
-            }, function () {
-              console.log(this.state.userlist)
-              if (res.data.data.length < 10) {
-                this.setState({
-                  page: false
-                })
-              } else {
-                this.setState({
-                  page: true
-                })
-              }
-            });
-          }
-        });
-        this.setState({
-          visible: false,
-        })
-      }
-      if (res.data && res.data.code === -1) {
-        message.error(res.data.data)
-      }
-
-    });
   }
 
   //额定功率填写

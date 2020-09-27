@@ -173,10 +173,18 @@ class App extends React.Component {
   handleCancel = () => {
     this.setState({
       visible: false,
-      menuvisible: false,
       deletevisible: false,
     })
   }
+
+  //关闭model
+  handleCancels = () => {
+    this.setState({
+      menuvisible: false,
+    })
+  }
+
+
 
   //打开添加弹窗
   addthirdparty = () => {
@@ -449,7 +457,7 @@ class App extends React.Component {
                     placeholder="请选择推送内容"
                     mode="multiple"
                     onChange={this.handleChanges}
-                    // defaultValue={JSON.parse(text)}
+                  // defaultValue={JSON.parse(text)}
                   >
                     {prooptions}
                   </Select>
@@ -641,7 +649,7 @@ class App extends React.Component {
             title="选择统计区域"
             visible={this.state.menuvisible}
             onOk={this.saveOk}
-            onCancel={this.handleCancel}
+            onCancel={this.handleCancels}
             okText="保存"
             // centered
             mask={false}

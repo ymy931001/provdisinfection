@@ -149,61 +149,13 @@ class App extends React.Component {
           runtime: parseFloat(res.data.data.runtime / 60).toFixed(2),
           roomlist: res.data.data,
           readout: !res.data.data.readings ? [] : JSON.parse(res.data.data.readings),
+          readouts: !res.data.data.readings ? [] : JSON.parse(res.data.data.readings),
           decendingdatas: !res.data.data.timepairs ? [] : JSON.parse(res.data.data.timepairs),
         }, function () {
-          if (this.state.readout.length === 0) {
-            this.setState({
-              timedisone: 'inline-block',
-              timedis: 'none',
-            })
-          } else {
-            // var arrs = []
-            // console.log(this.state.readout)
-            // if (this.state.readout.length > 1) {
-            //   for (var g = 0; g < this.state.readout.length - 1; g += 2) {
-            //     if ((this.state.readout[g + 1].end - this.state.readout[g].begin) < (1000 * 3600)) {
-            //       if ((this.state.readout[g + 2].end - this.state.readout[g].begin) < (1000 * 3600)) {
-            //         arrs.push({
-            //           'begin': this.state.readout[g].begin,
-            //           'end': this.state.readout[g + 2].end,
-            //         })
-            //       } else {
-            //         arrs.push({
-            //           'begin': this.state.readout[g].begin,
-            //           'end': this.state.readout[g + 1].end,
-            //         }, {
-            //           'begin': this.state.readout[g + 2].begin,
-            //           'end': this.state.readout[g + 2].end,
-            //         })
-            //       }
-            //     } else {
-            //       arrs.push({
-            //         'begin': this.state.readout[g + 1].begin,
-            //         'end': this.state.readout[g + 1].end,
-            //       })
-            //     }
-            //   }
-            // } else {
-            //   arrs = this.state.readout
-            // }
 
-            // for (var a in this.state.readout) {
-            //   // for (var b in this.state.readout) {
-            //   if ((this.state.readout[a + 1].end - this.state.readout[a].begin) > (1000 * 3600)) {
-            //     arr.push({
-            //       'begin': this.state.readout[a].begin,
-            //       'end': this.state.readout[a + 1].end,
-            //     })
-            //   }
-            //   // }
-            // }
-            // console.log(arrs)
-            this.setState({
-              timeresult: this.state.readout,
-              timedisone: 'none',
-              timedis: 'inline-block',
-            })
-          }
+          // this.readoutlist()
+          this.initialize = setInterval(() => this.readoutlist(), 0);
+
           if (this.state.roomlist.sceneId === 2) {
             this.setState({
               cameradis: 'block',
@@ -344,6 +296,53 @@ class App extends React.Component {
     })
   }
 
+
+  readoutlist = () => {
+    this.setState({
+      listlength: this.state.readouts.length
+    }, function () {
+      if (this.state.readout.length === 0) {
+        this.setState({
+          timedisone: 'inline-block',
+          timedis: 'none',
+        })
+      } else {
+        var arrs = []
+        if (this.state.readouts.length > 1) {
+          for (var g = 0; g < this.state.readouts.length - 1; g++) {
+            if (Math.abs((this.state.readouts[g + 1].begin - this.state.readouts[g].end)) < (1000 * 3600)) {
+              arrs.push({
+                'begin': this.state.readouts[g].begin,
+                'end': this.state.readouts[g + 1].end,
+              })
+            } else {
+              arrs.push({
+                'begin': this.state.readouts[g].begin,
+                'end': this.state.readouts[g].end,
+              })
+            }
+          }
+        } else {
+          arrs = this.state.readouts
+        }
+        this.setState({
+          readouts: arrs,
+
+          timedisone: 'none',
+          timedis: 'inline-block',
+        }, function () {
+          if (this.state.readouts.length === this.state.listlength) {
+            clearInterval(this.initialize)
+            this.setState({
+              timeresult: arrs,
+            })
+          } else {
+
+          }
+        })
+      }
+    })
+  }
 
   render() {
     const time1line = this.state.time1list.map((province) =>
