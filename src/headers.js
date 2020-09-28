@@ -96,15 +96,15 @@ class Headers extends Component {
             <div style={{ textAlign: 'center', height: '64px', display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{
                     lineHeight: '50px', height: '50px',
-                    color: 'rgb(255, 106, 0)', fontSize: "14px",borderRadius: '5px',
-                    marginLeft: "1%", marginRight: '1%', marginTop: "6px", display: 'flex', alignItems: 'center'
+                    color: 'white', fontSize: "25px", borderRadius: '5px',
+                    marginLeft: "1%", marginRight: '10px', marginTop: "6px", display: 'flex', alignItems: 'center'
                 }}>
-                    <img src={require('./logo666.png')} alt="" style={{ float: 'left', width: '70%' }} />
+                    <img src={require('./logo666.png')} alt="" style={{ marginRight: '20px' }} /> 浙江省住宿场所消毒保洁智能监管平台
                 </div>
                 <div style={{ marginRight: "20px", float: 'right', height: '64px', display: 'flex', alignItems: 'center', fontSize: '14px' }}>
                     <div style={{ textAlign: 'right' }}>
                         <span style={{ fontSize: '16x', display: 'inline-block', height: '56px' }}>欢迎您，</span>
-                        <Avatar icon="user" style={{ marginRight: '10px' ,marginBottom:'10px'}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <Avatar icon="user" style={{ marginRight: '10px', marginBottom: '10px' }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                         <span style={{ marginRight: '10px' }}>
                             {/* <Icon type="user" style={{ marginRight: '5px' }} /> */}
                             {localStorage.getItem("userID")}
