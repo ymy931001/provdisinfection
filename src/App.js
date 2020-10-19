@@ -71,10 +71,11 @@ const SubMenu = Menu.SubMenu;
 
 
 class App extends Component {
+  rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub6', 'sub7', 'sub10', 'sub11'];
+
   state = {
     // collapsed: true,
     mode: "inline",
-    openKey: "",
     usertypenone: 'block',
     disnone: "none",
     data1: [],
@@ -83,6 +84,7 @@ class App extends Component {
     data4: [],
     data5: [],
     data6: [],
+    openKeys: [localStorage.getItem("menuline")],
     // firstHide: false // 点击收缩菜单，第一次隐藏展开子菜单，openMenu时恢复
   };
 
@@ -144,10 +146,23 @@ class App extends Component {
   }
 
   menuClick = e => {
+    console.log(e)
     localStorage.setItem("menuid", e.key)
+    localStorage.setItem("menuline", e.keyPath[1])
+
   };
 
 
+  onOpenChange = openKeys => {
+    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      this.setState({ openKeys });
+    } else {
+      this.setState({
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
+      });
+    }
+  };
 
   render() {
     const powers1 = this.state.data1.map((province, id) => <Menu.Item key={province.id}><Link to={province.path}>
@@ -176,16 +191,15 @@ class App extends Component {
           </Header>
           <Layout>
             <Sider
-              onMouseEnter={this.mouseenter}
-              onMouseLeave={this.onmouseleave}
               collapsed={this.state.collapsed}
               style={{ display: this.state.mobiledis }}
             >
               <Menu theme="dark"
                 onClick={this.menuClick}
                 mode="inline"
-                defaultSelectedKeys={['0']}
-
+                defaultSelectedKeys={['85']}
+                openKeys={this.state.openKeys}
+                onOpenChange={this.onOpenChange}
                 selectedKeys={[localStorage.getItem("menuid")]}
               >
                 <Menu.Item key="0"

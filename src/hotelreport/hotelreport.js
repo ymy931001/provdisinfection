@@ -399,6 +399,7 @@ class App extends React.Component {
                   onChange={this.pagechange}
                   total={this.state.total}
                   hideOnSinglePage={true}
+                  current={this.state.pageNum}
                 />
               </div>
             </Card>
