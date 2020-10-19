@@ -1238,7 +1238,10 @@ class App extends React.Component {
             footer={null}
             onCancel={this.handleCancel}
           >
-            <img src={this.state.xukeimg} alt="" style={{ width: '100%' }} />
+
+
+            <img src="http://home.terabits.cn/59b6362c7510266ded40740d0a33923.png" alt="" style={{ width: '100%' }} />
+            {/* <img src={this.state.xukeimg} alt="" style={{ width: '100%' }} /> */}
           </Modal>
 
           <Modal

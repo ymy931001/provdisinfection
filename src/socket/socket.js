@@ -662,8 +662,27 @@ class App extends React.Component {
               });
             }
           });
+
+          andsmartdevice([
+          ]).then(res => {
+            if (res.data && res.data.resultMessage === "success") {
+              var arr = []
+              for (var i in res.data.data) {
+                arr.push({
+                  "name": res.data.data[i].deviceName,
+                  "imei": res.data.data[i].imei,
+                  "id": res.data.data[i].socketId
+                })
+              }
+              console.log(arr)
+              this.setState({
+                devicelists: arr
+              })
+            }
+          });
           this.setState({
             visible: false,
+            socketid: []
           })
         }
         if (res.data && res.data.code === -1) {

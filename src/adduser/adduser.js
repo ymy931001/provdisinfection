@@ -172,9 +172,10 @@ class App extends React.Component {
           setTimeout(() => {
             window.location.href = "/app/user";
           }, 1000);
-        }
-        if (res.data && res.data.code === 1222) {
+        } else if (res.data && res.data.code === 1222) {
           message.error('该用户名已存在，请重新输入')
+        } else {
+          message.error(res.data.data)
         }
       });
     }

@@ -42,6 +42,7 @@ class App extends React.Component {
       arealist: [],
       iscplatform: [],
       iscplatformid: '',
+      activationvalue: null,
       treeData: [],
       xukeimg: 'http://disimg.terabits.cn/timg.jpg'
     };
@@ -115,7 +116,7 @@ class App extends React.Component {
       message.error('请输入负责人电话')
     } else if (!this.state.regionCode) {
       message.error('请选择所属区域')
-    } else if (!this.state.activationvalue) {
+    } else if (this.state.activationvalue === null) {
       message.error('请选择杯具管理功能')
     } else if (!this.state.completename) {
       message.error('请输入酒店全称')

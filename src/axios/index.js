@@ -1071,8 +1071,8 @@ export const addisc = params =>
   http.post(config.requestIp + "/isc", {
     name: params[0],
     host: params[1],
-    appSecret: params[2],
-    appKey: params[3],
+    appsecret: params[2],
+    appkey: params[3],
   });
 
 

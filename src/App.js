@@ -93,7 +93,7 @@ class App extends Component {
 
   }
   componentDidMount() {
-    if (localStorage.getItem("userID") === 'lsadmin') {
+    if (localStorage.getItem("type") !== '1') {
       this.setState({
         lsdis: 'none',
       })
@@ -203,7 +203,6 @@ class App extends Component {
                 selectedKeys={[localStorage.getItem("menuid")]}
               >
                 <Menu.Item key="0"
-                  style={{ display: this.state.lsdis }}
                 >
                   <a href={"http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + localStorage.getItem('authorization')} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
                     <Icon type="dashboard" /><span>仪表盘</span>
@@ -219,7 +218,7 @@ class App extends Component {
                       <span>运行概览</span>
                     </span>
                   }
-                  style={{ display: this.state.lsdis }}
+                  // style={{ display: this.state.lsdis }}
                 >
                   <Menu.Item key="100"
                   >
@@ -476,6 +475,7 @@ class App extends Component {
 
 
                 <Menu.Item key="59"
+                  style={{ display: this.state.lsdis }}
                 >
                   <Link to="/app/examine">
                     <PushpinOutlined />
