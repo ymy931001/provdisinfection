@@ -282,6 +282,7 @@ class App extends React.Component {
 
 
 
+
     this.nodeInfoTableColumns = [
       {
         title: "酒店名称",
@@ -499,7 +500,7 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          sitelist: res.data.data
+          sitelist: res.data.data,
         }, function () {
           if (res.data.data.length < 10) {
             this.setState({
@@ -853,7 +854,7 @@ class App extends React.Component {
             })
           }
         });
-      }
+      } 
     });
   }
 

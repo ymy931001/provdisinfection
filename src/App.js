@@ -117,7 +117,7 @@ class App extends Component {
             if (arrs[i].id === 89 || arrs[i].id === 90 || arrs[i].id === 91 || arrs[i].id === 92 || arrs[i].id === 93 || arrs[i].id === 97) {
               data2.push(arrs[i])
             }
-            if (arrs[i].id === 4 || arrs[i].id === 9 || arrs[i].id === 14 || arrs[i].id === 15 || arrs[i].id === 16) {
+            if (arrs[i].id === 4 || arrs[i].id === 9 || arrs[i].id === 15 || arrs[i].id === 16) {
               data3.push(arrs[i])
             }
             if (arrs[i].id === 6 || arrs[i].id === 7) {
