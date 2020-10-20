@@ -143,14 +143,14 @@ class App extends React.Component {
       if (res.data && res.data.message === "success") {
         this.setState({
           timelist: !res.data.data.readings ? [] : JSON.parse(res.data.data.readings),
-          timelist1: !res.data.data.timepairs ? [] : JSON.parse(res.data.data.timepairs),
+          timelist1: !res.data.data.timepairs ? (!res.data.data.timePiarsList ? [] : res.data.data.timePiarsList) : JSON.parse(res.data.data.timepairs),
           detection: res.data.data,
           worktime: parseFloat(res.data.data.worktime / 60).toFixed(2),
           runtime: parseFloat(res.data.data.runtime / 60).toFixed(2),
           roomlist: res.data.data,
           readout: !res.data.data.readings ? [] : JSON.parse(res.data.data.readings),
           readouts: !res.data.data.readings ? [] : JSON.parse(res.data.data.readings),
-          decendingdatas: !res.data.data.timepairs ? [] : JSON.parse(res.data.data.timepairs),
+          decendingdatas: !res.data.data.timepairs ? (!res.data.data.timePiarsList ? [] : res.data.data.timePiarsList) : JSON.parse(res.data.data.timepairs),
         }, function () {
 
           // this.readoutlist()
