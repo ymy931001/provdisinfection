@@ -221,132 +221,199 @@ class App extends React.Component {
       }
     ];
 
-    this.nodeInfoTableColumns = [
-      {
-        title: "设备ID",
-        dataIndex: "id",
-        key: 'roomName',
-      }, {
-        title: "单位名称",
-        dataIndex: "siteName",
-        key: 'siteName',
-      }, {
-        title: "设备位置",
-        dataIndex: "roomName",
-        key: 'roomName',
-      },
-      {
-        title: "联网状态",
-        dataIndex: "onlinestatus",
-        key: 'onlinestatus',
-        render: (text, record, index) => {
-          if (text === true) {
+    if (localStorage.getItem("type") === "2" || localStorage.getItem("type") === "3") {
+      this.nodeInfoTableColumns = [
+        {
+          title: "设备ID",
+          dataIndex: "id",
+          key: 'roomName',
+        }, {
+          title: "单位名称",
+          dataIndex: "siteName",
+          key: 'siteName',
+        }, {
+          title: "设备位置",
+          dataIndex: "roomName",
+          key: 'roomName',
+        },
+        {
+          title: "联网状态",
+          dataIndex: "onlinestatus",
+          key: 'onlinestatus',
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a onClick={() => this.showonline(text, record, index)} style={{ color: '#08c04d' }}
+                  > <span className="circle"></span> 在线</a>
+                </div>
+              )
+            }
+            if (text === false) {
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a onClick={() => this.showonline(text, record, index)} style={{ color: '#e72e2e' }}
+                  ><span className="circle1"></span> 离线</a>
+                </div>
+              )
+            }
+          }
+        }, {
+          title: "实时画面",
+          dataIndex: "streams",
+          key: 'streams',
+          render: (text, record, index) => {
+            if (record.onlinestatus === true) {
+              return (
+                <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                  查看
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                  暂无
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "添加时间",
+          dataIndex: "gmtcreate",
+          key: 'gmtcreate',
+        }
+      ];
+    } else {
+      this.nodeInfoTableColumns = [
+        {
+          title: "设备ID",
+          dataIndex: "id",
+          key: 'roomName',
+        }, {
+          title: "单位名称",
+          dataIndex: "siteName",
+          key: 'siteName',
+        }, {
+          title: "设备位置",
+          dataIndex: "roomName",
+          key: 'roomName',
+        },
+        {
+          title: "联网状态",
+          dataIndex: "onlinestatus",
+          key: 'onlinestatus',
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a onClick={() => this.showonline(text, record, index)} style={{ color: '#08c04d' }}
+                  > <span className="circle"></span> 在线</a>
+                </div>
+              )
+            }
+            if (text === false) {
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a onClick={() => this.showonline(text, record, index)} style={{ color: '#e72e2e' }}
+                  ><span className="circle1"></span> 离线</a>
+                </div>
+              )
+            }
+          }
+        }, {
+          title: "实时画面",
+          dataIndex: "streams",
+          key: 'streams',
+          render: (text, record, index) => {
+            if (record.onlinestatus === true) {
+              return (
+                <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                  查看
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                  暂无
+                </div>
+              )
+            }
+          }
+        }
+        , {
+          title: "参数设置",
+          dataIndex: "cover",
+          key: 'roomId',
+          render: (text, record, index) => {
             return (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <a onClick={() => this.showonline(text, record, index)} style={{ color: '#08c04d' }}
-                > <span className="circle"></span> 在线</a>
+              <div style={{ color: this.state.typecolor, cursor: 'pointer' }} onClick={() => this.parameter(text, record, index)}>
+                <span>查看</span>
               </div>
             )
           }
-          if (text === false) {
+        },
+        //  {
+        //   title: "插座绑定",
+        //   dataIndex: "id",
+        //   render: (text, record, index) => {
+        //     return (
+        //       <div onClick={() => this.socket(text, record, index)} style={{ color: this.state.typecolor, cursor: 'pointer' }} >
+        //         添加
+        //       </div>
+        //     )
+        //   }
+        // },
+        {
+          title: "添加时间",
+          dataIndex: "gmtcreate",
+          key: 'gmtcreate',
+        },
+        {
+          title: '操作',
+          dataIndex: 'id',
+          key: 'id',
+          render: (text, record, index) => {
+            // const editable = this.isEditing(record);
             return (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <a onClick={() => this.showonline(text, record, index)} style={{ color: '#e72e2e' }}
-                ><span className="circle1"></span> 离线</a>
-              </div>
-            )
-          }
-        }
-      }, {
-        title: "实时画面",
-        dataIndex: "streams",
-        key: 'streams',
-        render: (text, record, index) => {
-          if (record.onlinestatus === true) {
-            return (
-              <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                查看
-              </div>
-            )
-          } else {
-            return (
-              <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                暂无
-              </div>
-            )
-          }
-        }
-      }
-      , {
-        title: "参数设置",
-        dataIndex: "cover",
-        key: 'roomId',
-        render: (text, record, index) => {
-          return (
-            <div style={{ color: this.state.typecolor, cursor: 'pointer' }} onClick={() => this.parameter(text, record, index)}>
-              <span>查看</span>
-            </div>
-          )
-        }
-      },
-      //  {
-      //   title: "插座绑定",
-      //   dataIndex: "id",
-      //   render: (text, record, index) => {
-      //     return (
-      //       <div onClick={() => this.socket(text, record, index)} style={{ color: this.state.typecolor, cursor: 'pointer' }} >
-      //         添加
-      //       </div>
-      //     )
-      //   }
-      // },
-      {
-        title: "添加时间",
-        dataIndex: "gmtcreate",
-        key: 'gmtcreate',
-      },
-      {
-        title: '操作',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record, index) => {
-          // const editable = this.isEditing(record);
-          return (
-            <div>
-              {/* {editable ? (
-                <span>
-                  <EditableContext.Consumer>
-                    {form => (
-                      <a
-
-                        onClick={() => this.save(form, record.key, text)}
-                        style={{ marginRight: 8 }}
-                      >
-                        保存
-                      </a>
-                    )}
-                  </EditableContext.Consumer>
-                  <Popconfirm
-                    title="确认要取消吗?"
-                    onConfirm={() => this.cancel(record.key, text)}
-                  >
-                    <a>取消</a>
-                  </Popconfirm>
+              <div>
+                {/* {editable ? (
+                  <span>
+                    <EditableContext.Consumer>
+                      {form => (
+                        <a
+  
+                          onClick={() => this.save(form, record.key, text)}
+                          style={{ marginRight: 8 }}
+                        >
+                          保存
+                        </a>
+                      )}
+                    </EditableContext.Consumer>
+                    <Popconfirm
+                      title="确认要取消吗?"
+                      onConfirm={() => this.cancel(record.key, text)}
+                    >
+                      <a>取消</a>
+                    </Popconfirm>
+                  </span>
+                ) : (
+                    <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
+                  )} */}
+                {/* <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
+                  <a><img src={require('./edit.png')} alt="" /></a>
+                </span> */}
+                <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
+                  <a><img src={require('./delete.png')} alt="" /></a>
                 </span>
-              ) : (
-                  <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
-                )} */}
-              {/* <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
-                <a><img src={require('./edit.png')} alt="" /></a>
-              </span> */}
-              <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
-                <a><img src={require('./delete.png')} alt="" /></a>
-              </span>
-            </div>
-          );
+              </div>
+            );
+          }
         }
-      }
-    ];
+      ];
+    }
+
+
   }
 
   componentWillMount() {
