@@ -288,6 +288,9 @@ export const putsite = params =>
 export const sitelist = params =>
   http.get(config.requestIp + "/site", {
     key: params[0],
+    city: params[1],
+    area: params[2],
+    siteid: params[3],
   });
 
 //网点列表

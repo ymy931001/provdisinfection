@@ -14,7 +14,7 @@ import {
   Row, Col,
   Icon,
   Upload, Radio,
-  Tooltip,
+  Tooltip, Cascader
 } from "antd";
 import {
   cleanerlist,
@@ -25,7 +25,7 @@ import {
   deletesite,
   getsterilizer,
   bindQRcode,
-  deletecleaner
+  deletecleaner, getregion
 } from "../axios";
 import "./hotel.css";
 import QRCode from 'qrcode-react';
@@ -404,6 +404,11 @@ class App extends React.Component {
       {
         title: "杯具管理功能",
         dataIndex: "ifHasCup",
+        filters: [
+          { text: "有", value: true },
+          { text: "无", value: false },
+        ],
+        onFilter: (value, record) => record.ifHasCup == value,  //eslint-disable-line 
         render: (text, record, index) => {
           if (text === true) {
             return (
@@ -525,7 +530,30 @@ class App extends React.Component {
       }
     });
 
+
+    getregion().then(res => {
+      if (res.data && res.data.message === "success") {
+        console.log(res.data.data[0].children[0].children[0].children[0].children.length)
+        for (var i in res.data.data[0].children) {
+          for (var j in res.data.data[0].children[i].children) {
+            for (var k in res.data.data[0].children[i].children[j].children) {
+              if (res.data.data[0].children[i].children[j].children[k].children.length === 0) {
+                res.data.data[0].children[i].children[j].children[k].adcode = res.data.data[0].children[i].children[j].children[k].id
+                res.data.data[0].children[i].children[j].children[k].children = undefined
+              }
+            }
+          }
+        }
+        this.setState({
+          deviceLists: res.data.data[0].children
+        })
+      }
+    });
+
+
   }
+
+
 
 
   onChange = (date, dateString) => {
@@ -685,18 +713,6 @@ class App extends React.Component {
       }
     });
   }
-  //区域地址
-  addresschange = (e) => {
-    console.log(e)
-    this.setState({
-      addresschange: e.target.value
-    })
-    // this.setState({
-    //   provinceId: e[0] === undefined ? null : e[0],
-    //   cityId: e[1] === undefined ? null : e[1],
-    //   districtId: e[2] === undefined ? null : e[2],
-    // })
-  }
 
   //区域联系人电话
   telphone = (e) => {
@@ -744,7 +760,10 @@ class App extends React.Component {
   onsearch = () => {
     console.log(111)
     sitelist([
-      this.state.searchname
+      this.state.searchname,
+      this.state.cityid,
+      this.state.areaid,
+      this.state.siteId
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -855,7 +874,7 @@ class App extends React.Component {
             })
           }
         });
-      } 
+      }
     });
   }
 
@@ -1101,6 +1120,18 @@ class App extends React.Component {
     });
   }
 
+  //设备位置选择
+  addresschange = (e) => {
+    console.log(e)
+    this.setState({
+      addresslist: e,
+      cityid: e[0] === undefined ? null : e[0],
+      areaid: e[1] === undefined ? null : e[1],
+      siteId: e[2] === undefined ? null : e[2]
+    });
+  }
+
+
 
   render() {
     const components = {
@@ -1203,6 +1234,16 @@ class App extends React.Component {
                   </Button> */}
                 </div>}>
               <div>
+                &nbsp;&nbsp;&nbsp;设备位置&nbsp;: &nbsp;&nbsp;&nbsp;
+                <Cascader
+                  fieldNames={{ label: 'name', value: 'adcode' }}
+                  options={this.state.deviceLists}
+                  onChange={this.addresschange}
+
+                  value={this.state.addresslist}
+                  changeOnSelect
+                  style={{ width: "350px", marginRight: '20px' }}
+                  placeholder="选择酒店" />
                 <Search placeholder="搜索单位名称" onSearch={this.onsearch}
                   onChange={this.searchname}
                   value={this.state.searchname}
