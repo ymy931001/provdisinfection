@@ -545,6 +545,7 @@ class App extends React.Component {
       erweimamodels: false,
       workvisible: false,
       xiaoduvisible: false,
+      deleteclear: false,
     })
   }
 
@@ -794,11 +795,11 @@ class App extends React.Component {
         }, function () {
           if (res.data.data.length < 10) {
             this.setState({
-              page: false
+              clearpage: false
             })
           } else {
             this.setState({
-              page: true
+              clearpage: true
             })
           }
         });
@@ -1355,6 +1356,7 @@ class App extends React.Component {
                 dataSource={this.state.cleanerdata}
                 columns={cleanercolumn}
                 components={components}
+                pagination={this.state.clearpage}
                 bordered
               />
             </div>

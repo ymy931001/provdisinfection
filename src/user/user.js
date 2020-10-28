@@ -986,7 +986,7 @@ class App extends React.Component {
                       dataSource={this.state.userlist}
                       components={components}
                       columns={nodeInfoTableColumns}
-                      pagination={this.state.page}
+                      // pagination={this.state.page}
                     />
                   </div>
                 </TabPane>
@@ -996,7 +996,7 @@ class App extends React.Component {
                       dataSource={this.state.areauserlist}
                       components={components}
                       columns={areaColumns}
-                      pagination={this.state.page}
+                      // pagination={this.state.page}
                     />
                   </div>
                 </TabPane>
@@ -1006,7 +1006,7 @@ class App extends React.Component {
                       dataSource={this.state.hoteluserlist}
                       components={components}
                       columns={hotelColumns}
-                      pagination={this.state.page}
+                      // pagination={this.state.page}
                     />
                   </div>
                 </TabPane>
