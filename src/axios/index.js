@@ -213,6 +213,16 @@ export const putuser = params =>
     remark: params[5],
   });
 
+//修改酒店管理员
+export const puthoteluser = params =>
+  http.put(config.requestIp + "/admin", {
+    id: params[0],
+    name: params[1],
+    phone: params[2],
+    mail: params[3],
+  });
+
+
 
 //修改用户
 export const deleteuser = params =>

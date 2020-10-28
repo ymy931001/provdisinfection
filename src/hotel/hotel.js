@@ -578,7 +578,7 @@ class App extends React.Component {
         if (res.data && res.data.message === "success") {
           message.success('添加成功')
           cleanerlist([
-            localStorage.getItem('hotelid')
+            this.state.siteid
           ]).then(res => {
             if (res.data && res.data.message === "success") {
               this.setState({
@@ -586,11 +586,11 @@ class App extends React.Component {
               }, function () {
                 if (res.data.data.length < 10) {
                   this.setState({
-                    page: false
+                    clearpage: false
                   })
                 } else {
                   this.setState({
-                    page: true
+                    clearpage: true
                   })
                 }
               });

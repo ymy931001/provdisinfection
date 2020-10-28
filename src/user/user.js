@@ -25,7 +25,8 @@ import {
   getAdminAreas,
   getallRegion,
   putuser,
-  deleteuser
+  deleteuser,
+  puthoteluser
 } from "../axios";
 import "./user.css";
 import { Link } from 'react-router-dom';
@@ -476,6 +477,58 @@ class App extends React.Component {
     });
   }
 
+  //酒店管理员编辑
+  saves(form, key, text) {
+    form.validateFields((error, row) => {
+      if (error) {
+        return;
+      }
+      const newData = [...this.state.hoteluserlist];
+      const index = newData.findIndex(item => key === item.key);
+      console.log(newData[index])
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, {
+          ...item,
+          ...row,
+        });
+        this.setState({
+          hoteluserlist: newData, editingKey: '',
+          adminname: newData[index].name,
+          username: newData[index].username,
+          phone: newData[index].phone,
+          password: newData[index].password,
+          mail: newData[index].mail,
+        }, () => {
+          puthoteluser([
+            this.state.userid,
+            this.state.adminname,
+            this.state.phone,
+            this.state.mail,
+          ]).then(res => {
+            if (res.data && res.data.message === 'success') {
+              message.success("信息修改成功");
+              userlist([
+                4
+              ]).then(res => {
+                if (res.data && res.data.message === 'success') {
+                  this.setState({
+                    hoteluserlist: res.data.data,
+                  });
+                }
+              });
+            }
+          });
+
+        });
+
+      } else {
+        newData.push(this.state.areauserlist);
+        this.setState({ areauserlist: newData, editingKey: '' });
+      }
+    });
+  }
+
 
   renderTreeNodes = (data) => {
     return data.map((item) => {
@@ -729,7 +782,7 @@ class App extends React.Component {
       //     }
       //   }
       // }
-      
+
       {
         title: "管辖区域",
         dataIndex: "areaId",
@@ -884,7 +937,7 @@ class App extends React.Component {
                     {form => (
                       <a
 
-                        onClick={() => this.save(form, record.key, text)}
+                        onClick={() => this.saves(form, record.key, text)}
                         style={{ marginRight: 8 }}
                       >
                         保存
@@ -986,7 +1039,7 @@ class App extends React.Component {
                       dataSource={this.state.userlist}
                       components={components}
                       columns={nodeInfoTableColumns}
-                      // pagination={this.state.page}
+                    // pagination={this.state.page}
                     />
                   </div>
                 </TabPane>
@@ -996,7 +1049,7 @@ class App extends React.Component {
                       dataSource={this.state.areauserlist}
                       components={components}
                       columns={areaColumns}
-                      // pagination={this.state.page}
+                    // pagination={this.state.page}
                     />
                   </div>
                 </TabPane>
@@ -1006,7 +1059,7 @@ class App extends React.Component {
                       dataSource={this.state.hoteluserlist}
                       components={components}
                       columns={hotelColumns}
-                      // pagination={this.state.page}
+                    // pagination={this.state.page}
                     />
                   </div>
                 </TabPane>
