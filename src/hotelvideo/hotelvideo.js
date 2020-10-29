@@ -13,7 +13,7 @@ import {
   Tooltip
 } from "antd";
 import {
-  newdetection,
+  // newdetection,
   imageExist,
   getchaincode,
   newdetectionsearch,
@@ -586,8 +586,8 @@ class App extends React.Component {
 
   query = () => {
     newdetectionsearch([
-      this.state.pageNum,
-      this.state.pageNumSize,
+      1,
+      10,
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
@@ -604,6 +604,7 @@ class App extends React.Component {
           this.setState({
             videoListDataSource: res.data.data.detectionVOList,
             total: res.data.data.total,
+            pageNum: 1,
           })
         }
       }
@@ -614,7 +615,7 @@ class App extends React.Component {
   state = { historyvisible: false }
   showhistory = (text, record, index) => {
     console.log(record)
-    newdetection([
+    detectionvison([
       record.id
     ]).then(res => {
       if (res.data && res.data.message === "success") {

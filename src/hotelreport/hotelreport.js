@@ -222,8 +222,8 @@ class App extends React.Component {
   //查询
   query = () => {
     detectionService([
-      this.state.pageNum,
-      this.state.pageNumSize,
+      1,
+      10,
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
@@ -240,6 +240,7 @@ class App extends React.Component {
           this.setState({
             videoListDataSource: res.data.data.detectionVOList,
             total: res.data.data.total,
+            pageNum: 1,
           })
         }
       }
