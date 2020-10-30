@@ -63,33 +63,33 @@ class App extends React.Component {
     this.rankcolumns = [
       {
         title: "排序",
-        dataIndex: "aNum",
+        dataIndex: "pm",
         render: (text, record, index) => {
-          if (index === 0) {
+          if (text === 1) {
             return (
               <div className="firsttitle">
-                <span className="firstcircle"> {index + 1}</span>
+                <span className="firstcircle"> {text}</span>
               </div>
             )
           }
-          else if (index === 1) {
+          else if (text === 2) {
             return (
               <div className="firsttitle">
-                <span className="twocircle"> {index + 1}</span>
+                <span className="twocircle"> {text}</span>
               </div>
             )
           }
-          else if (index === 2) {
+          else if (text === 2) {
             return (
               <div className="firsttitle">
-                <span className="threecircle"> {index + 1}</span>
+                <span className="threecircle"> {text}</span>
               </div>
             )
           }
           else {
             return (
               <div className="firsttitle">
-                <span className="othercircle"> {index + 1}</span>
+                <span className="othercircle"> {text}</span>
               </div>
             )
           }
@@ -510,6 +510,7 @@ class App extends React.Component {
           var arr2 = []
           var arr4 = []
           var arr5 = []
+
           for (var i in this.state.datelist) {
             if (this.state.datelist[i].housekeeping != undefined) { //eslint-disable-line
               arr.push(this.state.datelist[i])
@@ -547,14 +548,6 @@ class App extends React.Component {
           for (var c in arr2) {
             arr2[c].pm = parseInt(c, 10) + 1
           }
-
-          // arr3.sort(function (a, b) {
-          //   return a.worktime < b.worktime ? 1 : -1
-          // })
-          // for (var d in arr3) {
-          //   arr3[c].pm = parseInt(d, 10) + 1
-          // }
-
 
           arr5.sort(function (a, b) {
             return a.alarmCount < b.alarmCount ? 1 : -1
