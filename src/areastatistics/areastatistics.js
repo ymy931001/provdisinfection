@@ -124,33 +124,33 @@ class App extends React.Component {
     this.rankcolumnssix = [
       {
         title: "排序",
-        dataIndex: "aNum",
+        dataIndex: "pm",
         render: (text, record, index) => {
-          if (index === 0) {
+          if (text === 1) {
             return (
               <div className="firsttitle">
-                <span className="firstcircle"> {index + 1}</span>
+                <span className="firstcircle"> {text}</span>
               </div>
             )
           }
-          else if (index === 1) {
+          else if (text === 2) {
             return (
               <div className="firsttitle">
-                <span className="twocircle"> {index + 1}</span>
+                <span className="twocircle"> {text}</span>
               </div>
             )
           }
-          else if (index === 2) {
+          else if (text === 3) {
             return (
               <div className="firsttitle">
-                <span className="threecircle"> {index + 1}</span>
+                <span className="threecircle"> {text}</span>
               </div>
             )
           }
           else {
             return (
               <div className="firsttitle">
-                <span className="othercircle"> {index + 1}</span>
+                <span className="othercircle"> {text}</span>
               </div>
             )
           }
@@ -170,7 +170,7 @@ class App extends React.Component {
         title: "报警次数",
         dataIndex: "alarmCount",
         defaultSortOrder: 'descend',
-        sorter: (a, b) => a.workcount - b.workcount,
+        sorter: (a, b) => a.alarmCount - b.alarmCount,
         render: (text, record, index) => {
           return (
             <div>
@@ -526,6 +526,41 @@ class App extends React.Component {
             if (this.state.datelist[i].alarmCount != undefined) { //eslint-disable-line
               arr5.push(this.state.datelist[i])
             }
+          }
+          arr.sort(function (a, b) {
+            return a.housekeeping < b.housekeeping ? 1 : -1
+          })
+          for (var a in arr) {
+            arr[a].pm = parseInt(a, 10) + 1
+          }
+
+          arr1.sort(function (a, b) {
+            return a.runtime < b.runtime ? 1 : -1
+          })
+          for (var b in arr1) {
+            arr1[b].pm = parseInt(b, 10) + 1
+          }
+
+          arr2.sort(function (a, b) {
+            return a.worktime < b.worktime ? 1 : -1
+          })
+          for (var c in arr2) {
+            arr2[c].pm = parseInt(c, 10) + 1
+          }
+
+          // arr3.sort(function (a, b) {
+          //   return a.worktime < b.worktime ? 1 : -1
+          // })
+          // for (var d in arr3) {
+          //   arr3[c].pm = parseInt(d, 10) + 1
+          // }
+
+
+          arr5.sort(function (a, b) {
+            return a.alarmCount < b.alarmCount ? 1 : -1
+          })
+          for (var a in arr5) {
+            arr5[a].pm = parseInt(a, 10) + 1
           }
           this.setState({
             firstlist: arr,

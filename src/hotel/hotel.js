@@ -242,12 +242,39 @@ class App extends React.Component {
     }, {
       title: '功率',
       dataIndex: 'power',
+      render: (text, record, index) => {
+        return (
+          <div>
+            <span>
+              {text}W
+            </span>
+          </div>
+        );
+      }
     }, {
       title: '容量',
       dataIndex: 'capacity',
+      render: (text, record, index) => {
+        return (
+          <div>
+            <span>
+              {text}L
+            </span>
+          </div>
+        );
+      }
     }, {
       title: '额定时间',
       dataIndex: 'standartTime',
+      render: (text, record, index) => {
+        return (
+          <div>
+            <span>
+              {text}分
+            </span>
+          </div>
+        );
+      }
     }, {
       title: '图片',
       dataIndex: 'id',
@@ -843,6 +870,7 @@ class App extends React.Component {
   }
 
   openhealthcard = (text, record, index) => {
+    console.log(record.certificate.indexOf('http://iva.terabits.cn') === -1)
     this.setState({
       healthvisible: true,
       certificate: record.certificate,

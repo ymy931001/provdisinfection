@@ -72,6 +72,7 @@ class App extends React.Component {
       iscplatformdis: 'none',
       roomshow: 'none',
       treeData: [],
+      iscdata: [],
       type: null,
       serial: null,
       stream: null,
@@ -1029,112 +1030,6 @@ class App extends React.Component {
 
 
 
-  // handleOks = () => {
-  //   console.log(this.state.addnum)
-  //   var threshold = document.getElementById('threshold').value
-  //   if (this.state.addnum === 1) {
-
-  //     insertboard([
-  //       localStorage.getItem('socketid'),
-  //       this.state.macdata,
-  //       threshold
-  //     ]).then(res => {
-  //       if (res.data && res.data.message === "success") {
-  //         message.success('设备添加成功')
-  //         this.setState({
-  //           visibles: false,
-  //         })
-  //       }
-  //       if (res.data && res.data.message === "查找不到设备") {
-  //         message.error('mac不存在，设备添加失败')
-  //       }
-  //     });
-  //   } else {
-  //     var arr = []
-  //     var newarr = []
-  //     var power1 = document.getElementById('power1').value
-  //     var power2 = document.getElementById('power2').value
-  //     var power3 = document.getElementById('power3').value
-  //     if (this.state.addnum === 2) {
-  //       if (this.state.macdata1 === "" || this.state.macdata === "") {
-  //         message.error("请输入完整信息")
-  //       } else {
-  //         arr.push(this.state.macdata, this.state.macdata1)
-  //         newarr.push(threshold, power1)
-  //         insertboard([
-  //           localStorage.getItem('socketid'),
-  //           arr.join(',').replace(/\s/g, ""),
-  //           newarr.join(',').replace(/\s/g, ""),
-  //         ]).then(res => {
-  //           if (res.data && res.data.message === "success") {
-  //             message.success('设备添加成功')
-  //             this.setState({
-  //               visibles: false,
-  //             })
-  //           }
-  //           if (res.data && res.data.message === "查找不到设备") {
-  //             message.error('mac不存在，设备添加失败')
-  //           }
-  //         });
-  //       }
-  //     }
-  //     if (this.state.addnum === 3) {
-  //       if (this.state.macdata1 === "" || this.state.macdata === "" || threshold === "" || power1 === "") {
-  //         message.error("请输入完整信息")
-  //       } else {
-  //         arr.push(this.state.macdata)
-  //         arr.push(this.state.macdata1)
-  //         arr.push(this.state.macdata2)
-  //         newarr.push(threshold)
-  //         newarr.push(power1)
-  //         newarr.push(power2)
-  //         insertboard([
-  //           localStorage.getItem('socketid'),
-  //           arr.join(',').replace(/\s/g, ""),
-  //           newarr.join(',').replace(/\s/g, ""),
-  //         ]).then(res => {
-  //           if (res.data && res.data.message === "success") {
-  //             message.success('设备添加成功')
-  //             this.setState({
-  //               visibles: false,
-  //             })
-  //           }
-  //           if (res.data && res.data.message === "查找不到设备") {
-  //             message.error('mac不存在，设备添加失败')
-  //           }
-  //         });
-  //       }
-  //     }
-  //     if (this.state.addnum === 4) {
-  //       if (this.state.macdata1 === "" || this.state.macdata === "" || threshold === "" || power1 === "" || this.state.macdata2 === "" || power2 === "") {
-  //         message.error("请输入完整信息")
-  //       } else {
-  //         arr.push(this.state.macdata, this.state.macdata1, this.state.macdata2, this.state.macdata3)
-  //         newarr.push(threshold)
-  //         newarr.push(power1)
-  //         newarr.push(power2)
-  //         newarr.push(power3)
-  //         insertboard([
-  //           localStorage.getItem('socketid'),
-  //           arr.join(',').replace(/\s/g, ""),
-  //           newarr.join(',').replace(/\s/g, ""),
-  //         ]).then(res => {
-  //           if (res.data && res.data.message === "success") {
-  //             message.success('设备添加成功')
-  //             this.setState({
-  //               visibles: false,
-  //             })
-  //           }
-  //           if (res.data && res.data.message === "查找不到设备") {
-  //             message.error('mac不存在，设备添加失败')
-  //           }
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
-
-
   // statuschange = (text, record, index) => {
   //   console.log(record)
   //   devicestatus([
@@ -1236,10 +1131,6 @@ class App extends React.Component {
 
   //树形图选择
   onSelects = (keys, event) => {
-    console.log(keys)
-    console.log(keys.length)
-    console.log(keys.join(','))
-    console.log(event)
     iscdevice([
       this.state.iscplatformid,
       keys.join(',')
@@ -1338,48 +1229,69 @@ class App extends React.Component {
         this.state.iscplatformid,
       ]).then(res => {
         if (res.data && res.data.message === "success") {
-          console.log(res.data.data[0].name)
-          var arr = []
-          for (var a in res.data.data) {
-            arr.push({
-              'title': res.data.data[a].name,
-              'key': res.data.data[a].indexCode,
-              'children': res.data.data[a].children
-            })
+          // console.log(res.data.data[0].name)
+
+          // for (var a in res.data.data) {
+          //   arr.push({
+          //     'title': res.data.data[a].name,
+          //     'key': res.data.data[a].indexCode,
+          //     'children': res.data.data[a].children
+          //   })
+          // }
+
+          // for (var i in arr) {
+          //   for (var j in arr[i].children) {
+          //     if (arr[i].children[j].children != undefined && arr[i].children[j].children.length != 0) {  //eslint-disable-line
+          //       arr[i].children[j].title = arr[i].children[j].name
+          //       arr[i].children[j].key = arr[i].children[j].indexCode
+          //       arr[i].children[j].children = arr[i].children[j].children
+          //       for (var k in arr[i].children[j].children) {
+          //         if (arr[i].children[j].children[k].children != undefined && arr[i].children[j].children[k].children.length != 0) {  //eslint-disable-line
+          //           arr[i].children[j].children[k].title = arr[i].children[j].children[k].name
+          //           arr[i].children[j].children[k].key = arr[i].children[j].children[k].indexCode
+          //         } else {
+          //           arr[i].children[j].children[k].title = arr[i].children[j].children[k].name
+          //           arr[i].children[j].children[k].key = arr[i].children[j].children[k].indexCode
+          //           arr[i].children[j].children[k].children = undefined
+          //         }
+          //       }
+          //     } else {
+          //       arr[i].children[j].title = arr[i].children[j].name
+          //       arr[i].children[j].key = arr[i].children[j].indexCode
+          //       arr[i].children[j].children = undefined
+          //     }
+          //   }
+          // }
+
+          const ass = (data) => {
+            let item = [];
+            data.forEach((list, i) => {
+              let newData = {};
+              newData.key = list.indexCode;
+              newData.value = list.indexCode;
+              newData.title = list.name;
+              newData.children = list.children ? ass(list.children) : [];    //如果还有子集，就再次调用自己
+              item.push(newData);
+            });
+            return item;
           }
-          for (var i in arr) {
-            for (var j in arr[i].children) {
-              if (arr[i].children[j].children != undefined && arr[i].children[j].children.length != 0) {  //eslint-disable-line
-                arr[i].children[j].title = arr[i].children[j].name
-                arr[i].children[j].key = arr[i].children[j].indexCode
-                arr[i].children[j].children = arr[i].children[j].children
-                for (var k in arr[i].children[j].children) {
-                  if (arr[i].children[j].children[k].children != undefined && arr[i].children[j].children[k].children.length != 0) {  //eslint-disable-line
-                    arr[i].children[j].children[k].title = arr[i].children[j].children[k].name
-                    arr[i].children[j].children[k].key = arr[i].children[j].children[k].indexCode
-                  } else {
-                    arr[i].children[j].children[k].title = arr[i].children[j].children[k].name
-                    arr[i].children[j].children[k].key = arr[i].children[j].children[k].indexCode
-                    arr[i].children[j].children[k].children = undefined
-                  }
-                }
-              } else {
-                arr[i].children[j].title = arr[i].children[j].name
-                arr[i].children[j].key = arr[i].children[j].indexCode
-                arr[i].children[j].children = undefined
-              }
-            }
-          }
-          console.log(arr)
 
           this.setState({
-            treeData: arr,
-            iscoption: arr
+            treeData: ass(res.data.data),
+            iscoption: ass(res.data.data)
           })
+
+
+
+
+
+
         }
       });
     })
   }
+
+
 
   //设备类型选择
   typeonChange = (e) => {
@@ -1747,6 +1659,7 @@ class App extends React.Component {
             <div className="drawermain">
               <div className="treelist">
                 <DirectoryTree
+                  fieldNames={{ title: 'name', key: 'indexCode' }}
                   multiple
                   defaultExpandAll
                   onSelect={this.onSelects}

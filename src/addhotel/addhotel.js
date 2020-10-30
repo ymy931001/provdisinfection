@@ -352,49 +352,67 @@ class App extends React.Component {
         this.state.iscplatformid,
       ]).then(res => {
         if (res.data && res.data.message === "success") {
-          console.log(res.data.data[0].name)
-          var arr = []
-          for (var a in res.data.data) {
-            arr.push({
-              'title': res.data.data[a].name,
-              'key': res.data.data[a].indexCode,
-              'children': res.data.data[a].children
-            })
+          // console.log(res.data.data[0].name)
+
+          // for (var a in res.data.data) {
+          //   arr.push({
+          //     'title': res.data.data[a].name,
+          //     'key': res.data.data[a].indexCode,
+          //     'children': res.data.data[a].children
+          //   })
+          // }
+
+          // for (var i in arr) {
+          //   for (var j in arr[i].children) {
+          //     if (arr[i].children[j].children != undefined && arr[i].children[j].children.length != 0) {  //eslint-disable-line
+          //       arr[i].children[j].title = arr[i].children[j].name
+          //       arr[i].children[j].key = arr[i].children[j].indexCode
+          //       arr[i].children[j].children = arr[i].children[j].children
+          //       for (var k in arr[i].children[j].children) {
+          //         if (arr[i].children[j].children[k].children != undefined && arr[i].children[j].children[k].children.length != 0) {  //eslint-disable-line
+          //           arr[i].children[j].children[k].title = arr[i].children[j].children[k].name
+          //           arr[i].children[j].children[k].key = arr[i].children[j].children[k].indexCode
+          //         } else {
+          //           arr[i].children[j].children[k].title = arr[i].children[j].children[k].name
+          //           arr[i].children[j].children[k].key = arr[i].children[j].children[k].indexCode
+          //           arr[i].children[j].children[k].children = undefined
+          //         }
+          //       }
+          //     } else {
+          //       arr[i].children[j].title = arr[i].children[j].name
+          //       arr[i].children[j].key = arr[i].children[j].indexCode
+          //       arr[i].children[j].children = undefined
+          //     }
+          //   }
+          // }
+
+          const ass = (data) => {
+            let item = [];
+            data.forEach((list, i) => {
+              let newData = {};
+              newData.key = list.indexCode;
+              newData.value = list.indexCode;
+              newData.title = list.name;
+              newData.children = list.children ? ass(list.children) : [];    //如果还有子集，就再次调用自己
+              item.push(newData);
+            });
+            return item;
           }
-          for (var i in arr) {
-            for (var j in arr[i].children) {
-              if (arr[i].children[j].children != undefined && arr[i].children[j].children.length != 0) {  //eslint-disable-line
-                arr[i].children[j].title = arr[i].children[j].name
-                arr[i].children[j].key = arr[i].children[j].indexCode
-                arr[i].children[j].children = arr[i].children[j].children
-                for (var k in arr[i].children[j].children) {
-                  if (arr[i].children[j].children[k].children != undefined && arr[i].children[j].children[k].children.length != 0) {  //eslint-disable-line
-                    arr[i].children[j].children[k].title = arr[i].children[j].children[k].name
-                    arr[i].children[j].children[k].key = arr[i].children[j].children[k].indexCode
-                  } else {
-                    arr[i].children[j].children[k].title = arr[i].children[j].children[k].name
-                    arr[i].children[j].children[k].key = arr[i].children[j].children[k].indexCode
-                    arr[i].children[j].children[k].children = undefined
-                  }
-                }
-              } else {
-                arr[i].children[j].title = arr[i].children[j].name
-                arr[i].children[j].key = arr[i].children[j].indexCode
-                arr[i].children[j].children = undefined
-              }
-            }
-          }
-          console.log(arr)
 
           this.setState({
-            treeData: arr,
-            iscoption: arr
+            treeData: ass(res.data.data),
+            iscoption: ass(res.data.data)
           })
+
+
+
+
+
+
         }
       });
     })
   }
-
 
   //table选择
   onSelectChange = (selectedRowKeys, b) => {
@@ -423,7 +441,7 @@ class App extends React.Component {
     console.log(event)
     this.setState({
       regionCode: keys.join(','),
-      regionname: event.node.props.name,
+      regionname: event.node.props.name || event.node.props.title,
     })
     iscdevice([
       this.state.iscplatformid,
