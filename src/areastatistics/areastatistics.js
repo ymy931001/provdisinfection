@@ -79,7 +79,7 @@ class App extends React.Component {
               </div>
             )
           }
-          else if (text === 2) {
+          else if (text === 3) {
             return (
               <div className="firsttitle">
                 <span className="threecircle"> {text}</span>
@@ -124,7 +124,7 @@ class App extends React.Component {
     this.rankcolumnssix = [
       {
         title: "排序",
-        dataIndex: "pm",
+        dataIndex: "pm5",
         render: (text, record, index) => {
           if (text === 1) {
             return (
@@ -184,33 +184,33 @@ class App extends React.Component {
     this.rankcolumnstwo = [
       {
         title: "排序",
-        dataIndex: "aNum",
+        dataIndex: "pm1",
         render: (text, record, index) => {
-          if (index === 0) {
+          if (text === 1) {
             return (
               <div className="firsttitle">
-                <span className="firstcircle"> {index + 1}</span>
+                <span className="firstcircle"> {text}</span>
               </div>
             )
           }
-          else if (index === 1) {
+          else if (text === 2) {
             return (
               <div className="firsttitle">
-                <span className="twocircle"> {index + 1}</span>
+                <span className="twocircle"> {text}</span>
               </div>
             )
           }
-          else if (index === 2) {
+          else if (text === 3) {
             return (
               <div className="firsttitle">
-                <span className="threecircle"> {index + 1}</span>
+                <span className="threecircle"> {text}</span>
               </div>
             )
           }
           else {
             return (
               <div className="firsttitle">
-                <span className="othercircle"> {index + 1}</span>
+                <span className="othercircle"> {text}</span>
               </div>
             )
           }
@@ -253,33 +253,33 @@ class App extends React.Component {
     this.rankcolumnsthree = [
       {
         title: "排序",
-        dataIndex: "aNum",
+        dataIndex: "pm2",
         render: (text, record, index) => {
-          if (index === 0) {
+          if (text === 1) {
             return (
               <div className="firsttitle">
-                <span className="firstcircle"> {index + 1}</span>
+                <span className="firstcircle"> {text}</span>
               </div>
             )
           }
-          else if (index === 1) {
+          else if (text === 2) {
             return (
               <div className="firsttitle">
-                <span className="twocircle"> {index + 1}</span>
+                <span className="twocircle"> {text}</span>
               </div>
             )
           }
-          else if (index === 2) {
+          else if (text === 3) {
             return (
               <div className="firsttitle">
-                <span className="threecircle"> {index + 1}</span>
+                <span className="threecircle"> {text}</span>
               </div>
             )
           }
           else {
             return (
               <div className="firsttitle">
-                <span className="othercircle"> {index + 1}</span>
+                <span className="othercircle"> {text}</span>
               </div>
             )
           }
@@ -320,40 +320,41 @@ class App extends React.Component {
 
 
     this.rankcolumnsfive = [
+      // {
+      //   title: "排序",
+      //   dataIndex: "aNum",
+      //   render: (text, record, index) => {
+      //     if (index === 0) {
+      //       return (
+      //         <div className="firsttitle">
+      //           <span className="firstcircle"> {index + 1}</span>
+      //         </div>
+      //       )
+      //     }
+      //     else if (index === 1) {
+      //       return (
+      //         <div className="firsttitle">
+      //           <span className="twocircle"> {index + 1}</span>
+      //         </div>
+      //       )
+      //     }
+      //     else if (index === 2) {
+      //       return (
+      //         <div className="firsttitle">
+      //           <span className="threecircle"> {index + 1}</span>
+      //         </div>
+      //       )
+      //     }
+      //     else {
+      //       return (
+      //         <div className="firsttitle">
+      //           <span className="othercircle"> {index + 1}</span>
+      //         </div>
+      //       )
+      //     }
+      //   }
+      // },
       {
-        title: "排序",
-        dataIndex: "aNum",
-        render: (text, record, index) => {
-          if (index === 0) {
-            return (
-              <div className="firsttitle">
-                <span className="firstcircle"> {index + 1}</span>
-              </div>
-            )
-          }
-          else if (index === 1) {
-            return (
-              <div className="firsttitle">
-                <span className="twocircle"> {index + 1}</span>
-              </div>
-            )
-          }
-          else if (index === 2) {
-            return (
-              <div className="firsttitle">
-                <span className="threecircle"> {index + 1}</span>
-              </div>
-            )
-          }
-          else {
-            return (
-              <div className="firsttitle">
-                <span className="othercircle"> {index + 1}</span>
-              </div>
-            )
-          }
-        }
-      }, {
         title: "网点名",
         dataIndex: "siteName",
         render: (text, record, index) => {
@@ -365,14 +366,27 @@ class App extends React.Component {
         }
       },
       {
-        title: "设备数量",
+        title: "摄像头数量",
         dataIndex: "cameraCount",
         defaultSortOrder: 'descend',
-        sorter: (a, b) => (a.cameraCount + a.boardCount) - (b.cameraCount + b.boardCount),
+        sorter: (a, b) => a.cameraCount - b.cameraCount,
         render: (text, record, index) => {
           return (
             <div>
-              {record.cameraCount + record.boardCount} 个
+              {text} 个
+            </div>
+          )
+        }
+      },
+      {
+        title: "插座数量",
+        dataIndex: "boardCount",
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.boardCount - b.boardCount,
+        render: (text, record, index) => {
+          return (
+            <div>
+              {text} 个
             </div>
           )
         }
@@ -382,39 +396,6 @@ class App extends React.Component {
 
     this.rankcolumnsfour = [
       {
-        title: "排序",
-        dataIndex: "aNum",
-        render: (text, record, index) => {
-          if (index === 0) {
-            return (
-              <div className="firsttitle">
-                <span className="firstcircle"> {index + 1}</span>
-              </div>
-            )
-          }
-          else if (index === 1) {
-            return (
-              <div className="firsttitle">
-                <span className="twocircle"> {index + 1}</span>
-              </div>
-            )
-          }
-          else if (index === 2) {
-            return (
-              <div className="firsttitle">
-                <span className="threecircle"> {index + 1}</span>
-              </div>
-            )
-          }
-          else {
-            return (
-              <div className="firsttitle">
-                <span className="othercircle"> {index + 1}</span>
-              </div>
-            )
-          }
-        }
-      }, {
         title: "网点名",
         dataIndex: "siteName",
         render: (text, record, index) => {
@@ -429,10 +410,11 @@ class App extends React.Component {
         title: "插座",
         dataIndex: "boardOnlineRate",
         sorter: (a, b) => a.boardOnlineRate - b.boardOnlineRate,
+        defaultSortOrder: 'descend',
         render: (text, record, index) => {
           return (
             <div>
-              {text === undefined || text === null ? "无" : text * 100 + "%"}
+              {!text ? "无" : text * 100 + "%"}
             </div>
           )
         }
@@ -444,7 +426,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              {text === undefined || text === null ? "无" : text * 100 + "%"}
+              {!text ? "无" : text * 100 + "%"}
             </div>
           )
         }
@@ -539,22 +521,23 @@ class App extends React.Component {
             return a.runtime < b.runtime ? 1 : -1
           })
           for (var b in arr1) {
-            arr1[b].pm = parseInt(b, 10) + 1
+            arr1[b].pm1 = parseInt(b, 10) + 1
           }
 
           arr2.sort(function (a, b) {
             return a.worktime < b.worktime ? 1 : -1
           })
           for (var c in arr2) {
-            arr2[c].pm = parseInt(c, 10) + 1
+            arr2[c].pm2 = parseInt(c, 10) + 1
           }
 
           arr5.sort(function (a, b) {
             return a.alarmCount < b.alarmCount ? 1 : -1
           })
-          for (var a in arr5) {
-            arr5[a].pm = parseInt(a, 10) + 1
+          for (var d in arr5) {
+            arr5[d].pm5 = parseInt(d, 10) + 1
           }
+
           this.setState({
             firstlist: arr,
             twolist: arr1,
