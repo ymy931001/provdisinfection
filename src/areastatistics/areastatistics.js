@@ -631,6 +631,36 @@ class App extends React.Component {
               arr5.push(this.state.datelist[i])
             }
           }
+
+          arr.sort(function (a, b) {
+            return a.housekeeping < b.housekeeping ? 1 : -1
+          })
+          for (var a in arr) {
+            arr[a].pm = parseInt(a, 10) + 1
+          }
+
+          arr1.sort(function (a, b) {
+            return a.runtime < b.runtime ? 1 : -1
+          })
+          for (var b in arr1) {
+            arr1[b].pm1 = parseInt(b, 10) + 1
+          }
+
+          arr2.sort(function (a, b) {
+            return a.worktime < b.worktime ? 1 : -1
+          })
+          for (var c in arr2) {
+            arr2[c].pm2 = parseInt(c, 10) + 1
+          }
+
+          arr5.sort(function (a, b) {
+            return a.alarmCount < b.alarmCount ? 1 : -1
+          })
+          for (var d in arr5) {
+            arr5[d].pm5 = parseInt(d, 10) + 1
+          }
+
+          
           this.setState({
             firstlist: arr,
             twolist: arr1,
