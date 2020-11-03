@@ -144,6 +144,13 @@
 }
 
 
+.cupscroll{
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+
 #hotelplace .resultline::-webkit-scrollbar {
     /* overflow-y: scroll;
 　　scrollbar-color: transparent transparent;
