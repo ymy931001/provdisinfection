@@ -368,7 +368,7 @@ class App extends React.Component {
       {
         title: "摄像头数量",
         dataIndex: "cameraCount",
-        defaultSortOrder: 'descend',
+        // defaultSortOrder: 'descend',
         sorter: (a, b) => a.cameraCount - b.cameraCount,
         render: (text, record, index) => {
           return (
@@ -381,7 +381,7 @@ class App extends React.Component {
       {
         title: "插座数量",
         dataIndex: "boardCount",
-        defaultSortOrder: 'descend',
+        // defaultSortOrder: 'descend',
         sorter: (a, b) => a.boardCount - b.boardCount,
         render: (text, record, index) => {
           return (
@@ -410,7 +410,7 @@ class App extends React.Component {
         title: "插座",
         dataIndex: "boardOnlineRate",
         sorter: (a, b) => a.boardOnlineRate - b.boardOnlineRate,
-        defaultSortOrder: 'descend',
+        // defaultSortOrder: 'descend',
         render: (text, record, index) => {
           return (
             <div>
