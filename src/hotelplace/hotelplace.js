@@ -148,15 +148,12 @@ class App extends React.Component {
           worktime: parseFloat(res.data.data.worktime / 60).toFixed(2),
           runtime: parseFloat(res.data.data.runtime / 60).toFixed(2),
           roomlist: res.data.data,
-          readout: !res.data.data.readings ? (!res.data.data.readingVOS ? [] :res.data.data.readingVOS) : JSON.parse(res.data.data.readings),
+          readout: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings),
           readouts: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings),
           decendingdatas: !res.data.data.timepairs ? (!res.data.data.timePiarsList ? [] : res.data.data.timePiarsList) : JSON.parse(res.data.data.timepairs),
         }, function () {
-          console.log(this.state.timelist1)
-          console.log(this.state.decendingdatas)
-          // this.readoutlist()
-          this.initialize = setInterval(() => this.readoutlist(), 0);
-
+          this.readoutlist()
+          // this.initialize = setInterval(() => this.readoutlist(), 0);
           if (this.state.roomlist.sceneId === 2) {
             this.setState({
               cameradis: 'block',
@@ -298,6 +295,7 @@ class App extends React.Component {
   }
 
 
+  //结论时间合并
   readoutlist = () => {
     this.setState({
       listlength: this.state.readouts.length
@@ -310,25 +308,60 @@ class App extends React.Component {
       } else {
         var arrs = []
         if (this.state.readouts.length > 1) {
-          for (var g = 0; g < this.state.readouts.length - 1; g++) {
-            if (Math.abs((this.state.readouts[g + 1].begin - this.state.readouts[g].end)) < (1000 * 3600)) {
-              arrs.push({
-                'begin': this.state.readouts[g].begin,
-                'end': this.state.readouts[g + 1].end,
-              })
-            } else {
-              arrs.push({
-                'begin': this.state.readouts[g].begin,
-                'end': this.state.readouts[g].end,
-              })
+          if (this.state.readouts.length % 2 === 0) {
+            for (var g = 0; g < this.state.readouts.length - 1; g += 2) {
+              if (Math.abs((this.state.readouts[g + 1].begin - this.state.readouts[g].end)) < (1000 * 3600)) {
+                arrs.push({
+                  'begin': this.state.readouts[g].begin,
+                  'end': this.state.readouts[g + 1].end,
+                })
+              } else {
+                arrs.push({
+                  'begin': this.state.readouts[g].begin,
+                  'end': this.state.readouts[g].end,
+                }, {
+                  'begin': this.state.readouts[g + 1].begin,
+                  'end': this.state.readouts[g + 1].end,
+                })
+              }
             }
+          } else {
+            for (var r = 0; r < this.state.readouts.length - 1; r += 2) {
+              if (Math.abs((this.state.readouts[r + 1].begin - this.state.readouts[r].end)) < (1000 * 3600)) {
+                arrs.push({
+                  'begin': this.state.readouts[r].begin,
+                  'end': this.state.readouts[r + 1].end,
+                })
+              } else {
+                arrs.push({
+                  'begin': this.state.readouts[r].begin,
+                  'end': this.state.readouts[r].end,
+                }, {
+                  'begin': this.state.readouts[r + 1].begin,
+                  'end': this.state.readouts[r + 1].end,
+                })
+              }
+            }
+            arrs.push(this.state.readouts[this.state.readouts.length - 1])
+          }
+          var lastarr = []
+          if (Math.abs((arrs[arrs.length - 1].begin - arrs[arrs.length - 2].end)) < (1000 * 3600)) {
+            arrs[arrs.length - 2].end = arrs[arrs.length - 1].end
+            for (var i in arrs) {
+              if (parseInt(i, 10) !== arrs.length - 1) {
+                lastarr.push(arrs[i])
+              }
+            }
+            arrs = lastarr
+          } else {
+
           }
         } else {
           arrs = this.state.readouts
         }
         this.setState({
           readouts: arrs,
-
+          timeresult: arrs,
           timedisone: 'none',
           timedis: 'inline-block',
         }, function () {
@@ -338,6 +371,7 @@ class App extends React.Component {
               timeresult: arrs,
             })
           } else {
+            this.readoutlist()
 
           }
         })
