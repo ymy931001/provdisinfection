@@ -14,7 +14,7 @@ import {
 } from "../axios";
 import "./cuplistpc.css";
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const { Content } = Layout;
 const { TextArea } = Input;
@@ -380,11 +380,11 @@ class App extends React.Component {
                       />
                       <Button type="primary" onClick={this.query}>查询</Button>
                       <Button onClick={this.reset} style={{ marginLeft: '15px', marginRight: '15px' }}>重置</Button>
-                      <Button type="primary" onClick={this.monthbtn}>
+                      {/* <Button type="primary" onClick={this.monthbtn}>
                         <Link to="/app/monthstatistics">
                           <span>月度打卡</span>
                         </Link>
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </div>
