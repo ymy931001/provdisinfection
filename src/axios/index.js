@@ -823,12 +823,14 @@ export const getmenu = params =>
 //杯具目录
 export const getcup = params =>
   http.get(config.requestIp + "/cup/record", {
-    city: params[0],
-    area: params[1],
-    siteid: params[2],
-    start: params[3],
-    stop: params[4],
-    key: params[5],
+    pageNum: params[0],
+    pageSize: params[1],
+    city: params[2],
+    area: params[3],
+    siteid: params[4],
+    start: params[5],
+    stop: params[6],
+    key: params[7],
   });
 
 //杯具目录

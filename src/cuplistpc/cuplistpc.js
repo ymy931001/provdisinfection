@@ -28,6 +28,8 @@ class App extends React.Component {
     this.state = {
       begintime: undefined,
       endtime: undefined,
+      pageNum: 1,
+      pageNumSize: 10,
     };
     this.cupcolumns = [
       {
@@ -105,8 +107,8 @@ class App extends React.Component {
       {
         title: "提交时间",
         dataIndex: "gmtcreate",
-        sorter: (a, b) => new Date(a.gmtcreate) > new Date(b.gmtcreate) ? 1 : -1,
-        defaultSortOrder: "descend"
+        // sorter: (a, b) => new Date(a.gmtcreate) > new Date(b.gmtcreate) ? 1 : -1,
+        // defaultSortOrder: "descend"
       }
 
 
@@ -161,11 +163,13 @@ class App extends React.Component {
     document.title = "杯具清洗记录";
 
     getcup([
-
+      1,
+      10
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          cuplist: res.data.data
+          cuplist: res.data.data.cupRecords,
+          total: res.data.data.total,
         });
       }
     });
@@ -228,6 +232,8 @@ class App extends React.Component {
       keytext: text
     })
     getcup([
+      1,
+      10,
       null,
       null,
       record.siteId,
@@ -237,7 +243,8 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          cuplist: res.data.data
+          cuplist: res.data.data.cupRecords,
+          total: res.data.data.total,
         });
       }
     })
@@ -330,8 +337,12 @@ class App extends React.Component {
       keytext: undefined,
       begintime: undefined,
       endtime: undefined,
+      pageNum: 1,
+      pageNumSize: 10,
     }, function () {
       getcup([
+        this.state.pageNum,
+        this.state.pageNumSize,
         undefined,
         undefined,
         undefined,
@@ -341,7 +352,8 @@ class App extends React.Component {
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           this.setState({
-            cuplist: res.data.data
+            cuplist: res.data.data.cupRecords,
+            total: res.data.data.total,
           });
         }
       });
@@ -352,6 +364,8 @@ class App extends React.Component {
   //查询
   query = () => {
     getcup([
+      this.state.pageNum,
+      this.state.pageNumSize,
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
@@ -361,7 +375,8 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          cuplist: res.data.data
+          cuplist: res.data.data.cupRecords,
+          total: res.data.data.total,
         });
       }
     });
@@ -373,6 +388,41 @@ class App extends React.Component {
       keytext: e.target.value
     })
   }
+
+  //分页
+
+  pagechange = (page, num) => {
+    this.setState({
+      pageNum: page,
+      pageNumSize: num,
+    }, function () {
+      getcup([
+        this.state.pageNum,
+        this.state.pageNumSize,
+        this.state.cityid,
+        this.state.areaid,
+        this.state.siteId,
+        this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+        this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+        this.state.keytext,
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          if (res.data.data === null) {
+            this.setState({
+              videoListDataSource: []
+            })
+          } else {
+            this.setState({
+              cuplist: res.data.data.cupRecords,
+              total: res.data.data.total,
+            })
+          }
+        }
+      })
+
+    })
+  }
+
 
 
   render() {
@@ -422,9 +472,9 @@ class App extends React.Component {
                 <Table
                   dataSource={this.state.cuplist}
                   columns={this.cupcolumns}
-                pagination={this.state.page}
+                  pagination={false}
                 />
-                {/* <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
                   <Pagination
                     onShowSizeChange={this.onShowSizeChange}
                     defaultCurrent={1}
@@ -433,7 +483,7 @@ class App extends React.Component {
                     hideOnSinglePage={true}
                     current={this.state.pageNum}
                   />
-                </div> */}
+                </div>
               </div>
             </Card>
           </Content>
