@@ -98,6 +98,11 @@ class App extends Component {
         lsdis: 'none',
       })
     }
+    if (localStorage.getItem("type") === '4') {
+      this.setState({
+        hoteldis: 'none',
+      })
+    }
     getsysmenu().then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -203,8 +208,10 @@ class App extends Component {
                 selectedKeys={[localStorage.getItem("menuid")]}
               >
                 <Menu.Item key="0"
+                  style={{ display: this.state.hoteldis }}
                 >
-                  <a href={"http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + localStorage.getItem('authorization')} style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
+                  <a href={"http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + localStorage.getItem('authorization')}
+                    style={{ color: 'rgba(255, 255, 255, 0.65)', }}>
                     <Icon type="dashboard" /><span>仪表盘</span>
                   </a>
                 </Menu.Item>
@@ -218,7 +225,7 @@ class App extends Component {
                       <span>运行概览</span>
                     </span>
                   }
-                  // style={{ display: this.state.lsdis }}
+                // style={{ display: this.state.lsdis }}
                 >
                   <Menu.Item key="100"
                   >
