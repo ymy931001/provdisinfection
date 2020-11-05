@@ -229,15 +229,17 @@ class App extends React.Component {
         this.setState({
           areauserlist: res.data.data
         }, function () {
-          if (res.data.data.length < 10) {
-            this.setState({
-              page: false
-            })
-          } else {
-            this.setState({
-              page: true
-            })
-          }
+          userlist([6]).then(res => {
+            var arr = this.state.areauserlist
+            if (res.data && res.data.message === "success") {
+              for (var i in res.data.data) {
+                arr.push(res.data.data[i])
+              }
+              this.setState({
+                areauserlist: arr
+              });
+            }
+          });
         });
       }
     });
