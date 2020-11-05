@@ -170,7 +170,7 @@ class App extends React.Component {
       this.state.pageNumSize,
       null,
       null,
-      null,
+      record.siteId,
       null,
       this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
       text

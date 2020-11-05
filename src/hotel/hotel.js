@@ -468,7 +468,7 @@ class App extends React.Component {
           dataIndex: "gmtcreate",
         }
       ];
-  
+
     } else {
       this.nodeInfoTableColumns = [
         {
@@ -623,7 +623,7 @@ class App extends React.Component {
           //   )
           // }
         },
-  
+
         {
           title: "详细地址",
           dataIndex: "address",
@@ -651,7 +651,7 @@ class App extends React.Component {
                     <EditableContext.Consumer>
                       {form => (
                         <a
-  
+
                           onClick={() => this.save(form, record.key, text)}
                           style={{ marginRight: 8 }}
                         >
@@ -672,9 +672,9 @@ class App extends React.Component {
           }
         }
       ];
-  
+
     }
-  
+
 
   }
 
@@ -1032,11 +1032,18 @@ class App extends React.Component {
   }
 
   openhealthcard = (text, record, index) => {
-    console.log(record.certificate.indexOf('http://iva.terabits.cn') === -1)
-    this.setState({
-      healthvisible: true,
-      certificate: record.certificate,
-    })
+    if (record.certificate.indexOf('http://iva.terabits.cn') === -1) {
+      this.setState({
+        healthvisible: true,
+        certificate: 'http://iva.terabits.cn' + record.certificate,
+      })
+    } else {
+      this.setState({
+        healthvisible: true,
+        certificate: record.certificate,
+      })
+    }
+
   }
 
   //打开二维码弹窗

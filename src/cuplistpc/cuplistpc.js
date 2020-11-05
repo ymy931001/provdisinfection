@@ -8,6 +8,7 @@ import {
   Modal,
   Cascader,
   DatePicker,
+  Pagination
 } from "antd";
 import {
   getregion, getcup
@@ -35,6 +36,15 @@ class App extends React.Component {
       }, {
         title: "房间号",
         dataIndex: "roomName",
+        render: (text, record, index) => {
+          return (
+            <div>
+              <a onClick={() => this.findroom(text, record, index)} style={{ color: '#666' }}>
+                {text}
+              </a>
+            </div>
+          )
+        }
       },
       {
         title: "清洗日期",
@@ -211,6 +221,27 @@ class App extends React.Component {
     })
   }
 
+
+  //房间搜索
+  findroom = (text, record, index) => {
+    this.setState({
+      keytext: text
+    })
+    getcup([
+      null,
+      null,
+      record.siteId,
+      null,
+      this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      text
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          cuplist: res.data.data
+        });
+      }
+    })
+  }
 
   //关闭model
   handleCancel = () => {
@@ -391,8 +422,18 @@ class App extends React.Component {
                 <Table
                   dataSource={this.state.cuplist}
                   columns={this.cupcolumns}
-                  pagination={this.state.page}
+                pagination={this.state.page}
                 />
+                {/* <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <Pagination
+                    onShowSizeChange={this.onShowSizeChange}
+                    defaultCurrent={1}
+                    onChange={this.pagechange}
+                    total={this.state.total}
+                    hideOnSinglePage={true}
+                    current={this.state.pageNum}
+                  />
+                </div> */}
               </div>
             </Card>
           </Content>
