@@ -238,7 +238,7 @@ class App extends React.Component {
       null,
       record.siteId,
       null,
-      this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
       text
     ]).then(res => {
       if (res.data && res.data.message === "success") {
@@ -370,7 +370,7 @@ class App extends React.Component {
       this.state.areaid,
       this.state.siteId,
       this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
-      this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
       this.state.keytext,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
@@ -403,7 +403,7 @@ class App extends React.Component {
         this.state.areaid,
         this.state.siteId,
         this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
-        this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+        this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
         this.state.keytext,
       ]).then(res => {
         if (res.data && res.data.message === "success") {
