@@ -309,210 +309,372 @@ class App extends React.Component {
 
 
 
-
-    this.nodeInfoTableColumns = [
-      {
-        title: "酒店名称",
-        dataIndex: "sitename",
-        editable: true,
-        render: (text, record, index) => {
-          return (
-            <div onClick={() => this.toroom(text, record, index)} style={{ cursor: 'pointer' }}>
-              {text}
-            </div>
-          )
-        }
-      },
-      {
-        title: "负责人姓名",
-        dataIndex: "adminName",
-        editable: true,
-        render: (text, record, index) => {
-          if (text === null) {
+    if (localStorage.getItem('type') === "4") {
+      this.nodeInfoTableColumns = [
+        {
+          title: "酒店名称",
+          dataIndex: "sitename",
+          editable: true,
+          render: (text, record, index) => {
             return (
-              <div>
-                无
+              <div onClick={() => this.toroom(text, record, index)} style={{ cursor: 'pointer' }}>
+                {text}
               </div>
             )
-          } else {
+          }
+        },
+        {
+          title: "负责人姓名",
+          dataIndex: "adminName",
+          editable: true,
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "联系电话",
+          dataIndex: "phone",
+          editable: true,
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "保洁员数量",
+          dataIndex: "cleanerQuantity",
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div onClick={() => this.opencleanerlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "设备数量",
+          dataIndex: "deviceQuantity",
+          render: (text, record, index) => {
+            return (
+              <div>
+                <Tooltip title={"插座数量：" + record.boardQuantity + "个  ~ 摄像头数量：" + record.cameraQuantity + "个"}>
+                  <span style={{ color: '#1890ff' }}>{record.boardQuantity + record.cameraQuantity} </span>
+                </Tooltip>
+              </div>
+            )
+          }
+        },
+        {
+          title: "卫生许可证",
+          dataIndex: "borard",
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.openlicence(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                查看
+              </div>
+            )
+          }
+        },
+        {
+          title: "消毒间数量",
+          dataIndex: "roomQuantity",
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.openroomlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                查看
+              </div>
+            )
+          }
+        },
+        {
+          title: "二维码",
+          dataIndex: "roomQuantity",
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.lookerweima(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                查看
+              </div>
+            )
+          }
+        },
+        {
+          title: "杯具管理功能",
+          dataIndex: "ifHasCup",
+          filters: [
+            { text: "有", value: true },
+            { text: "无", value: false },
+          ],
+          onFilter: (value, record) => record.ifHasCup == value,  //eslint-disable-line 
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div>
+                  有
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "详细地址",
+          dataIndex: "address",
+          render: (text, record, index) => {
             return (
               <div>
                 {text}
               </div>
             )
           }
+        },
+        {
+          title: "创建时间",
+          dataIndex: "gmtcreate",
         }
-      },
-      {
-        title: "联系电话",
-        dataIndex: "phone",
-        editable: true,
-        render: (text, record, index) => {
-          if (text === null) {
+      ];
+  
+    } else {
+      this.nodeInfoTableColumns = [
+        {
+          title: "酒店名称",
+          dataIndex: "sitename",
+          editable: true,
+          render: (text, record, index) => {
             return (
-              <div>
-                无
+              <div onClick={() => this.toroom(text, record, index)} style={{ cursor: 'pointer' }}>
+                {text}
               </div>
             )
-          } else {
+          }
+        },
+        {
+          title: "负责人姓名",
+          dataIndex: "adminName",
+          editable: true,
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "联系电话",
+          dataIndex: "phone",
+          editable: true,
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "保洁员数量",
+          dataIndex: "cleanerQuantity",
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div onClick={() => this.opencleanerlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "设备数量",
+          dataIndex: "deviceQuantity",
+          render: (text, record, index) => {
+            return (
+              <div>
+                <Tooltip title={"插座数量：" + record.boardQuantity + "个  ~ 摄像头数量：" + record.cameraQuantity + "个"}>
+                  <span style={{ color: '#1890ff' }}>{record.boardQuantity + record.cameraQuantity} </span>
+                </Tooltip>
+              </div>
+            )
+          }
+        },
+        {
+          title: "卫生许可证",
+          dataIndex: "borard",
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.openlicence(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                查看
+              </div>
+            )
+          }
+        },
+        {
+          title: "消毒间数量",
+          dataIndex: "roomQuantity",
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.openroomlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                查看
+              </div>
+            )
+          }
+        },
+        {
+          title: "二维码",
+          dataIndex: "roomQuantity",
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.lookerweima(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                查看
+              </div>
+            )
+          }
+        },
+        {
+          title: "杯具管理功能",
+          dataIndex: "ifHasCup",
+          filters: [
+            { text: "有", value: true },
+            { text: "无", value: false },
+          ],
+          onFilter: (value, record) => record.ifHasCup == value,  //eslint-disable-line 
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div>
+                  有
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            }
+          }
+          // render: (text, record, index) => {
+          //   return (
+          //     <div >
+          //       <Switch
+          //         checked={text}
+          //         checkedChildren="有" unCheckedChildren="无"
+          //       // onChange={() => this.switchchange(text, record, index)}
+          //       />
+          //     </div>
+          //   )
+          // }
+        },
+  
+        {
+          title: "详细地址",
+          dataIndex: "address",
+          render: (text, record, index) => {
             return (
               <div>
                 {text}
               </div>
             )
           }
-        }
-      },
-      {
-        title: "保洁员数量",
-        dataIndex: "cleanerQuantity",
-        render: (text, record, index) => {
-          if (text === null) {
+        },
+        {
+          title: "创建时间",
+          dataIndex: "gmtcreate",
+        },
+        {
+          title: '操作',
+          dataIndex: 'id',
+          render: (text, record, index) => {
+            const editable = this.isEditing(record);
             return (
               <div>
-                无
-              </div>
-            )
-          } else {
-            return (
-              <div onClick={() => this.opencleanerlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
-                {text}
-              </div>
-            )
-          }
-        }
-      },
-      {
-        title: "设备数量",
-        dataIndex: "deviceQuantity",
-        render: (text, record, index) => {
-          return (
-            <div>
-              <Tooltip title={"插座数量：" + record.boardQuantity + "个  ~ 摄像头数量：" + record.cameraQuantity + "个"}>
-                <span style={{ color: '#1890ff' }}>{record.boardQuantity + record.cameraQuantity} </span>
-              </Tooltip>
-            </div>
-          )
-        }
-      },
-      {
-        title: "卫生许可证",
-        dataIndex: "borard",
-        render: (text, record, index) => {
-          return (
-            <div onClick={() => this.openlicence(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
-              查看
-            </div>
-          )
-        }
-      },
-      {
-        title: "消毒间数量",
-        dataIndex: "roomQuantity",
-        render: (text, record, index) => {
-          return (
-            <div onClick={() => this.openroomlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
-              查看
-            </div>
-          )
-        }
-      },
-      {
-        title: "二维码",
-        dataIndex: "roomQuantity",
-        render: (text, record, index) => {
-          return (
-            <div onClick={() => this.lookerweima(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
-              查看
-            </div>
-          )
-        }
-      },
-      {
-        title: "杯具管理功能",
-        dataIndex: "ifHasCup",
-        filters: [
-          { text: "有", value: true },
-          { text: "无", value: false },
-        ],
-        onFilter: (value, record) => record.ifHasCup == value,  //eslint-disable-line 
-        render: (text, record, index) => {
-          if (text === true) {
-            return (
-              <div>
-                有
-              </div>
-            )
-          } else {
-            return (
-              <div>
-                无
-              </div>
-            )
-          }
-        }
-        // render: (text, record, index) => {
-        //   return (
-        //     <div >
-        //       <Switch
-        //         checked={text}
-        //         checkedChildren="有" unCheckedChildren="无"
-        //       // onChange={() => this.switchchange(text, record, index)}
-        //       />
-        //     </div>
-        //   )
-        // }
-      },
-
-      {
-        title: "详细地址",
-        dataIndex: "address",
-        render: (text, record, index) => {
-          return (
-            <div>
-              {text}
-            </div>
-          )
-        }
-      },
-      {
-        title: "创建时间",
-        dataIndex: "gmtcreate",
-      },
-      {
-        title: '操作',
-        dataIndex: 'id',
-        render: (text, record, index) => {
-          const editable = this.isEditing(record);
-          return (
-            <div>
-              {editable ? (
-                <span>
-                  <EditableContext.Consumer>
-                    {form => (
-                      <a
-
-                        onClick={() => this.save(form, record.key, text)}
-                        style={{ marginRight: 8 }}
-                      >
-                        保存
-                      </a>
-                    )}
-                  </EditableContext.Consumer>
-                  <a onClick={() => this.cancel(record.key, text)}>取消</a>
+                {editable ? (
+                  <span>
+                    <EditableContext.Consumer>
+                      {form => (
+                        <a
+  
+                          onClick={() => this.save(form, record.key, text)}
+                          style={{ marginRight: 8 }}
+                        >
+                          保存
+                        </a>
+                      )}
+                    </EditableContext.Consumer>
+                    <a onClick={() => this.cancel(record.key, text)}>取消</a>
+                  </span>
+                ) : (
+                    <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
+                  )}
+                <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
+                  <a><img src={require('./delete.png')} alt="" /></a>
                 </span>
-              ) : (
-                  <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
-                )}
-              <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
-                <a><img src={require('./delete.png')} alt="" /></a>
-              </span>
-            </div>
-          );
+              </div>
+            );
+          }
         }
-      }
-    ];
-
+      ];
+  
+    }
+  
 
   }
 
@@ -522,7 +684,7 @@ class App extends React.Component {
 
   componentDidMount() {
     document.title = "单位管理";
-    if (localStorage.getItem("type") === "2" || localStorage.getItem("type") === "3") {
+    if (localStorage.getItem("type") === "2" || localStorage.getItem("type") === "3" || localStorage.getItem("type") === "4") {
       this.setState({
         typenone: 'none'
       })

@@ -132,111 +132,181 @@ class App extends React.Component {
     };
 
 
-
-    this.nodeInfoTableColumns = [
-      // {
-      //   title: "插座名称",
-      //   dataIndex: "nam",
-      // },
-      {
-        title: "所属酒店",
-        dataIndex: "siteName",
-      }, {
-        title: "设备位置",
-        dataIndex: "roomName",
-      },
-      {
-        title: "imei",
-        dataIndex: "imei",
-      },
-      // {
-      //   title: "mac",
-      //   dataIndex: "mac",
-      // },
-      {
-        title: "设备状态",
-        dataIndex: "onlineStatus",
-        render: (text, record, index) => {
-          if (text === true) {
-            return (
-              <div style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
-                在线
-              </div>
-            )
-          }
-          if (text === false) {
-            return (
-              <div style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
-                离线
-              </div>
-            )
+    if (localStorage.getItem('type') === "1") {
+      this.nodeInfoTableColumns = [
+        {
+          title: "所属酒店",
+          dataIndex: "siteName",
+        }, {
+          title: "设备位置",
+          dataIndex: "roomName",
+        },
+        {
+          title: "imei",
+          dataIndex: "imei",
+        },
+        // {
+        //   title: "mac",
+        //   dataIndex: "mac",
+        // },
+        {
+          title: "设备状态",
+          dataIndex: "onlineStatus",
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
+                  在线
+                </div>
+              )
+            }
+            if (text === false) {
+              return (
+                <div style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
+                  离线
+                </div>
+              )
+            }
           }
         }
-      }
-      // ,{
-      //   title: "累计电量",
-      //   dataIndex: "tec",
-      // }
-      , {
-        title: '工作记录',
-        dataIndex: 'id',
-        render: (text, record, index) =>
-          <div>
-            <a onClick={() => this.showhistory(text, record, index)}
-            >详情</a>
-          </div>
-      }
-      , {
-        title: "信号强度",
-        dataIndex: "sig",
-        render: (text, record, index) => {
-          if (text === null) {
-            return (
-              <div style={{ color: 'green' }}>
-                30
-              </div>
-            )
-          } else {
-            return (
-              <div style={{ color: 'green' }}>
-                {text}
-              </div>
-            )
-          }
-        }
-      },
-      {
-        title: '修改阈值',
-        dataIndex: 'id',
-        render: (text, record, index) =>
-          <div>
-            <a onClick={() => this.showyuzhi(text, record, index)}
-            >修改</a>
-          </div>
-      },
-      {
-        title: "创建时间",
-        dataIndex: "gmtcreate",
-      }, {
-        title: '操作',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record, index) => {
-          return (
+        // ,{
+        //   title: "累计电量",
+        //   dataIndex: "tec",
+        // }
+        , {
+          title: '工作记录',
+          dataIndex: 'id',
+          render: (text, record, index) =>
             <div>
-              <span onClick={() => this.onDelete(text, record, index)}>
-                <a><img src={require('./delete.png')} alt="" /></a>
-              </span>
+              <a onClick={() => this.showhistory(text, record, index)}
+              >详情</a>
             </div>
-          );
         }
-      }
-    ];
+        , {
+          title: "信号强度",
+          dataIndex: "sig",
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div style={{ color: 'green' }}>
+                  30
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ color: 'green' }}>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: '修改阈值',
+          dataIndex: 'id',
+          render: (text, record, index) =>
+            <div>
+              <a onClick={() => this.showyuzhi(text, record, index)}
+              >修改</a>
+            </div>
+        },
+        {
+          title: "创建时间",
+          dataIndex: "gmtcreate",
+        }, {
+          title: '操作',
+          dataIndex: 'id',
+          key: 'id',
+          render: (text, record, index) => {
+            return (
+              <div>
+                <span onClick={() => this.onDelete(text, record, index)}>
+                  <a><img src={require('./delete.png')} alt="" /></a>
+                </span>
+              </div>
+            );
+          }
+        }
+      ];
+    } else {
+      this.nodeInfoTableColumns = [
+        {
+          title: "所属酒店",
+          dataIndex: "siteName",
+        }, {
+          title: "设备位置",
+          dataIndex: "roomName",
+        },
+        {
+          title: "imei",
+          dataIndex: "imei",
+        },
+        {
+          title: "设备状态",
+          dataIndex: "onlineStatus",
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
+                  在线
+                </div>
+              )
+            }
+            if (text === false) {
+              return (
+                <div style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
+                  离线
+                </div>
+              )
+            }
+          }
+        }
+        , {
+          title: '工作记录',
+          dataIndex: 'id',
+          render: (text, record, index) =>
+            <div>
+              <a onClick={() => this.showhistory(text, record, index)}
+              >详情</a>
+            </div>
+        }
+        , {
+          title: "信号强度",
+          dataIndex: "sig",
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div style={{ color: 'green' }}>
+                  30
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ color: 'green' }}>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "创建时间",
+          dataIndex: "gmtcreate",
+        }
+      ];
+    }
+
+
   }
 
 
   componentWillMount() {
     document.title = "插座管理";
+    if (localStorage.getItem("type") === "2" || localStorage.getItem("type") === "3" || localStorage.getItem("type") === "4") {
+      this.setState({
+        typenone: 'none'
+      })
+    }
   }
 
   componentDidMount() {
