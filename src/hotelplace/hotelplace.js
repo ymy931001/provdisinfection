@@ -100,15 +100,8 @@ class App extends React.Component {
       if (res.data && res.data.message === "success") {
         if (res.data.data != undefined) { //eslint-disable-line
           if (res.data.data.length != 0) { //eslint-disable-line
-            // var arr = "杯具添加记录："
-            // for (var i in res.data.data) {
-            //   for (var j in JSON.parse(res.data.data[i].detail)) {
-            //     arr += JSON.parse(res.data.data[i].detail)[j].name + JSON.parse(res.data.data[i].detail)[j].count + "个，"
-            //   }
-            //   arr += "时间为 " + moment(res.data.data[0].gmtcreate).format('HH:mm:ss') + "。"
-            // }
             this.setState({
-              cuplist: res.data.data
+              cuplist: res.data.data.cupRecords
             }, function () {
               var cuparr = []
               for (var i in this.state.cuplist) {
