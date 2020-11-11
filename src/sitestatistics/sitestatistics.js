@@ -288,7 +288,7 @@ class App extends React.Component {
       })
     } else {
       this.setState({
-        begintime: moment(dateString[0]),
+        begintime: moment(dateString[0]).format('YYYY-MM-DD'),
       });
     }
     if (dateString[1] === "") {
@@ -297,7 +297,7 @@ class App extends React.Component {
       })
     } else {
       this.setState({
-        endtime: moment(dateString[1]),
+        endtime: moment(dateString[1]).format('YYYY-MM-DD'),
       });
     }
   }
