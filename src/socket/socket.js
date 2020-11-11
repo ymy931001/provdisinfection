@@ -66,38 +66,39 @@ class App extends React.Component {
       devicelists: [],
       devicedis: 'none',
       readouts: [
-        //   {
-        //   title: 'MAC',
-        //   dataIndex: 'mac',
+        // //   {
+        // //   title: 'MAC',
+        // //   dataIndex: 'mac',
+        // // },
+        // {
+        //   title: '电流',
+        //   dataIndex: 'electricity',
+        // }, {
+        //   title: '功率',
+        //   dataIndex: 'power',
         // },
         {
-          title: '电流',
-          dataIndex: 'electricity',
+          title: '开始时间',
+          dataIndex: 'begin',
+          // render: (text, record, index) => {
+          //   if (text === true) {
+          //     return (
+          //       <div style={{ color: 'green', cursor: 'pointer' }}>
+          //         开启
+          //       </div>
+          //     )
+          //   }
+          //   if (text === false) {
+          //     return (
+          //       <div style={{ color: 'red', cursor: 'pointer' }}>
+          //         关闭
+          //       </div>
+          //     )
+          //   }
+          // }
         }, {
-          title: '功率',
-          dataIndex: 'power',
-        }, {
-          title: '开关状态',
-          dataIndex: 'loadStatus',
-          render: (text, record, index) => {
-            if (text === true) {
-              return (
-                <div style={{ color: 'green', cursor: 'pointer' }}>
-                  开启
-                </div>
-              )
-            }
-            if (text === false) {
-              return (
-                <div style={{ color: 'red', cursor: 'pointer' }}>
-                  关闭
-                </div>
-              )
-            }
-          }
-        }, {
-          title: '上报时间',
-          dataIndex: 'gmtcreate',
+          title: '结束时间',
+          dataIndex: 'end',
         }],
 
       socketcolumns: [
@@ -524,17 +525,55 @@ class App extends React.Component {
       moment(new Date().getTime()).format("YYYY-MM-DD"),
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
-        this.setState({
-          readout: res.data.data,
-        });
-        if (res.data.data.length < 10) {
+        if (res.data.data.length !== 0) {
+          var arr = []
+          var newarr = []
+          var arrlist = []
+          for (var i in res.data.data) {
+            if (res.data.data[res.data.data.length - 1].loadStatus === false) {
+              if (parseInt(i, 10) !== res.data.data.length - 1) {
+                if (res.data.data[i].loadStatus === false) {
+                  arr.push(res.data.data[i].gmtcreate)
+                }
+                if (res.data.data[i].loadStatus === true) {
+                  newarr.push(res.data.data[i].gmtcreate)
+                }
+              }
+            } else {
+              if (res.data.data[i].loadStatus === false) {
+                arr.push(res.data.data[i].gmtcreate)
+              }
+              if (res.data.data[i].loadStatus === true) {
+                newarr.push(res.data.data[i].gmtcreate)
+              }
+            }
+          }
+          if (res.data.data[0].loadStatus === true) {
+            arr.push("使用中")
+          }
+          for (var j in arr) {
+            arrlist.push({
+              "begin": newarr[j],
+              "end": arr[j]
+            })
+          }
           this.setState({
-            pages: false
-          })
+            readout: arrlist,
+          });
+          if (arrlist.length < 10) {
+            this.setState({
+              pages: false
+            })
+          } else {
+            this.setState({
+              pages: true
+            })
+          }
         } else {
           this.setState({
-            pages: true
-          })
+            readout: [],
+            pages: false
+          });
         }
       }
     });
@@ -602,17 +641,55 @@ class App extends React.Component {
       this.state.endtime === undefined ? undefined : moment(this.state.endtime).format('YYYY-MM-DD'),
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
-        this.setState({
-          readout: res.data.data,
-        });
-        if (res.data.data.length < 10) {
+        if (res.data.data.length !== 0) {
+          var arr = []
+          var newarr = []
+          var arrlist = []
+          for (var i in res.data.data) {
+            if (res.data.data[res.data.data.length - 1].loadStatus === false) {
+              if (parseInt(i, 10) !== res.data.data.length - 1) {
+                if (res.data.data[i].loadStatus === false) {
+                  arr.push(res.data.data[i].gmtcreate)
+                }
+                if (res.data.data[i].loadStatus === true) {
+                  newarr.push(res.data.data[i].gmtcreate)
+                }
+              }
+            } else {
+              if (res.data.data[i].loadStatus === false) {
+                arr.push(res.data.data[i].gmtcreate)
+              }
+              if (res.data.data[i].loadStatus === true) {
+                newarr.push(res.data.data[i].gmtcreate)
+              }
+            }
+          }
+          if (res.data.data[0].loadStatus === true) {
+            arr.push("使用中")
+          }
+          for (var j in arr) {
+            arrlist.push({
+              "begin": newarr[j],
+              "end": arr[j]
+            })
+          }
           this.setState({
-            pages: false
-          })
+            readout: arrlist,
+          });
+          if (arrlist.length < 10) {
+            this.setState({
+              pages: false
+            })
+          } else {
+            this.setState({
+              pages: true
+            })
+          }
         } else {
           this.setState({
-            pages: true
-          })
+            readout: [],
+            pages: false
+          });
         }
       }
     });

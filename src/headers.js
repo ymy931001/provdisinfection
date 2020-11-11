@@ -107,7 +107,7 @@ class Headers extends Component {
                         <Avatar icon="user" style={{ marginRight: '10px', marginBottom: '10px' }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                         <span style={{ marginRight: '10px' }}>
                             {/* <Icon type="user" style={{ marginRight: '5px' }} /> */}
-                            {localStorage.getItem("userID")}
+                            {localStorage.getItem("namezh")}
                         </span>
                     </div>
                     <div style={{ height: "32px", lineHeight: "32px", textAlign: 'right' }}>

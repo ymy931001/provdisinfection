@@ -240,37 +240,37 @@ class App extends React.Component {
       title: '型号',
       dataIndex: 'model',
     }, {
-      title: '功率',
+      title: '功率(W)',
       dataIndex: 'power',
       render: (text, record, index) => {
         return (
           <div>
             <span>
-              {text}W
+              {text}
             </span>
           </div>
         );
       }
     }, {
-      title: '容量',
+      title: '容量(L)',
       dataIndex: 'capacity',
       render: (text, record, index) => {
         return (
           <div>
             <span>
-              {text}L
+              {text}
             </span>
           </div>
         );
       }
     }, {
-      title: '额定时间',
+      title: '额定时间(分)',
       dataIndex: 'standartTime',
       render: (text, record, index) => {
         return (
           <div>
             <span>
-              {text}分
+              {text}
             </span>
           </div>
         );
@@ -1624,7 +1624,7 @@ class App extends React.Component {
 
           <Drawer
             title="消毒柜管理"
-            width={750}
+            width={850}
             onClose={this.onClose}
             visible={this.state.roomvisible}
           >

@@ -303,8 +303,8 @@ class App extends React.Component {
             } else {
               return (
                 <div style={{ color: 'red', cursor: "pointer" }}>
-                  <Tooltip placement="topLeft" title={"消毒柜未开启：" + record.duration + "天"}>
-                    {text}
+                  <Tooltip placement="topLeft" title={"未开启天数：" + record.duration + "天"}>
+                    消毒柜未开启
                   </Tooltip>
                 </div>
 
