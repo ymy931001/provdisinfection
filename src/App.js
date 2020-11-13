@@ -578,10 +578,10 @@ class App extends Component {
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="19">
-                    <a href="http://disinfection.terabits.cn:9000" target="_blank" rel="noopener noreferrer">控制台</a>
+                    <a href="http://iva.terabits.cn:9000" target="_blank" rel="noopener noreferrer">控制台</a>
                   </Menu.Item>
                   <Menu.Item key="20">
-                    <a href="http://disinfection.terabits.cn:9090/druid" target="_blank" rel="noopener noreferrer">sql统计</a>
+                    <a href="http://iva.terabits.cn:9090/druid" target="_blank" rel="noopener noreferrer">sql统计</a>
                   </Menu.Item>
                 </SubMenu>
               </Menu>
