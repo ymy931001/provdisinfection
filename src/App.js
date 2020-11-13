@@ -58,6 +58,7 @@ import interfaces from "./interfaces/interfaces";
 import housereportdetail from "./housereportdetail/housereportdetail";
 import erweima from "./erweima/erweima";
 import sederweimalist from "./sederweimalist/sederweimalist";
+import testpage from "./testpage/testpage";
 import backvideo from "./backvideo/backvideo";
 
 import Headers from './headers';
@@ -71,7 +72,7 @@ const SubMenu = Menu.SubMenu;
 
 
 class App extends Component {
-  rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub6', 'sub7', 'sub10', 'sub11'];
+  rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub6', 'sub7', 'sub10', 'sub11', 'sub12'];
 
   state = {
     // collapsed: true,
@@ -225,7 +226,7 @@ class App extends Component {
                       <span>运行概览</span>
                     </span>
                   }
-                // style={{ display: this.state.lsdis }}
+                  style={{ display: this.state.lsdis }}
                 >
                   <Menu.Item key="100"
                   >
@@ -562,9 +563,8 @@ class App extends Component {
                   </Link>
                 </Menu.Item> */}
 
-                {/* <SubMenu
-                  key="sub3"
-                  style={{ display: this.state.disnone }}
+                <SubMenu
+                  key="sub12"
                   title={
                     <span>
                       <Icon type="laptop" />
@@ -573,17 +573,17 @@ class App extends Component {
                   }
                 >
                   <Menu.Item key="18">
-                    <Link to="/app/video_datas">
+                    <Link to="/app/testpage">
                       <span>测试信息</span>
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="11">
-                    <a href="http://disinfection.terabits.cn:9000" target="_blank">控制台</a>
+                  <Menu.Item key="19">
+                    <a href="http://disinfection.terabits.cn:9000" target="_blank" rel="noopener noreferrer">控制台</a>
                   </Menu.Item>
-                  <Menu.Item key="12">
-                    <a href="http://disinfection.terabits.cn:9090/druid" target="_blank">sql统计</a>
+                  <Menu.Item key="20">
+                    <a href="http://disinfection.terabits.cn:9090/druid" target="_blank" rel="noopener noreferrer">sql统计</a>
                   </Menu.Item>
-                </SubMenu> */}
+                </SubMenu>
               </Menu>
             </Sider>
 
@@ -635,6 +635,7 @@ class App extends Component {
                   <Route path="/app/erweima" component={erweima} />
                   <Route path="/app/sederweimalist" component={sederweimalist} />
                   <Route path="/app/backvideo" component={backvideo} />
+                  <Route path="/app/testpage" component={testpage} />
                 </Switch>
               </Content>
             </Layout>

@@ -1453,6 +1453,21 @@ export const pcuploadfile = params =>
   });
 
 
+//查询检测原始记录消息
+export const testindex = params =>
+  http.get(config.requestIp + "/test/index", {
+    roomId: params[0],
+    date: params[1],
+  });
+
+//查询动检消息
+export const testmotion = params =>
+  http.get(config.requestIp + "/test/motion", {
+    roomId: params[0],
+    date: params[1],
+  });
+
+
 
 
 
