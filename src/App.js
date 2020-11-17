@@ -574,6 +574,7 @@ class App extends Component {
                       <span>运维监控</span>
                     </span>
                   }
+                  style={{ display: this.state.lsdis }}
                 >
                   <Menu.Item key="18">
                     <Link to="/app/testpage">
