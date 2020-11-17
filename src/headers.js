@@ -32,6 +32,7 @@ class Headers extends Component {
         user: '',
         visible: false,
         collapsed: false,
+        areaname: null
     };
     toggle = () => {
         this.setState({
@@ -58,6 +59,11 @@ class Headers extends Component {
                 window.location = "/";
                 localStorage.clear();
             }, 1500);
+        }
+        if (localStorage.getItem('type') === "6" || localStorage.getItem('type') === "2") {
+            this.setState({
+                areaname: "-" + localStorage.getItem('namezh').substring(0, 3)
+            })
         }
         // function showTime() {
         //     let nowtime = new Date();
@@ -99,7 +105,7 @@ class Headers extends Component {
                     color: 'white', fontSize: "25px", borderRadius: '5px',
                     marginLeft: "1%", marginRight: '10px', marginTop: "6px", display: 'flex', alignItems: 'center'
                 }}>
-                    <img src={require('./logo666.png')} alt="" style={{ marginRight: '20px' }} /> 浙江省住宿场所消毒保洁智能监管平台
+                    <img src={require('./logo666.png')} alt="" style={{ marginRight: '20px' }} /> 浙江省住宿场所消毒保洁智能监管平台{this.state.areaname}
                 </div>
                 <div style={{ marginRight: "20px", float: 'right', height: '64px', display: 'flex', alignItems: 'center', fontSize: '14px' }}>
                     <div style={{ textAlign: 'right' }}>

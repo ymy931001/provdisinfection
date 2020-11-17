@@ -88,7 +88,7 @@ class SignIn extends Component {
             localStorage.setItem('sitelist', arr)
           });
           setTimeout(function () {
-            window.location.href = "/app/hotelreport";
+            window.location.href = "/app/areastatistics";
           }, 1000);
         } else {
           message.error("用户名或密码错误");
@@ -146,7 +146,7 @@ class SignIn extends Component {
         localStorage.setItem("areaId", res.data.data.areaId);
         localStorage.setItem("currenttime", new Date().getTime());
         setTimeout(function () {
-          window.location.href = "/app/hotelreport";
+          window.location.href = "/app/areastatistics";
         }, 1000);
       } else {
         message.error("用户名或密码错误");
