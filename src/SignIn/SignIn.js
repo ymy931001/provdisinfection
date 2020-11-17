@@ -69,8 +69,8 @@ class SignIn extends Component {
           localStorage.setItem("authorization", res.headers.authorization);
           localStorage.setItem("userID", this.state.userID);
           localStorage.setItem("namezh", res.data.data.name);
-          localStorage.setItem("menuid", "85");
-          localStorage.setItem("menuline", "sub7");
+          localStorage.setItem("menuid", "100");
+          localStorage.setItem("menuline", "sub10");
           localStorage.setItem("lastLogin", res.data.data.lastLogin);
           localStorage.setItem("rolename", arrs.join(','));
           localStorage.removeItem('addresslist');
@@ -137,8 +137,8 @@ class SignIn extends Component {
         localStorage.setItem("namezh", res.data.data.name);
         localStorage.setItem("rolename", arrs.join(','));
         localStorage.setItem("lastLogin", res.data.data.lastLogin);
-        localStorage.setItem("menuid", "85");
-        localStorage.setItem("menuline", "sub7");
+        localStorage.setItem("menuid", "100");
+        localStorage.setItem("menuline", "sub10");
         localStorage.removeItem('addresslist');
         localStorage.removeItem('site');
         localStorage.setItem("userID", this.state.userID);

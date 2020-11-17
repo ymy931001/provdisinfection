@@ -102,8 +102,11 @@ class App extends Component {
     if (localStorage.getItem("type") === '4') {
       this.setState({
         hoteldis: 'none',
+        // jddis: 'none',
       })
     }
+
+
     getsysmenu().then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -203,7 +206,7 @@ class App extends Component {
               <Menu theme="dark"
                 onClick={this.menuClick}
                 mode="inline"
-                defaultSelectedKeys={['85']}
+                defaultSelectedKeys={['100']}
                 openKeys={this.state.openKeys}
                 onOpenChange={this.onOpenChange}
                 selectedKeys={[localStorage.getItem("menuid")]}
@@ -226,7 +229,7 @@ class App extends Component {
                       <span>运行概览</span>
                     </span>
                   }
-                  style={{ display: this.state.lsdis }}
+                  style={{ display: this.state.jddis }}
                 >
                   <Menu.Item key="100"
                   >
