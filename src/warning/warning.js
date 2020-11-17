@@ -85,9 +85,14 @@ class App extends React.Component {
     ]).then(res => {
       var arr = []
       var newarr = []
+      var offarr = []
       for (var i in res.data.data) {
         if (res.data.data[i].status === false) {
-          arr.push(res.data.data[i])
+          if (res.data.data[i].type === 3) {
+            offarr.push(res.data.data[i])
+          } else {
+            arr.push(res.data.data[i])
+          }
         } else {
           newarr.push(res.data.data[i])
         }
@@ -95,7 +100,9 @@ class App extends React.Component {
       this.setState({
         warningListDataSource: arr,
         historydata: newarr,
+        offlinedata: offarr
       }, function () {
+        console.log(this.state.historydata)
         if (arr.length < 10) {
           this.setState({
             page: false
@@ -324,10 +331,15 @@ class App extends React.Component {
       }, {
         title: "报警级别",
         dataIndex: "level",
+        filters: [
+          { text: 1, value: "预报警" },
+          { text: 2, value: "报警" },
+        ],
+        onFilter: (value, record) => record.ifHasCup == value,  //eslint-disable-line 
         render: (text, record, index) => {
           if (text === 1) {
             return (
-              <div style={{ color: 'red' }}>
+              <div style={{ color: 'orange' }}>
                 预报警
               </div>
             )
@@ -339,6 +351,13 @@ class App extends React.Component {
               </div>
             )
           }
+          if (record.type === 1) {
+            return (
+              <div style={{ color: '#1890ff' }}>
+                提醒
+              </div>
+            )
+          }
           if (text === undefined) {
             return (
               <div>
@@ -347,12 +366,32 @@ class App extends React.Component {
             )
           }
         }
+      }, {
+        title: "报警时长",
+        dataIndex: "duration",
+        sorter: (a, b) => a.duration - b.duration,
+        render: (text, record, index) => {
+          if (!text) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                <span style={{ fontWeight: 'bold', color: "red" }}>{text}</span>  天
+              </div>
+            )
+          }
+
+        }
       },
       {
         title: "报警时间",
         dataIndex: "date",
         render: (text, record, index) => {
-          if (text === null) {
+          if (text === null || !record.duration) {
             return (
               <div style={{ color: 'red' }}>
                 暂无
@@ -361,10 +400,11 @@ class App extends React.Component {
           } else {
             return (
               <div style={{ color: 'green' }}>
-                {moment(new Date(text)).format('YYYY-MM-DD')}
+                {moment(new Date(text) - 3600 * 24 * 1000 * record.duration).format('YYYY-MM-DD')}
               </div>
             )
           }
+
         }
       }, {
         title: "异常说明",
@@ -386,6 +426,74 @@ class App extends React.Component {
         }
       }
 
+    ];
+
+    const offlineColumns = [
+      {
+        title: "酒店名称",
+        dataIndex: "siteName",
+      },
+      {
+        title: "房间位置",
+        dataIndex: "roomName",
+        render: (text, record, index) => {
+          if (!text) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                {text}
+              </div>
+            )
+          }
+        }
+      },
+      {
+        title: "报警原因",
+        dataIndex: "message",
+        render: (text, record, index) => {
+          return (
+            <div style={{ color: 'red' }} >
+              {text}
+            </div >
+          )
+        }
+      }, {
+        title: "离线时长",
+        dataIndex: "duration",
+        sorter: (a, b) => a.duration - b.duration,
+        render: (text, record, index) => {
+          return (
+            <div>
+              <span style={{ fontWeight: 'bold', color: "red" }}>{Math.ceil(text / 24)}</span>  天
+            </div>
+          )
+        }
+      },
+      {
+        title: "报警时间",
+        dataIndex: "date",
+        render: (text, record, index) => {
+          if (text === null) {
+            return (
+              <div style={{ color: 'red' }}>
+                暂无
+              </div>
+            )
+          } else {
+            return (
+              <div style={{ color: 'green' }}>
+                {moment(new Date(text) - 3600 * 24 * 1000 * (Math.ceil(record.duration / 24))).format('YYYY-MM-DD')}
+              </div>
+            )
+          }
+
+        }
+      }
     ];
     return (
       <Layout>
@@ -424,12 +532,21 @@ class App extends React.Component {
                     />
                   </div>
                 </TabPane>
-                <TabPane tab="历史" key="2" style={{ minHeight: "700px" }}>
+                <TabPane tab="已处理" key="2" style={{ minHeight: "700px" }}>
                   <div style={{ marginTop: 5 }}>
                     <Table
                       dataSource={this.state.historydata}
                       columns={otaInfoTableColumns}
                       pagination={this.state.pages}
+                    />
+                  </div>
+                </TabPane>
+                <TabPane tab="设备离线" key="3" style={{ minHeight: "700px" }}>
+                  <div style={{ marginTop: 5 }}>
+                    <Table
+                      dataSource={this.state.offlinedata}
+                      columns={offlineColumns}
+                      pagination={this.state.offlinepage}
                     />
                   </div>
                 </TabPane>
