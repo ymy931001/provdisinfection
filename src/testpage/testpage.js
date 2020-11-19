@@ -472,8 +472,11 @@ class App extends React.Component {
         dataIndex: "uuid",
       },
       {
-        title: "时间",
+        title: "请求时间",
         dataIndex: "gmtcreate",
+      }, {
+        title: "响应时间",
+        dataIndex: "gmtmodify",
       },
       {
         title: "请求",

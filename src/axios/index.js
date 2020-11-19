@@ -1507,7 +1507,6 @@ export const testai = params =>
     pageNum: params[0],
     pageSize: params[1],
     date: params[2],
-
   });
 
 

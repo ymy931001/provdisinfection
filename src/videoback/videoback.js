@@ -17,6 +17,7 @@ import $ from "jquery"
 import {
 
 } from "../axios";
+
 import "./videoback.css";
 
 
@@ -37,7 +38,7 @@ class App extends React.Component {
   };
 
   componentWillMount() {
-
+ 
   }
 
   componentDidMount() {
