@@ -346,10 +346,10 @@ class App extends React.Component {
         title: "报警级别",
         dataIndex: "level",
         filters: [
-          { text: 1, value: "预报警" },
-          { text: 2, value: "报警" },
+          { text: "预报警", value: 1 },
+          { text: "报警", value: 2 },
         ],
-        onFilter: (value, record) => record.ifHasCup == value,  //eslint-disable-line 
+        onFilter: (value, record) => record.level == value,  //eslint-disable-line 
         render: (text, record, index) => {
           if (text === 1) {
             return (
