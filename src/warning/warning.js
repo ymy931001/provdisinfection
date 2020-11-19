@@ -109,7 +109,7 @@ class App extends React.Component {
       this.state.nowpageNum,
       this.state.pageNumSize,
       false,
-      "1, 2, 4, 5, 6,7",
+      "0,1, 2, 4, 5, 6,7",
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
