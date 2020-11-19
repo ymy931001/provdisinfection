@@ -1111,13 +1111,46 @@ export const findById = params =>
 //报警列表
 export const getalarm = params =>
   http.get(config.requestIp + "/alarm", {
-    city: params[0],
-    area: params[1],
-    siteId: params[2],
-    begin: params[3],
-    end: params[4],
-    roomId: params[5],
+    pageNum: params[0],
+    pageSize: params[1],
+    type: params[2],
+    city: params[3],
+    area: params[4],
+    siteId: params[5],
+    begin: params[6],
+    end: params[7],
+    roomId: params[8],
   });
+
+//报警列表
+export const getalarms = params =>
+  http.get(config.requestIp + "/alarm", {
+    pageNum: params[0],
+    pageSize: params[1],
+    status: params[2],
+    city: params[3],
+    area: params[4],
+    siteId: params[5],
+    begin: params[6],
+    end: params[7],
+    roomId: params[8],
+  });
+
+//当前报警列表
+export const nowalarm = params =>
+  http.get(config.requestIp + "/alarm", {
+    pageNum: params[0],
+    pageSize: params[1],
+    status: params[2],
+    type: params[3],
+    city: params[4],
+    area: params[5],
+    siteId: params[6],
+    begin: params[7],
+    end: params[8],
+    roomId: params[9],
+  });
+
 
 //添加报警说明
 export const addalarmRemark = params =>
@@ -1468,6 +1501,11 @@ export const testmotion = params =>
   });
 
 
+//查询ai交互消息
+export const testai = params =>
+  http.get(config.requestIp + "/test/ai", {
+    date: params[0],
+  });
 
 
 

@@ -13,6 +13,7 @@ import { BankOutlined, RobotOutlined, PushpinOutlined, CloudOutlined } from '@an
 import {
   getsysmenu,
 } from "./axios";
+import * as config from "./axios/config";
 
 
 import warning from "./warning/warning";
@@ -585,7 +586,10 @@ class App extends Component {
                     <a href="http://iva.terabits.cn:9000" target="_blank" rel="noopener noreferrer">控制台</a>
                   </Menu.Item>
                   <Menu.Item key="20">
-                    <a href="http://iva.terabits.cn:9090/druid" target="_blank" rel="noopener noreferrer">sql统计</a>
+                    <a href={config.requestIp + "/druid"} target="_blank" rel="noopener noreferrer">sql统计</a>
+                  </Menu.Item>
+                  <Menu.Item key="21">
+                    <a href={config.requestIp + "/doc.html"} target="_blank" rel="noopener noreferrer">接口文档</a>
                   </Menu.Item>
                 </SubMenu>
               </Menu>

@@ -10,12 +10,13 @@ import {
   Cascader,
   Button,
   DatePicker,
-  Tooltip
+  Tooltip,
+  Pagination
 } from "antd";
 
 import {
   getalarm,
-  addalarmRemark, getregion
+  addalarmRemark, getregion, getalarms, nowalarm
 } from "../axios";
 import "./warning.css";
 import moment from 'moment';
@@ -37,6 +38,10 @@ class App extends React.Component {
       otaModalVisible: null,
       begintime: undefined,
       endtime: undefined,
+      pageNum: 1,
+      hispageNum: 1,
+      nowpageNum: 1,
+      pageNumSize: 10,
     };
   }
   onCollapse = collapsed => {
@@ -49,7 +54,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getalarm()
-
+    this.getdevicealarm()
+    this.getnowalarm()
     getregion().then(res => {
       if (res.data && res.data.message === "success") {
         if (res.data.data.length !== 0) {
@@ -79,48 +85,58 @@ class App extends React.Component {
   }
 
 
-  getalarm = () => {
+  getdevicealarm = () => {
     getalarm([
-
+      this.state.pageNum,
+      this.state.pageNumSize,
+      3,
+      this.state.cityid,
+      this.state.areaid,
+      this.state.siteId,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
     ]).then(res => {
-      var arr = []
-      var newarr = []
-      var offarr = []
-      for (var i in res.data.data) {
-        if (res.data.data[i].status === false) {
-          if (res.data.data[i].type === 3) {
-            offarr.push(res.data.data[i])
-          } else {
-            arr.push(res.data.data[i])
-          }
-        } else {
-          newarr.push(res.data.data[i])
-        }
-      }
       this.setState({
-        warningListDataSource: arr,
-        historydata: newarr,
-        offlinedata: offarr
-      }, function () {
-        console.log(this.state.historydata)
-        if (arr.length < 10) {
-          this.setState({
-            page: false
-          })
-        } else {
-          this.setState({
-            page: true
-          })
-        }
-        if (newarr.length < 10) {
-          this.setState({
-            pages: false
-          })
-        } else {
-          this.setState({
-            pages: true
-          })
-        }
+        offlinedata: res.data.data.alarmHistoryVOList,
+        offlinetotal: res.data.data.total,
+      })
+    });
+  }
+
+
+  getnowalarm = () => {
+    nowalarm([
+      this.state.nowpageNum,
+      this.state.pageNumSize,
+      false,
+      "1, 2, 4, 5, 6,7",
+      this.state.cityid,
+      this.state.areaid,
+      this.state.siteId,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+    ]).then(res => {
+      this.setState({
+        warningListDataSource: res.data.data.alarmHistoryVOList,
+        nowtotal: res.data.data.total,
+      })
+    });
+  }
+
+  getalarm = () => {
+    getalarms([
+      this.state.hispageNum,
+      this.state.pageNumSize,
+      true,
+      this.state.cityid,
+      this.state.areaid,
+      this.state.siteId,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+    ]).then(res => {
+      this.setState({
+        historydata: res.data.data.alarmHistoryVOList,
+        histotal: res.data.data.total,
       })
     });
   }
@@ -179,46 +195,9 @@ class App extends React.Component {
 
   //查询
   query = () => {
-    getalarm([
-      this.state.cityid,
-      this.state.areaid,
-      this.state.siteId,
-      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
-      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
-    ]).then(res => {
-      var arr = []
-      var newarr = []
-      for (var i in res.data.data) {
-        if (res.data.data[i].status === false) {
-          arr.push(res.data.data[i])
-        } else {
-          newarr.push(res.data.data[i])
-        }
-      }
-      this.setState({
-        warningListDataSource: arr,
-        historydata: newarr,
-      }, function () {
-        if (arr.length < 10) {
-          this.setState({
-            page: false
-          })
-        } else {
-          this.setState({
-            page: true
-          })
-        }
-        if (newarr.length < 10) {
-          this.setState({
-            pages: false
-          })
-        } else {
-          this.setState({
-            pages: true
-          })
-        }
-      })
-    });
+    this.getalarm()
+    this.getdevicealarm()
+    this.getnowalarm()
   }
 
 
@@ -235,6 +214,8 @@ class App extends React.Component {
       endtime: undefined,
     }, function () {
       this.getalarm()
+      this.getdevicealarm()
+      this.getnowalarm()
     })
   }
 
@@ -260,6 +241,39 @@ class App extends React.Component {
       });
     }
   }
+
+  //设备离线筛选
+  pagechange = (page, num) => {
+    this.setState({
+      pageNum: page,
+      pageNumSize: num,
+    }, function () {
+      this.getdevicealarm()
+    })
+  }
+
+  //已处理分页
+  hispagechange = (page, num) => {
+    this.setState({
+      hispageNum: page,
+      pageNumSize: num,
+    }, function () {
+      console.log(11)
+      this.getalarm()
+    })
+  }
+
+
+  //当前报警分页
+  nowpagechange = (page, num) => {
+    this.setState({
+      nowpageNum: page,
+      pageNumSize: num,
+    }, function () {
+      this.getnowalarm()
+    })
+  }
+
 
 
   render() {
@@ -528,8 +542,17 @@ class App extends React.Component {
                     <Table
                       dataSource={this.state.warningListDataSource}
                       columns={otaInfoTableColumns}
-                      pagination={this.state.page}
+                      pagination={false}
                     />
+                    <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                      <Pagination
+                        defaultCurrent={1}
+                        onChange={this.nowpagechange}
+                        total={this.state.nowtotal}
+                        hideOnSinglePage={true}
+                        current={this.state.nowpageNum}
+                      />
+                    </div>
                   </div>
                 </TabPane>
                 <TabPane tab="已处理" key="2" style={{ minHeight: "700px" }}>
@@ -537,8 +560,17 @@ class App extends React.Component {
                     <Table
                       dataSource={this.state.historydata}
                       columns={otaInfoTableColumns}
-                      pagination={this.state.pages}
+                      pagination={false}
                     />
+                    <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                      <Pagination
+                        defaultCurrent={1}
+                        onChange={this.hispagechange}
+                        total={this.state.histotal}
+                        hideOnSinglePage={true}
+                        current={this.state.hispageNum}
+                      />
+                    </div>
                   </div>
                 </TabPane>
                 <TabPane tab="设备离线" key="3" style={{ minHeight: "700px" }}>
@@ -546,9 +578,19 @@ class App extends React.Component {
                     <Table
                       dataSource={this.state.offlinedata}
                       columns={offlineColumns}
-                      pagination={this.state.offlinepage}
+                      pagination={false}
                     />
+                    <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                      <Pagination
+                        defaultCurrent={1}
+                        onChange={this.pagechange}
+                        total={this.state.offlinetotal}
+                        hideOnSinglePage={true}
+                        current={this.state.pageNum}
+                      />
+                    </div>
                   </div>
+
                 </TabPane>
               </Tabs>
             </Card>
