@@ -1504,7 +1504,10 @@ export const testmotion = params =>
 //查询ai交互消息
 export const testai = params =>
   http.get(config.requestIp + "/test/ai", {
-    date: params[0],
+    pageNum: params[0],
+    pageSize: params[1],
+    date: params[2],
+
   });
 
 

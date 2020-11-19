@@ -8,7 +8,7 @@ import {
   DatePicker,
   Cascader,
   Select, Modal, message,
-  Input
+  Input, Pagination
 } from "antd";
 
 import {
@@ -39,6 +39,8 @@ class App extends React.Component {
     otaModalVisible: null,
     time: moment(new Date().getTime()),
     times: moment(new Date().getTime()),
+    pageNum: 1,
+    pageNumSize: 10,
   };
 
   onCollapse = collapsed => {
@@ -186,10 +188,13 @@ class App extends React.Component {
 
   aiquery = () => {
     testai([
+      this.state.pageNum,
+      this.state.pageNumSize,
       moment(this.state.times).format("YYYY-MM-DD"),
     ]).then(res => {
       this.setState({
-        aidata: res.data.data
+        aidata: res.data.data.detectionAiList,
+        total: res.data.data.total,
       })
     });
   }
@@ -357,6 +362,26 @@ class App extends React.Component {
         lookimgurl: 'http://iva.terabits.cn/' + text
       })
     }
+  }
+
+
+  //设备离线筛选
+  pagechange = (page, num) => {
+    this.setState({
+      pageNum: page,
+      pageNumSize: num,
+    }, function () {
+      testai([
+        this.state.pageNum,
+        this.state.pageNumSize,
+        moment(this.state.times).format("YYYY-MM-DD"),
+      ]).then(res => {
+        this.setState({
+          aidata: res.data.data.detectionAiList,
+          total: res.data.data.total,
+        })
+      });
+    })
   }
 
 
@@ -687,8 +712,17 @@ class App extends React.Component {
                       dataSource={this.state.aidata}
                       columns={aiColumns}
                       style={{ marginTop: '20px' }}
-                    // pagination={this.state.page}
+                      pagination={false}
                     />
+                    <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                      <Pagination
+                        defaultCurrent={1}
+                        onChange={this.pagechange}
+                        total={this.state.total}
+                        hideOnSinglePage={true}
+                        current={this.state.pageNum}
+                      />
+                    </div>
                   </div>
                 </TabPane>
               </Tabs>
