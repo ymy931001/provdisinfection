@@ -165,23 +165,27 @@ class App extends React.Component {
 
 
   query = () => {
-    testmotion([
-      this.state.roomId,
-      moment(this.state.time).format("YYYY-MM-DD"),
-    ]).then(res => {
-      this.setState({
-        isclist: res.data.data
-      })
-    });
+    if (!this.state.roomId) {
+      message.error('请选择房间')
+    } else {
+      testmotion([
+        this.state.roomId,
+        moment(this.state.time).format("YYYY-MM-DD"),
+      ]).then(res => {
+        this.setState({
+          isclist: res.data.data
+        })
+      });
 
-    testindex([
-      this.state.roomId,
-      moment(this.state.time).format('YYYY-MM-DD'),
-    ]).then(res => {
-      this.setState({
-        historydata: res.data.data
-      })
-    });
+      testindex([
+        this.state.roomId,
+        moment(this.state.time).format('YYYY-MM-DD'),
+      ]).then(res => {
+        this.setState({
+          historydata: res.data.data
+        })
+      });
+    }
   }
 
 
