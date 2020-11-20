@@ -7,7 +7,8 @@ import {
   Modal,
   DatePicker,
   Select,
-  Tooltip
+  Tooltip,
+  Pagination
 } from "antd";
 import {
   siteStatistics,
@@ -40,6 +41,8 @@ class App extends React.Component {
       typenone: "inline-block",
       notaddress: [],
       unnormallist: [],
+      pageNum: 1,
+      pageNumSize: 10,
     };
 
 
@@ -182,18 +185,22 @@ class App extends React.Component {
 
 
     siteStatistics([
-
+      this.state.pageNum,
+      this.state.pageNumSize,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         console.log(res.data.data)
         this.setState({
-          sitelist: res.data.data
+          sitelist: res.data.data.siteStatisticsList,
+          total: res.data.data.total,
         })
       }
     });
 
 
-    sitelist([]).then(res => {
+    sitelist([
+
+    ]).then(res => {
       if (res.data && res.data.message === "success") {
         var arr = []
         for (var i in res.data.data) {
@@ -268,11 +275,14 @@ class App extends React.Component {
 
   sitechange = (text, record, index) => {
     siteStatistics([
+      this.state.pageNum,
+      this.state.pageNumSize,
       record.siteId
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          sitelist: res.data.data
+          sitelist: res.data.data.siteStatisticsList,
+          total: res.data.data.total,
         })
       }
     });
@@ -303,11 +313,13 @@ class App extends React.Component {
   }
   reset = () => {
     siteStatistics([
-
+      1,
+      10,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          sitelist: res.data.data,
+          sitelist: res.data.data.siteStatisticsList,
+          total: res.data.data.total,
           hotelname: undefined,
         })
       }
@@ -316,16 +328,42 @@ class App extends React.Component {
 
   query = () => {
     siteStatistics([
+      this.state.pageNum,
+      this.state.pageNumSize,
       this.state.hotelname,
       this.state.begintime,
       this.state.endtime,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          sitelist: res.data.data
+          sitelist: res.data.data.siteStatisticsList,
+          total: res.data.data.total,
         })
       }
     });
+  }
+
+  //分页筛选
+  pagechange = (page, num) => {
+    this.setState({
+      pageNum: page,
+      pageNumSize: num,
+    }, function () {
+      siteStatistics([
+        this.state.pageNum,
+        this.state.pageNumSize,
+        this.state.hotelname,
+        this.state.begintime,
+        this.state.endtime,
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          this.setState({
+            sitelist: res.data.data.siteStatisticsList,
+            total: res.data.data.total,
+          })
+        }
+      });
+    })
   }
 
   //选择酒店
@@ -376,8 +414,17 @@ class App extends React.Component {
                 <Table
                   dataSource={this.state.sitelist}
                   columns={this.nodeInfoTableColumns}
-                  pagination={this.state.page}
+                  pagination={false}
                 />
+                <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <Pagination
+                    defaultCurrent={1}
+                    onChange={this.pagechange}
+                    total={this.state.total}
+                    hideOnSinglePage={true}
+                    current={this.state.pageNum}
+                  />
+                </div>
               </div>
             </Card>
           </Content>

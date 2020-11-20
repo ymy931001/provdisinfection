@@ -499,9 +499,11 @@ export const areaStatistics = params =>
 //网点统计
 export const siteStatistics = params =>
   http.get(config.requestIp + "/statistics/siteStatistics", {
-    siteid: params[0],
-    start: params[1],
-    stop: params[2],
+    pageNum: params[0],
+    pageSize: params[1],
+    siteid: params[2],
+    start: params[3],
+    stop: params[4],
   });
 
 
