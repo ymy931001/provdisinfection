@@ -41,14 +41,15 @@ function requireAuthentication(Component) {
         //有token，重置flag
         this.setState({ flag: true });
       } else {
-        let platform = localStorage.getItem('platform')
-        console.log(platform)
-        if (platform) {
-          window.location.href = "/?" + platform;
-          localStorage.removeItem('platform')
-        } else {
-          window.location.href = "/";
-        }
+        window.location.href = "/";
+        // let platform = localStorage.getItem('platform')
+        // console.log(platform)
+        // if (platform) {
+        //   window.location.href = "/?" + platform;
+        //   localStorage.removeItem('platform')
+        // } else {
+
+        // }
       }
     }
     render() {
