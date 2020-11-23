@@ -35,7 +35,7 @@ function requireAuthentication(Component) {
     }
     checkAuth() {
       //判断缓存是否有token
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authorization");
       const reg = token ? true : null;
       if (reg) {
         //有token，重置flag

@@ -19,6 +19,7 @@
     "http-proxy-middleware": "^0.20.0",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.5.1",
+    "jsencrypt": "^3.0.0-rc.1",
     "pac-resolver": "^4.1.0",
     "qiniu": "^7.3.2",
     "qiniu-js": "^3.0.3",
