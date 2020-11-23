@@ -45,14 +45,6 @@ class Headers extends Component {
         window.location.reload();
     }
     componentWillMount = () => {
-        if ((new Date() - localStorage.getItem('currenttime')) / 1000 > 60 * 60 * 24) {
-            // message.error('登录信息已过期,请重新登录')
-            setTimeout(() => {
-                window.location = "/";
-                localStorage.clear();
-            }, 1500);
-        }
-
         if (localStorage.getItem('authorization') === "" || localStorage.getItem('authorization') === null || localStorage.getItem('authorization') === undefined) {
             // message.error('登录信息已过期,请重新登录')
             setTimeout(() => {
