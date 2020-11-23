@@ -64,7 +64,7 @@ class SignIn extends Component {
             arr.push(res.data.data.roles[i].id)
             arrs.push(res.data.data.roles[i].namezh)
           }
-          console.log(arr.join(','))
+          // console.log(arr.join(','))
           localStorage.setItem("token", res.data.data.token);
           localStorage.setItem("authorization", res.headers.authorization);
           localStorage.setItem("userID", this.state.userID);
