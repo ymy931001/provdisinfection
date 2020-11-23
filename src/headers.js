@@ -40,7 +40,7 @@ class Headers extends Component {
         });
     }
     out = () => {
-        localStorage.removeItem("token");
+        localStorage.removeItem("authorization");
         localStorage.clear();
         window.location.reload();
     }
@@ -53,7 +53,7 @@ class Headers extends Component {
             }, 1500);
         }
 
-        if (localStorage.getItem('token') === "" || localStorage.getItem('token') === null || localStorage.getItem('token') === undefined) {
+        if (localStorage.getItem('authorization') === "" || localStorage.getItem('authorization') === null || localStorage.getItem('authorization') === undefined) {
             // message.error('登录信息已过期,请重新登录')
             setTimeout(() => {
                 window.location = "/";
