@@ -17,6 +17,7 @@ class SignIn extends Component {
     let urls = url.split('=')[1];
     console.log(urls)
     localStorage.setItem("authorization", urls)
+    localStorage.setItem("token", urls)
     window.location.href = "http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + urls;
   }
   componentDidMount = () => {
@@ -24,6 +25,7 @@ class SignIn extends Component {
     let urls = url.split('=')[1];
     console.log(urls)
     localStorage.setItem("authorization", urls)
+    localStorage.setItem("token", urls)
     window.location.href = "http://datav.aliyuncs.com/share/95aef6059199ee86ef8610153005e68e?Authorization=" + urls;
   };
   render() {
