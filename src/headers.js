@@ -52,7 +52,7 @@ class Headers extends Component {
                 localStorage.clear();
             }, 1500);
         }
-        if (localStorage.getItem('type') === "6" || localStorage.getItem('type') === "2") {
+        if (localStorage.getItem('type') === "6" || localStorage.getItem('type') === "2" || localStorage.getItem('type') === "7") {
             this.setState({
                 areaname: "-" + localStorage.getItem('namezh').substring(0, 3)
             })
