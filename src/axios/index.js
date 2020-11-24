@@ -57,7 +57,7 @@ export const detectionvison = (params) => http.get(config.requestIp + "/detectio
 });
 
 //获取摄像头url
-export const geisctUrl = (params) => http.posts(config.requestIp + "/isc/getUrl", params);
+export const geisctUrl = (params) => http.posts(config.requestIp + "/camera/getUrl", params);
 
 
 
