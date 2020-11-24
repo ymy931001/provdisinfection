@@ -275,20 +275,20 @@ class App extends React.Component {
             }
           }
         },
-        {
-          title: "添加时间",
-          dataIndex: "gmtcreate",
-          key: 'gmtcreate',
-        }, {
-          title: "备注",
-          dataIndex: "remark",
-          key: 'remark',
-        },
+        // {
+        //   title: "添加时间",
+        //   dataIndex: "gmtcreate",
+        //   key: 'gmtcreate',
+        // }, {
+        //   title: "备注",
+        //   dataIndex: "remark",
+        //   key: 'remark',
+        // },
       ];
     }
 
 
-    if (localStorage.getItem("type") === "2" || localStorage.getItem("type") === "3" || localStorage.getItem("type") === "4") {
+    if (localStorage.getItem("type") !== "1") {
       this.nodeInfoTableColumns = [
         {
           title: "设备ID",
@@ -490,7 +490,7 @@ class App extends React.Component {
   componentDidMount() {
 
 
-    if (localStorage.getItem("type") === "2" || localStorage.getItem("type") === "3" || localStorage.getItem("type") === "4") {
+    if (localStorage.getItem("type") !== "1") {
       this.setState({
         typenone: 'none',
         typecolor: '#999'

@@ -237,6 +237,18 @@ class App extends React.Component {
               }
               this.setState({
                 areauserlist: arr
+              }, function () {
+                userlist([7]).then(res => {
+                  var arrs = this.state.areauserlist
+                  if (res.data && res.data.message === "success") {
+                    for (var i in res.data.data) {
+                      arrs.push(res.data.data[i])
+                    }
+                    this.setState({
+                      areauserlist: arrs
+                    });
+                  }
+                });
               });
             }
           });
@@ -473,6 +485,18 @@ class App extends React.Component {
                         }
                         this.setState({
                           areauserlist: arr
+                        }, function () {
+                          userlist([7]).then(res => {
+                            var arrs = this.state.areauserlist
+                            if (res.data && res.data.message === "success") {
+                              for (var i in res.data.data) {
+                                arrs.push(res.data.data[i])
+                              }
+                              this.setState({
+                                areauserlist: arrs
+                              });
+                            }
+                          });
                         });
                       }
                     });

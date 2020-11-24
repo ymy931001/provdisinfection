@@ -469,7 +469,7 @@ class App extends React.Component {
         }
       ];
 
-    } else {
+    } else if (localStorage.getItem('type') === "6" || localStorage.getItem('type') === "1") {
       this.nodeInfoTableColumns = [
         {
           title: "酒店名称",
@@ -611,17 +611,6 @@ class App extends React.Component {
               )
             }
           }
-          // render: (text, record, index) => {
-          //   return (
-          //     <div >
-          //       <Switch
-          //         checked={text}
-          //         checkedChildren="有" unCheckedChildren="无"
-          //       // onChange={() => this.switchchange(text, record, index)}
-          //       />
-          //     </div>
-          //   )
-          // }
         },
 
         {
@@ -673,6 +662,130 @@ class App extends React.Component {
         }
       ];
 
+    } else {
+      this.nodeInfoTableColumns = [
+        {
+          title: "酒店名称",
+          dataIndex: "sitename",
+          editable: true,
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.toroom(text, record, index)} style={{ cursor: 'pointer' }}>
+                {text}
+              </div>
+            )
+          }
+        },
+        {
+          title: "负责人姓名",
+          dataIndex: "adminName",
+          editable: true,
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "联系电话",
+          dataIndex: "phone",
+          editable: true,
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "保洁员数量",
+          dataIndex: "cleanerQuantity",
+          render: (text, record, index) => {
+            if (text === null) {
+              return (
+                <div>
+                  无
+                </div>
+              )
+            } else {
+              return (
+                <div onClick={() => this.opencleanerlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                  {text}
+                </div>
+              )
+            }
+          }
+        },
+        {
+          title: "设备数量",
+          dataIndex: "deviceQuantity",
+          render: (text, record, index) => {
+            return (
+              <div>
+                <Tooltip title={"插座数量：" + record.boardQuantity + "个  ~ 摄像头数量：" + record.cameraQuantity + "个"}>
+                  <span style={{ color: '#1890ff' }}>{record.boardQuantity + record.cameraQuantity} </span>
+                </Tooltip>
+              </div>
+            )
+          }
+        },
+        {
+          title: "卫生许可证",
+          dataIndex: "borard",
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.openlicence(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                查看
+              </div>
+            )
+          }
+        },
+        {
+          title: "消毒间数量",
+          dataIndex: "roomQuantity",
+          render: (text, record, index) => {
+            return (
+              <div onClick={() => this.openroomlist(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                查看
+              </div>
+            )
+          }
+        },
+        {
+          title: "详细地址",
+          dataIndex: "address",
+          render: (text, record, index) => {
+            return (
+              <div>
+                {text}
+              </div>
+            )
+          }
+        },
+        {
+          title: "创建时间",
+          dataIndex: "gmtcreate",
+        }
+      ];
     }
 
 
@@ -684,7 +797,7 @@ class App extends React.Component {
 
   componentDidMount() {
     document.title = "单位管理";
-    if (localStorage.getItem("type") === "2" || localStorage.getItem("type") === "3" || localStorage.getItem("type") === "4") {
+    if (localStorage.getItem("type") !== "1") {
       this.setState({
         typenone: 'none'
       })

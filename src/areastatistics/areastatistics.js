@@ -414,7 +414,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              {!text ? "无" : text * 100 + "%"}
+              {!text ? "无" : (text * 100).toFixed(1) + "%"}
             </div>
           )
         }
@@ -426,7 +426,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              {!text ? "无" : text * 100 + "%"}
+              {!text ? "无" : (text * 100).toFixed(1) + "%"}
             </div>
           )
         }
@@ -660,7 +660,7 @@ class App extends React.Component {
             arr5[d].pm5 = parseInt(d, 10) + 1
           }
 
-          
+
           this.setState({
             firstlist: arr,
             twolist: arr1,

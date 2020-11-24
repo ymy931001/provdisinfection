@@ -229,7 +229,7 @@ class App extends React.Component {
           }
         }
       ];
-    } else {
+    } else if (localStorage.getItem('type') === "1") {
       this.nodeInfoTableColumns = [
         {
           title: "所属酒店",
@@ -295,6 +295,50 @@ class App extends React.Component {
           dataIndex: "gmtcreate",
         }
       ];
+    } else {
+      this.nodeInfoTableColumns = [
+        {
+          title: "所属酒店",
+          dataIndex: "siteName",
+        }, {
+          title: "设备位置",
+          dataIndex: "roomName",
+        },
+        {
+          title: "设备状态",
+          dataIndex: "onlineStatus",
+          render: (text, record, index) => {
+            if (text === true) {
+              return (
+                <div style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
+                  在线
+                </div>
+              )
+            }
+            if (text === false) {
+              return (
+                <div style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.showonlinehistory(text, record, index)}>
+                  离线
+                </div>
+              )
+            }
+          }
+        }
+        , {
+          title: '工作记录',
+          dataIndex: 'id',
+          render: (text, record, index) =>
+            <div>
+              <a onClick={() => this.showhistory(text, record, index)}
+              >详情</a>
+            </div>
+        }
+        ,
+        {
+          title: "创建时间",
+          dataIndex: "gmtcreate",
+        }
+      ];
     }
 
 
@@ -303,7 +347,7 @@ class App extends React.Component {
 
   componentWillMount() {
     document.title = "插座管理";
-    if (localStorage.getItem("type") === "2" || localStorage.getItem("type") === "3" || localStorage.getItem("type") === "4") {
+    if (localStorage.getItem("type") !== "1") {
       this.setState({
         typenone: 'none'
       })

@@ -353,11 +353,7 @@ class App extends React.Component {
       }
     });
 
-    detectionvison([
-      1192
-    ]).then(res => {
 
-    })
 
     // hotellist().then(res => {
     //   var arr = []
@@ -620,6 +616,11 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         var arr = []
+        if (!res.data.data.worktime) {
+          this.setState({
+            peopledis: 'none'
+          })
+        }
         if (res.data.data.timepairs !== undefined) {
           for (var i in JSON.parse(res.data.data.timepairs)) {
             if ((JSON.parse(res.data.data.timepairs)[i].end - JSON.parse(res.data.data.timepairs)[i].start) > 0) {
@@ -640,6 +641,8 @@ class App extends React.Component {
           decendingdatas: arr,
           time1: Math.ceil(res.data.data.runtime / 60),
           time2: Math.ceil(res.data.data.worktime / 60)
+          // time1: parseFloat(res.data.data.runtime / 60).toFixed(2),
+          // time2: parseFloat(res.data.data.worktime / 60).toFixed(2)
         }, function () {
           console.log(this.state.readout)
           if (this.state.time1 === 0) {
@@ -892,18 +895,20 @@ class App extends React.Component {
                   <div className="righttime">24时</div>
                 </div>
                 <div className="titlebot">
-                  工作人员消毒时间 <span className="botleft"></span>
+                  <span style={{ display: this.state.peopledis }}>工作人员消毒时间 <span className="botleft"></span></span>
                   <span style={{ display: this.state.cupboarddiss }}>消毒柜工作时间 <span className="botright"></span></span>
                 </div>
-                <div className="modeltitle">工作人员消毒时长:&nbsp;&nbsp;{this.state.time2}&nbsp;&nbsp;分</div>
-                <Table
-                  dataSource={this.state.decendingdatas}
-                  columns={this.state.decendinglist}
-                  pagination={this.state.pdpage}
-                  rowClassName="editable-row"
-                  style={{ width: '100%', textAlign: 'center' }}
-                  bordered
-                />
+                <div style={{ display: this.state.peopledis }}>
+                  <div className="modeltitle">工作人员消毒时长:&nbsp;&nbsp;{this.state.time2}&nbsp;&nbsp;分</div>
+                  <Table
+                    dataSource={this.state.decendingdatas}
+                    columns={this.state.decendinglist}
+                    pagination={this.state.pdpage}
+                    rowClassName="editable-row"
+                    style={{ width: '100%', textAlign: 'center' }}
+                    bordered
+                  />
+                </div>
                 <div style={{ display: this.state.cupboarddis }}>
                   <div className="modeltitle">消毒柜工作时长:&nbsp;&nbsp;{this.state.time1}&nbsp;&nbsp;分</div>
                   <Table
