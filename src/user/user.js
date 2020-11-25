@@ -13,6 +13,7 @@ import {
   InputNumber,
   Form,
   Tabs,
+  Cascader,
   Tree
 } from "antd";
 import {
@@ -26,7 +27,7 @@ import {
   getallRegion,
   putuser,
   deleteuser,
-  puthoteluser
+  puthoteluser, getregion
 } from "../axios";
 import "./user.css";
 import { Link } from 'react-router-dom';
@@ -125,6 +126,7 @@ class App extends React.Component {
       arealist: [],
       sitelists: [],
       permissionlist: [],
+      deviceList: [],
       typelist: [{
         'id': '0',
         'value': '超级管理员'
@@ -195,6 +197,30 @@ class App extends React.Component {
         sitelist: res.data.data,
         sitelists: arr,
       });
+    });
+
+    getregion().then(res => {
+      if (res.data && res.data.message === "success") {
+        if (res.data.data.length !== 0) {
+          for (var i in res.data.data[0].children) {
+            for (var j in res.data.data[0].children[i].children) {
+              for (var k in res.data.data[0].children[i].children[j].children) {
+                if (res.data.data[0].children[i].children[j].children[k].children.length === 0) {
+                  res.data.data[0].children[i].children[j].children[k].adcode = res.data.data[0].children[i].children[j].children[k].id
+                  res.data.data[0].children[i].children[j].children[k].children = undefined
+                }
+              }
+            }
+          }
+          this.setState({
+            deviceList: res.data.data[0].children
+          })
+        } else {
+          this.setState({
+            deviceList: []
+          })
+        }
+      }
     });
 
 
@@ -303,6 +329,71 @@ class App extends React.Component {
     this.setState({
       visible: true
     })
+  }
+
+  //设备位置选择
+  addresschange = (e) => {
+    console.log(e)
+    this.setState({
+      addresslist: e,
+      cityid: e[0] === undefined ? null : e[0],
+      areaid: e[1] === undefined ? null : e[1],
+      siteId: e[2] === undefined ? null : e[2]
+    });
+  }
+
+  query = () => {
+    userlist([
+      4,
+      this.state.siteId,
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          hoteluserlist: res.data.data
+        }, function () {
+          if (res.data.data.length < 10) {
+            this.setState({
+              page: false
+            })
+          } else {
+            this.setState({
+              page: true
+            })
+          }
+        });
+      }
+    });
+  }
+
+
+  reset = () => {
+    this.setState({
+      addresslist: [],
+      cityid: undefined,
+      areaid: undefined,
+      siteId: undefined
+    }, function () {
+      userlist([
+        4,
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          this.setState({
+            hoteluserlist: res.data.data
+          }, function () {
+            if (res.data.data.length < 10) {
+              this.setState({
+                page: false
+              })
+            } else {
+              this.setState({
+                page: true
+              })
+            }
+          });
+        }
+      });
+    });
+
   }
 
   typeChange = (value) => {
@@ -1093,6 +1184,19 @@ class App extends React.Component {
                 </TabPane>
                 <TabPane tab="酒店管理员" key="3" style={{ minHeight: "700px", marginLeft: '20px' }}>
                   <div>
+                    <div>
+                      &nbsp;&nbsp;&nbsp;设备位置&nbsp;: &nbsp;&nbsp;&nbsp;
+                <Cascader
+                        fieldNames={{ label: 'name', value: 'adcode' }}
+                        options={this.state.deviceList}
+                        onChange={this.addresschange}
+                        value={this.state.addresslist}
+                        changeOnSelect
+                        style={{ width: "350px", marginRight: '20px', marginBottom: '20px' }}
+                        placeholder="选择酒店" />
+                      <Button type="primary" onClick={this.query}>查询</Button>
+                      <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>
+                    </div>
                     <Table
                       dataSource={this.state.hoteluserlist}
                       components={components}

@@ -183,7 +183,9 @@ export const getWarningList = params =>
 export const userlist = params =>
   http.get(config.requestIp + "/admin", {
     roleId: params[0],
-    name: params[1],
+    siteId: params[1],
+    name: params[2],
+    adcode: params[3],
   });
 
 

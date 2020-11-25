@@ -996,7 +996,10 @@ class App extends React.Component {
             if (res.data && res.data.message === 'success') {
               message.success("信息修改成功");
               sitelist([
-
+                this.state.searchname,
+                this.state.cityid,
+                this.state.areaid,
+                this.state.siteId
               ]).then(res => {
                 if (res.data && res.data.message === 'success') {
                   this.setState({
