@@ -620,7 +620,12 @@ class App extends React.Component {
           this.setState({
             peopledis: 'none'
           })
+        } else {
+          this.setState({
+            peopledis: 'inline'
+          })
         }
+
         if (res.data.data.timepairs !== undefined) {
           for (var i in JSON.parse(res.data.data.timepairs)) {
             if ((JSON.parse(res.data.data.timepairs)[i].end - JSON.parse(res.data.data.timepairs)[i].start) > 0) {

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-// import { WebControl } from './jsWebControl-1.0.0.min.js'
+// import { WebControl } from './utils/jsWebControl-1.0.0.min.js'
 import $ from 'jquery'
 // import JSEncrypt from 'jsencrypt'
 import "./videoback.css";

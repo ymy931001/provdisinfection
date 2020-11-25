@@ -908,6 +908,8 @@ class App extends React.Component {
               visible: false,
             })
             this.device()
+          } else {
+            message.error(res.data.data)
           }
         });
       }
