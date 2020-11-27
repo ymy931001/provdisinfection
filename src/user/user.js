@@ -432,7 +432,7 @@ class App extends React.Component {
 
   getMock = () => {
     userlist([
-      1
+      
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         const targetKeys = [];
@@ -440,7 +440,7 @@ class App extends React.Component {
         for (var i in res.data.data) {
           mockData.push({
             'key': res.data.data[i].id,
-            'name': res.data.data[i].adminname,
+            'name': res.data.data[i].name,
             'phone': res.data.data[i].phone,
             'id': res.data.data[i].id,
             'chosen': res.data.data[i].notifier === null || res.data.data[i].notifier === false || res.data.data[i].notifier === 'null' ? false : true,

@@ -740,7 +740,30 @@ class App extends React.Component {
         this.setState({
           deletevisible: false,
         })
-        this.device()
+        // this.device()
+        devicelist([
+          this.state.cityid,
+          this.state.areaid,
+          this.state.siteId,
+          0,
+          this.state.keytext,
+        ]).then(res => {
+          if (res.data && res.data.message === "success") {
+            this.setState({
+              videoListDataSource: res.data.data,
+            }, function () {
+              if (this.state.videoListDataSource.length < 10) {
+                this.setState({
+                  page: false
+                })
+              } else {
+                this.setState({
+                  page: true
+                })
+              }
+            });
+          }
+        });
         // const dataSource = [...this.state.videoListDataSource];
         // this.setState({
         //   deletevisible: false,
