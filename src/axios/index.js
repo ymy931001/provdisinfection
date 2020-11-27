@@ -511,19 +511,15 @@ export const siteStatistics = params =>
 
 
 
-//添加用户报警
+//修改用户报警
 export const addUserAlarm = params =>
-  http.post(config.requestIp + "/user/addUserAlarm", {
+  http.patch(config.requestIp + "/admin/userAlarm", {
     token: localStorage.getItem('token'),
     userid: params[0],
+    alarm: params[1],
   });
 
-//删除用户报警
-export const removeUserAlarm = params =>
-  http.post(config.requestIp + "/user/removeUserAlarm", {
-    token: localStorage.getItem('token'),
-    userid: params[0],
-  });
+
 
 //获得截取图片
 export const getImage = params =>

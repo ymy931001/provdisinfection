@@ -20,7 +20,6 @@ import {
   userlist,
   hotellist,
   addUserAlarm,
-  removeUserAlarm,
   getAreaMap,
   updateAdminAreas,
   getAdminAreas,
@@ -432,7 +431,7 @@ class App extends React.Component {
 
   getMock = () => {
     userlist([
-      
+
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         const targetKeys = [];
@@ -465,14 +464,16 @@ class App extends React.Component {
     console.log(this.state.targetKeys.length)
     if (targetKeys.length > this.state.targetKeys.length) {
       addUserAlarm([
-        moveKeys.length === 0 ? '' : moveKeys.join(',')
+        moveKeys.length === 0 ? '' : moveKeys.join(','),
+        true,
       ]).then(res => {
 
       });
     }
     if (targetKeys.length < this.state.targetKeys.length) {
-      removeUserAlarm([
-        moveKeys.length === 0 ? '' : moveKeys.join(',')
+      addUserAlarm([
+        moveKeys.length === 0 ? '' : moveKeys.join(','),
+        false,
       ]).then(res => {
 
       });
