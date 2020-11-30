@@ -52,6 +52,7 @@
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
     "customize-cra": "^0.9.1",
+    "moment": "^2.29.1",
     "react-app-rewired": "^1.6.2"
   },
   "proxy": {

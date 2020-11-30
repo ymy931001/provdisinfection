@@ -2,13 +2,17 @@ import React from 'react'
 // import { WebControl } from './utils/jsWebControl-1.0.0.min.js'
 import $ from 'jquery'
 import JSEncrypt from 'jsencrypt'
-import "./videoback.css";
 import {
   Layout,
   Card,
   Input,
-  Button
+  Button,
+  DatePicker
 } from "antd";
+import moment from 'moment';
+import "./videoback.css";
+
+
 
 const { Content } = Layout;
 let oWebControl = null
@@ -53,6 +57,8 @@ function dateFormat(oDate, fmt) {
 }
 
 
+
+
 // const WebControl = window.WebControl;
 
 class App extends React.Component {
@@ -61,7 +67,9 @@ class App extends React.Component {
     thirdpartylist: [],
     permissionlist: [],
     warningListDataSource: [],
-    number: "a8945fb3a658472ab0b5a8e454664727"
+    number: "a8945fb3a658472ab0b5a8e454664727",
+    begintime: moment(new Date()),
+    endtime: moment(new Date()),
   };
 
   componentWillUnmount() {
@@ -72,11 +80,21 @@ class App extends React.Component {
 
 
   componentDidMount() {
+    // console.log(moment(new Date()).gettime())
+    // const timeFormat = 'YYYY-MM-DD 00:00:00';
+    // const timeFormat = 'YYYY-MM-DD 23:59:59';
+    // const currentTime = moment(new Date()).format(timeFormat);
+    // console.log('currentTime ：', currentTime)
+
     //设置录像回放时间的默认值
     var endTime = dateFormat(new Date(), "yyyy-MM-dd 23:59:59");
     var startTime = dateFormat(new Date(), "yyyy-MM-dd 00:00:00");
     $("#startTimeStamp").val(startTime);
     $("#endTimeStamp").val(endTime);
+    // this.setState({
+    //   begintime: startTime,
+    //   endtime: endTime,
+    // })
     // function loadJS(url, callback) {
     //   var script = document.createElement('script');
     //   var fn = callback || function () { };
@@ -282,9 +300,11 @@ class App extends React.Component {
 
   startPlayBack = () => {
     // var cameraIndexCode = $("#cameraIndexCode").val();         //获取输入的监控点编号值，必填
-    var cameraIndexCode = this.state.number
-    var startTimeStamp = new Date($("#startTimeStamp").val().replace('-', '/').replace('-', '/')).getTime();    //回放开始时间戳，必填
-    var endTimeStamp = new Date($("#endTimeStamp").val().replace('-', '/').replace('-', '/')).getTime();        //回放结束时间戳，必填
+    var cameraIndexCode = this.state.number;
+    var startTimeStamp = this.state.begintime;
+    var endTimeStamp = this.state.endtime
+    // var startTimeStamp = new Date($("#startTimeStamp").val().replace('-', '/').replace('-', '/')).getTime();    //回放开始时间戳，必填
+    // var endTimeStamp = new Date($("#endTimeStamp").val().replace('-', '/').replace('-', '/')).getTime();        //回放结束时间戳，必填
     var recordLocation = 1;                                     //录像存储位置：0-中心存储，1-设备存储
     var transMode = 1;                                          //传输协议：0-UDP，1-TCP
     var gpuMode = 0;                                            //是否启用GPU硬解，0-不启用，1-启用
@@ -319,6 +339,22 @@ class App extends React.Component {
     })
   }
 
+  //时间筛选
+  begintime = (e, b) => {
+    console.log(e, b)
+    this.setState({
+      begintime: moment(b)
+    })
+  }
+
+  //时间筛选
+  endtime = (e, b) => {
+    console.log(e, b)
+    this.setState({
+      endtime: moment(b)
+    })
+  }
+
   render() {
     return (
       <Layout>
@@ -327,7 +363,7 @@ class App extends React.Component {
             <Card title="视频回放" headStyle={{ fontWeight: 'bold', fontSize: '18px' }}>
               <div id="operate" className="operate">
                 <div className="module">
-                  <div className="item" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                  <div className="item" style={{ marginTop: '10px', marginBottom: '10px' }}>
                     <span className="label">监控点编号：</span>
                     <Input placeholder="请输入监控点编号" style={{ width: '300px', marginRight: '20px' }}
                       value={this.state.number}
@@ -335,15 +371,29 @@ class App extends React.Component {
                     />
                     {/* <input id="cameraIndexCode" type="text" value="a8945fb3a658472ab0b5a8e454664727" /> */}
                   </div>
-                  <div className="item">
+                  <div className="item" style={{ marginBottom: '10px' }}>
                     <span className="label">回放开始时间：</span>
-                    <input id="startTimeStamp" type="text" placeholder="yyyy-MM-dd hh:mm:ss格式" />
+                    <DatePicker
+                      showTime
+                      style={{ width: '300px' }}
+                      onChange={this.begintime}
+                      value={moment(this.state.begintime)}
+                    />
+                    {/* <input id="startTimeStamp" type="text" placeholder="yyyy-MM-dd hh:mm:ss格式" /> */}
                   </div>
-                  <div className="item"><span className="label">回放结束时间：</span>
-                    <input id="endTimeStamp" type="text" placeholder="yyyy-MM-dd hh:mm:ss格式" />
+                  <div className="item" style={{ marginBottom: '10px' }}>
+                    <span className="label">回放结束时间：</span>
+                    <DatePicker showTime
+                      onChange={this.endtime}
+                      value={moment(this.state.endtime)}
+                      style={{ width: '300px' }}
+                    // onOk={onOk} 
+                    />
+                    {/* <input id="endTimeStamp" type="text" placeholder="yyyy-MM-dd hh:mm:ss格式" /> */}
                   </div>
-                  <div className="item" style={{ marginTop: '20px' }}>
-                    <Button type="primary" onClick={() => this.startPlayBack()} > 回放</Button>
+                  <div className="item" style={{ marginTop: '10px' }}>
+                    <span className="label"></span>
+                    <Button type="primary" onClick={() => this.startPlayBack()}> 回放</Button>
                     <Button onClick={() => this.endPlayback()} style={{ marginLeft: '15px' }}>停止全部回放</Button>
                   </div>
                 </div>

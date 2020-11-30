@@ -351,7 +351,7 @@ class App extends React.Component {
           render: (text, record, index) => {
             if (record.onlinestatus === true) {
               return (
-                <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
                   查看
                 </div>
               )
@@ -433,7 +433,7 @@ class App extends React.Component {
           render: (text, record, index) => {
             if (record.onlinestatus === true) {
               return (
-                <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
                   查看
                 </div>
               )
@@ -1073,6 +1073,16 @@ class App extends React.Component {
       this.setState({
         visibles: true,
       })
+    }
+  }
+
+  backvideo = (text, record, index) => {
+    console.log(record.id)
+    if (record.id === 957) {
+      window.open('https://mainimg.terabits.cn/demo_window_simple_playback.html')
+    }
+    if (record.id === 941) {
+      window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B324%E6%A5%BC.html')
     }
   }
 
