@@ -248,11 +248,22 @@ class App extends React.Component {
       text
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        // this.setState({
+        //   userlist: res.data.data.detectionVOList,
+        //   total: res.data.data.total,
+        // })
+        var arr = []
+        for (var i in res.data.data.detectionVOList) {
+          if (res.data.data.detectionVOList[i].runtime !== 0) {
+            arr.push(res.data.data.detectionVOList[i])
+          }
+        }
         this.setState({
-          userlist: res.data.data.detectionVOList,
-          total: res.data.data.total,
+          userlist: arr,
+          total: res.data.data.total
         })
       }
+
     })
   }
 
@@ -315,10 +326,20 @@ class App extends React.Component {
       this.state.keytext,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        var arr = []
+        for (var i in res.data.data.detectionVOList) {
+          if (res.data.data.detectionVOList[i].runtime !== 0) {
+            arr.push(res.data.data.detectionVOList[i])
+          }
+        }
         this.setState({
-          userlist: res.data.data.detectionVOList,
-          total: res.data.data.total,
+          userlist: arr,
+          total: res.data.data.total
         })
+        // this.setState({
+        //   userlist: res.data.data.detectionVOList,
+        //   total: res.data.data.total,
+        // })
       }
     });
 
@@ -358,6 +379,16 @@ class App extends React.Component {
           userlist: res.data.data.detectionVOList,
           total: res.data.data.total,
         });
+        // var arr = []
+        // for (var i in res.data.data.detectionVOList) {
+        //   if (res.data.data.detectionVOList[i].runtime !== 0) {
+        //     arr.push(res.data.data.detectionVOList[i])
+        //   }
+        // }
+        // this.setState({
+        //   userlist: arr,
+        //   total: res.data.data.total
+        // })
       });
     })
   }
