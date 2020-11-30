@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Input } from "antd";
+// import { Button, Input } from "antd";
 import { createForm } from 'rc-form';
 import "./SignIns.css";
 
@@ -32,7 +32,7 @@ class SignIn extends Component {
     return (
       <div id="signbody">
         <div style={{ display: "flex", flexDirection: 'column' }}>
-          <div className="SignIn-body">
+          {/* <div className="SignIn-body">
             <div className="cover">
               <div className="logo">
                 <img src={require('./logo1.png')} alt="" style={{ width: "70px", marginRight: '20px' }} />
@@ -102,7 +102,7 @@ class SignIn extends Component {
               </div>
 
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -61,7 +61,7 @@ import erweima from "./erweima/erweima";
 import sederweimalist from "./sederweimalist/sederweimalist";
 import testpage from "./testpage/testpage";
 import backvideo from "./backvideo/backvideo";
-// import videoback from "./videoback/videoback";
+import videoback from "./videoback/videoback";
 
 
 import Headers from './headers';
@@ -584,11 +584,11 @@ class App extends Component {
                       <span>测试信息</span>
                     </Link>
                   </Menu.Item>
-                  {/* <Menu.Item key="22">
+                  <Menu.Item key="22">
                     <Link to="/app/videoback">
                       <span>视频回放</span>
                     </Link>
-                  </Menu.Item> */}
+                  </Menu.Item>
                   <Menu.Item key="19">
                     <a href="http://iva.terabits.cn:9000" target="_blank" rel="noopener noreferrer">控制台</a>
                   </Menu.Item>
@@ -651,7 +651,7 @@ class App extends Component {
                   <Route path="/app/sederweimalist" component={sederweimalist} />
                   <Route path="/app/backvideo" component={backvideo} />
                   <Route path="/app/testpage" component={testpage} />
-                  {/* <Route path="/app/videoback" component={videoback} /> */}
+                  <Route path="/app/videoback" component={videoback} />
                 </Switch>
               </Content>
             </Layout>
