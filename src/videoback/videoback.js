@@ -15,6 +15,7 @@ import "./videoback.css";
 
 
 const { Content } = Layout;
+
 let oWebControl = null
 let WebControl = null
 //声明公用变量
@@ -32,34 +33,11 @@ export const injectScript = (src) => {
 }
 
 
+let nowtime = new Date();
+let year = nowtime.getFullYear();
+let month = nowtime.getMonth() + 1 > 9 ? nowtime.getMonth() + 1 : '0' + (nowtime.getMonth() + 1);;
+let date = nowtime.getDate()? nowtime.getDate() : '0' + (nowtime.getDate());
 
-
-// 格式化时间
-function dateFormat(oDate, fmt) {
-  var o = {
-    "M+": oDate.getMonth() + 1, //月份
-    "d+": oDate.getDate(), //日
-    "h+": oDate.getHours(), //小时
-    "m+": oDate.getMinutes(), //分
-    "s+": oDate.getSeconds(), //秒
-    "q+": Math.floor((oDate.getMonth() + 3) / 3), //季度
-    "S": oDate.getMilliseconds()//毫秒
-  };
-  if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, (oDate.getFullYear() + "").substr(4 - RegExp.$1.length));
-  }
-  for (var k in o) {
-    if (new RegExp("(" + k + ")").test(fmt)) {
-      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    }
-  }
-  return fmt;
-}
-
-
-
-
-// const WebControl = window.WebControl;
 
 class App extends React.Component {
   state = {
@@ -68,8 +46,6 @@ class App extends React.Component {
     permissionlist: [],
     warningListDataSource: [],
     number: "a8945fb3a658472ab0b5a8e454664727",
-    begintime: moment(new Date()),
-    endtime: moment(new Date()),
   };
 
   componentWillUnmount() {
@@ -80,48 +56,11 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    // console.log(moment(new Date()).gettime())
-    // const timeFormat = 'YYYY-MM-DD 00:00:00';
-    // const timeFormat = 'YYYY-MM-DD 23:59:59';
-    // const currentTime = moment(new Date()).format(timeFormat);
-    // console.log('currentTime ：', currentTime)
-
-    //设置录像回放时间的默认值
-    var endTime = dateFormat(new Date(), "yyyy-MM-dd 23:59:59");
-    var startTime = dateFormat(new Date(), "yyyy-MM-dd 00:00:00");
-    $("#startTimeStamp").val(startTime);
-    $("#endTimeStamp").val(endTime);
-    // this.setState({
-    //   begintime: startTime,
-    //   endtime: endTime,
-    // })
-    // function loadJS(url, callback) {
-    //   var script = document.createElement('script');
-    //   var fn = callback || function () { };
-    //   script.type = 'text/javascript';
-    //   if (script.readyState) {
-    //     //IE
-    //     script.onreadystatechange = function () {
-    //       if (script.readyState == 'loaded' || script.readyState == 'complete') {
-    //         script.onreadystatechange = null;
-    //         fn();
-    //       }
-    //     };
-    //   }
-    //   else {
-    //     //其他浏览器
-    //     script.onload = function () { fn(); };
-    //   }
-    //   script.src = url;
-    //   document.getElementsByTagName('head')[0].appendChild(script);
-    // }
-
+    this.setState({
+      begintime: moment(new Date(year + "-" + month + "-" + date + " " + "00:00:00")),
+      endtime: moment(new Date(year + "-" + month + "-" + date + " " + "23:59:59")),
+    })
     let that = this
-    // loadJS('https://mainimg.terabits.cn/jsWebControl-1.0.0.min.js', function () {
-    //   WebControl = window.WebControl
-    //   //加载后要做的事情
-    //   that.initPlugin()
-    // });
     injectScript('https://mainimg.terabits.cn/jsWebControl-1.0.0.min.js').then(res => {
       WebControl = window.WebControl
       //加载后要做的事情
@@ -302,14 +241,15 @@ class App extends React.Component {
     // var cameraIndexCode = $("#cameraIndexCode").val();         //获取输入的监控点编号值，必填
     var cameraIndexCode = this.state.number;
     var startTimeStamp = this.state.begintime;
-    var endTimeStamp = this.state.endtime
+    var endTimeStamp = this.state.endtime;
     // var startTimeStamp = new Date($("#startTimeStamp").val().replace('-', '/').replace('-', '/')).getTime();    //回放开始时间戳，必填
     // var endTimeStamp = new Date($("#endTimeStamp").val().replace('-', '/').replace('-', '/')).getTime();        //回放结束时间戳，必填
     var recordLocation = 1;                                     //录像存储位置：0-中心存储，1-设备存储
     var transMode = 1;                                          //传输协议：0-UDP，1-TCP
     var gpuMode = 0;                                            //是否启用GPU硬解，0-不启用，1-启用
     var wndId = -1;                                             //播放窗口序号（在2x2以上布局下可指定播放窗口）
-
+    console.log(this.state.begintime)
+    console.log(this.state.endtime)
     oWebControl.JS_RequestInterface({
       funcName: "startPlayback",
       argument: JSON.stringify({
@@ -376,8 +316,10 @@ class App extends React.Component {
                     <DatePicker
                       showTime
                       style={{ width: '300px' }}
+                      // defaultValue={moment(new Date(), dateFormat)}
                       onChange={this.begintime}
-                      value={moment(this.state.begintime)}
+                      value={this.state.begintime}
+                    // format={dateFormat}
                     />
                     {/* <input id="startTimeStamp" type="text" placeholder="yyyy-MM-dd hh:mm:ss格式" /> */}
                   </div>
@@ -385,7 +327,8 @@ class App extends React.Component {
                     <span className="label">回放结束时间：</span>
                     <DatePicker showTime
                       onChange={this.endtime}
-                      value={moment(this.state.endtime)}
+                      // defaultValue={moment(new Date(), dateFormat)}
+                      value={this.state.endtime}
                       style={{ width: '300px' }}
                     // onOk={onOk} 
                     />
