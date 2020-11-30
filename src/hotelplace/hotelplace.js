@@ -290,6 +290,7 @@ class App extends React.Component {
 
   //结论时间合并
   readoutlist = () => {
+    console.log(this.state.readouts.length)
     this.setState({
       listlength: this.state.readouts.length
     }, function () {
@@ -337,18 +338,18 @@ class App extends React.Component {
             }
             arrs.push(this.state.readouts[this.state.readouts.length - 1])
           }
-          var lastarr = []
-          if (Math.abs((arrs[arrs.length - 1].begin - arrs[arrs.length - 2].end)) < (1000 * 3600)) {
-            arrs[arrs.length - 2].end = arrs[arrs.length - 1].end
-            for (var i in arrs) {
-              if (parseInt(i, 10) !== arrs.length - 1) {
-                lastarr.push(arrs[i])
-              }
-            }
-            arrs = lastarr
-          } else {
+          // var lastarr = []
+          // if (Math.abs((arrs[arrs.length - 1].begin - arrs[arrs.length - 2].end)) < (1000 * 3600)) {
+          //   arrs[arrs.length - 2].end = arrs[arrs.length - 1].end
+          //   for (var i in arrs) {
+          //     if (parseInt(i, 10) !== arrs.length - 1) {
+          //       lastarr.push(arrs[i])
+          //     }
+          //   }
+          //   arrs = lastarr
+          // } else {
 
-          }
+          // }
         } else {
           arrs = this.state.readouts
         }
