@@ -541,13 +541,19 @@ class App extends React.Component {
   //设备位置选择
   addresschange = (e) => {
     console.log(e)
+    localStorage.setItem('selectarea', e)
     this.setState({
       addresslist: e,
       cityid: e[0] === undefined ? null : e[0],
       areaid: e[1] === undefined ? null : e[1],
       siteId: e[2] === undefined ? null : e[2]
+    }, function () {
+      localStorage.setItem('cityid', this.state.cityid)
+      localStorage.setItem('areaid', this.state.areaid)
+      localStorage.setItem('siteId', this.state.siteId)
     });
   }
+
 
   lookimg = (text, record, index) => {
     console.log(record.timePiarsInfo)
