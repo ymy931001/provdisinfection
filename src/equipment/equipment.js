@@ -1522,6 +1522,7 @@ class App extends React.Component {
       localStorage.setItem('areaid', this.state.areaid)
       localStorage.setItem('siteId', this.state.siteId)
       this.query()
+      this.handlequery()
     })
   }
 
