@@ -30,8 +30,11 @@ class App extends React.Component {
       typenone: "inline-block",
       pageNum: 1,
       pageNumSize: 10,
-      begintime: undefined,
-      endtime: undefined,
+      begintime: localStorage.getItem('begintime') ? moment(localStorage.getItem('begintime')) : undefined,
+      endtime: localStorage.getItem('endtime') ? moment(localStorage.getItem('endtime')) : undefined,
+      cityid: localStorage.getItem('cityid'),
+      areaid: localStorage.getItem('areaid'),
+      siteId: localStorage.getItem('siteId'),
     };
     this.nodeInfoTableColumns = [
       {
@@ -103,6 +106,22 @@ class App extends React.Component {
 
   componentWillMount() {
     document.title = "酒店消毒监测报告";
+
+    if (localStorage.getItem('selectarea')) {
+      var arr = localStorage.getItem('selectarea').split(',')
+      if (arr.length > 2) {
+        for (var i in arr) {
+          arr[2] = parseInt(arr[2])
+        }
+      }
+      this.setState({
+        addresslist: arr
+      }, function () {
+        this.detectionService()
+      })
+    } else {
+      this.detectionService()
+    }
   }
 
   componentDidMount() {
@@ -131,7 +150,6 @@ class App extends React.Component {
     });
 
 
-    this.detectionService()
 
   }
 
@@ -139,11 +157,11 @@ class App extends React.Component {
     detectionService([
       this.state.pageNum,
       this.state.pageNumSize,
-      null,
-      null,
-      null,
-      null,
-      moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD")
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         if (res.data.data === null) {
@@ -171,7 +189,7 @@ class App extends React.Component {
       null,
       null,
       record.siteId,
-      null,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
       this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
       text
     ]).then(res => {
@@ -202,19 +220,27 @@ class App extends React.Component {
     if (dateString[0] === "") {
       this.setState({
         begintime: undefined
+      }, function () {
+        localStorage.setItem('begintime', this.state.begintime)
       })
     } else {
       this.setState({
         begintime: moment(dateString[0]),
+      }, function () {
+        localStorage.setItem('begintime', this.state.begintime)
       });
     }
     if (dateString[1] === "") {
       this.setState({
         endtime: undefined
+      }, function () {
+        localStorage.setItem('endtime', this.state.endtime)
       })
     } else {
       this.setState({
         endtime: moment(dateString[1]),
+      }, function () {
+        localStorage.setItem('endtime', this.state.endtime)
       });
     }
   }
@@ -224,9 +250,9 @@ class App extends React.Component {
     detectionService([
       1,
       10,
-      this.state.cityid,
-      this.state.areaid,
-      this.state.siteId,
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
       this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
       this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
       this.state.keytext,
@@ -260,9 +286,9 @@ class App extends React.Component {
       detectionService([
         this.state.pageNum,
         this.state.pageNumSize,
-        this.state.cityid,
-        this.state.areaid,
-        this.state.siteId,
+        this.state.cityid === 'null' ? null : this.state.cityid,
+        this.state.areaid === 'null' ? null : this.state.areaid,
+        this.state.siteId === 'null' ? null : this.state.siteId,
         this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
         this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
         this.state.keytext,
@@ -305,11 +331,16 @@ class App extends React.Component {
   //设备位置选择
   addresschange = (e) => {
     console.log(e)
+    localStorage.setItem('selectarea', e)
     this.setState({
       addresslist: e,
       cityid: e[0] === undefined ? null : e[0],
       areaid: e[1] === undefined ? null : e[1],
       siteId: e[2] === undefined ? null : e[2]
+    }, function () {
+      localStorage.setItem('cityid', this.state.cityid)
+      localStorage.setItem('areaid', this.state.areaid)
+      localStorage.setItem('siteId', this.state.siteId)
     });
   }
 
@@ -317,14 +348,20 @@ class App extends React.Component {
   //重置
   reset = () => {
     this.setState({
-      cityid: undefined,
-      areaid: undefined,
-      siteId: undefined,
+      cityid: null,
+      areaid: null,
+      siteId: null,
       addresslist: [],
       keytext: undefined,
       begintime: undefined,
       endtime: undefined,
     }, function () {
+      localStorage.setItem('selectarea', [])
+      localStorage.setItem('cityid', this.state.cityid)
+      localStorage.setItem('areaid', this.state.areaid)
+      localStorage.removeItem('begintime')
+      localStorage.removeItem('endtime')
+      localStorage.setItem('siteId', this.state.siteId)
       this.detectionService()
     })
   }
@@ -363,7 +400,6 @@ class App extends React.Component {
                   fieldNames={{ label: 'name', value: 'adcode' }}
                   options={this.state.deviceList}
                   onChange={this.addresschange}
-
                   value={this.state.addresslist}
                   changeOnSelect
                   style={{ width: "350px", marginRight: '20px' }}

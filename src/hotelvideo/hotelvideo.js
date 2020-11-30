@@ -90,7 +90,11 @@ class App extends React.Component {
       indexs: 0,
       time1list: [],
       time2list: [],
-      // page:localStorage.getItem('pagesize'),
+      cityid: localStorage.getItem('cityid'),
+      areaid: localStorage.getItem('areaid'),
+      siteId: localStorage.getItem('siteId'),
+      begintime: localStorage.getItem('begintime') ? moment(localStorage.getItem('begintime')) : undefined,
+      endtime: localStorage.getItem('endtime') ? moment(localStorage.getItem('endtime')) : undefined,
       decendinglist: [{
         title: '开始时间',
         dataIndex: 'start',
@@ -323,6 +327,21 @@ class App extends React.Component {
 
   componentWillMount() {
     document.title = "视频监测-杯具消毒";
+    if (localStorage.getItem('selectarea')) {
+      var arr = localStorage.getItem('selectarea').split(',')
+      if (arr.length > 2) {
+        for (var i in arr) {
+          arr[2] = parseInt(arr[2])
+        }
+      }
+      this.setState({
+        addresslist: arr
+      }, function () {
+        this.detectionService()
+      })
+    } else {
+      this.detectionService()
+    }
   }
 
   componentDidMount() {
@@ -377,11 +396,11 @@ class App extends React.Component {
     newdetectionsearch([
       this.state.pageNum,
       this.state.pageNumSize,
-      null,
-      null,
-      null,
-      null,
-      moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD")
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         if (res.data.data === null) {
@@ -433,7 +452,7 @@ class App extends React.Component {
       null,
       null,
       record.siteId,
-      null,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
       this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
       text
     ]).then(res => {
@@ -477,23 +496,30 @@ class App extends React.Component {
     if (dateString[0] === "") {
       this.setState({
         begintime: undefined
+      }, function () {
+        localStorage.setItem('begintime', this.state.begintime)
       })
     } else {
       this.setState({
         begintime: moment(dateString[0]),
+      }, function () {
+        localStorage.setItem('begintime', this.state.begintime)
       });
     }
     if (dateString[1] === "") {
       this.setState({
         endtime: undefined
+      }, function () {
+        localStorage.setItem('endtime', this.state.endtime)
       })
     } else {
       this.setState({
         endtime: moment(dateString[1]),
+      }, function () {
+        localStorage.setItem('endtime', this.state.endtime)
       });
     }
   }
-
 
   motionclick = (text, record, index) => {
     console.log(JSON.parse(text))
@@ -584,9 +610,9 @@ class App extends React.Component {
     newdetectionsearch([
       1,
       10,
-      this.state.cityid,
-      this.state.areaid,
-      this.state.siteId,
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
       this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
       this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
       this.state.keytext,
@@ -759,9 +785,9 @@ class App extends React.Component {
       newdetectionsearch([
         this.state.pageNum,
         this.state.pageNumSize,
-        this.state.cityid,
-        this.state.areaid,
-        this.state.siteId,
+        this.state.cityid === 'null' ? null : this.state.cityid,
+        this.state.areaid === 'null' ? null : this.state.areaid,
+        this.state.siteId === 'null' ? null : this.state.siteId,
         this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
         this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
         this.state.keytext,
@@ -786,14 +812,20 @@ class App extends React.Component {
   //重置
   reset = () => {
     this.setState({
-      cityid: undefined,
-      areaid: undefined,
-      siteId: undefined,
+      cityid: null,
+      areaid: null,
+      siteId: null,
       addresslist: [],
       keytext: undefined,
       begintime: undefined,
       endtime: undefined,
     }, function () {
+      localStorage.setItem('selectarea', [])
+      localStorage.setItem('cityid', this.state.cityid)
+      localStorage.setItem('areaid', this.state.areaid)
+      localStorage.setItem('siteId', this.state.siteId)
+      localStorage.removeItem('begintime')
+      localStorage.removeItem('endtime')
       this.detectionService()
     })
   }

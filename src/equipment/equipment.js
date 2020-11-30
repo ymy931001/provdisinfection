@@ -82,6 +82,9 @@ class App extends React.Component {
       password: null,
       roomId: null,
       iscplatform: [],
+      cityid: localStorage.getItem('cityid'),
+      areaid: localStorage.getItem('areaid'),
+      siteId: localStorage.getItem('siteId'),
       tabvalue: '1',
       onlines: [{
         title: '序列号',
@@ -523,6 +526,21 @@ class App extends React.Component {
 
   componentWillMount() {
     document.title = "摄像头管理";
+    if (localStorage.getItem('selectarea')) {
+      var arr = localStorage.getItem('selectarea').split(',')
+      if (arr.length > 2) {
+        for (var i in arr) {
+          arr[2] = parseInt(arr[2])
+        }
+      }
+      this.setState({
+        addresslist: arr
+      }, function () {
+        this.device()
+      })
+    } else {
+      this.device()
+    }
   }
 
   componentDidMount() {
@@ -780,9 +798,9 @@ class App extends React.Component {
         })
         // this.device()
         devicelist([
-          this.state.cityid,
-          this.state.areaid,
-          this.state.siteId,
+          this.state.cityid === 'null' ? null : this.state.cityid,
+          this.state.areaid === 'null' ? null : this.state.areaid,
+          this.state.siteId === 'null' ? null : this.state.siteId,
           0,
           this.state.keytext,
         ]).then(res => {
@@ -891,7 +909,9 @@ class App extends React.Component {
 
   device = () => {
     devicelist([
-
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         var arr = []
@@ -1116,9 +1136,9 @@ class App extends React.Component {
     console.log(this.state.site)
     console.log(this.state.name)
     devicelist([
-      this.state.cityid,
-      this.state.areaid,
-      this.state.siteId,
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
       0,
       this.state.keytext,
     ]).then(res => {
@@ -1144,9 +1164,9 @@ class App extends React.Component {
   //手持式筛选
   handlequery = () => {
     devicelist([
-      this.state.cityid,
-      this.state.areaid,
-      this.state.siteId,
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
       1,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
@@ -1485,12 +1505,16 @@ class App extends React.Component {
   //重置
   reset = () => {
     this.setState({
-      cityid: undefined,
-      areaid: undefined,
-      siteId: undefined,
+      cityid: null,
+      areaid: null,
+      siteId: null,
       addresslist: [],
       keytext: undefined,
     }, function () {
+      localStorage.setItem('selectarea', [])
+      localStorage.setItem('cityid', this.state.cityid)
+      localStorage.setItem('areaid', this.state.areaid)
+      localStorage.setItem('siteId', this.state.siteId)
       this.query()
     })
   }
