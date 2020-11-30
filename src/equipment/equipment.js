@@ -1099,10 +1099,11 @@ class App extends React.Component {
   backvideo = (text, record, index) => {
     console.log(record.id)
     if (record.id === 957) {
-      window.open('https://mainimg.terabits.cn/demo_window_simple_playback.html')
+      window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B3%E6%B1%8725%E6%A5%BC.html')
+
     }
     if (record.id === 941) {
-      window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B324%E6%A5%BC.html')
+      window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B3%E6%B1%8724%E6%A5%BC.html')
     }
   }
 
