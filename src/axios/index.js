@@ -341,6 +341,7 @@ export const boardlists = params =>
     area: params[1],
     siteid: params[2],
     key: params[3],
+    imei: params[4],
   });
 
 //封面

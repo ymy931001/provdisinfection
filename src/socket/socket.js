@@ -746,6 +746,7 @@ class App extends React.Component {
       this.state.areaid,
       this.state.siteId,
       this.state.keytext,
+      this.state.imei,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         console.log(res.data.data)
@@ -1069,6 +1070,13 @@ class App extends React.Component {
     })
   }
 
+  //imei录入
+  imei = (e) => {
+    this.setState({
+      imei: e.target.value
+    })
+  }
+
   //重置
   reset = () => {
     this.setState({
@@ -1077,12 +1085,14 @@ class App extends React.Component {
       siteId: undefined,
       addresslist: [],
       keytext: undefined,
+      imei: undefined,
     }, function () {
       boardlists([
         this.state.cityid,
         this.state.areaid,
         this.state.siteId,
         this.state.keytext,
+        this.state.imei,
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           this.setState({
@@ -1141,8 +1151,13 @@ class App extends React.Component {
                   changeOnSelect
                   style={{ width: "350px", marginRight: '20px', marginBottom: '20px' }}
                   placeholder="选择酒店" />
+                                   imei&nbsp;: &nbsp;&nbsp;&nbsp;
+                <Input placeholder="请输入imei" style={{ width: '150px', marginRight: '10px' }}
+                  value={this.state.imei}
+                  onChange={this.imei}
+                />
                     关键字搜索&nbsp;: &nbsp;&nbsp;&nbsp;
-                <Input placeholder="请输入关键字" style={{ width: '200px', marginRight: '20px' }}
+                <Input placeholder="请输入关键字" style={{ width: '150px', marginRight: '10px' }}
                   value={this.state.keytext}
                   onChange={this.keytext}
                 />
