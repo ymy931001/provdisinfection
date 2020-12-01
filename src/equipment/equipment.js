@@ -1003,10 +1003,10 @@ class App extends React.Component {
     geisctUrl(
       record,
     ).then(res => {
-      console.log(text)
-      localStorage.setItem('videoid', res.data)
+      console.log(res.data.data)
+      localStorage.setItem('videoid', res.data.data)
       localStorage.setItem('hotelnames', record.siteName)
-      if (!res.data) {
+      if (!res.data.data) {
         message.error('暂无视频')
       } else {
         window.location.href = "/app/onlinevideo"
