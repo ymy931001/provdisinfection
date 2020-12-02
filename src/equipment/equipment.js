@@ -29,7 +29,8 @@ import {
   roomlist,
   deletecamera,
   addhandheld,
-  geisctUrl
+  geisctUrl,
+  iscid
 } from "../axios";
 import "./equipment.css";
 import moment from 'moment';
@@ -1097,7 +1098,8 @@ class App extends React.Component {
   }
 
   backvideo = (text, record, index) => {
-    console.log(record.id)
+    console.log(record)
+    localStorage.setItem('indexCode', record.indexCode)
     if (record.id === 957) {
       window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B3%E6%B1%8725%E6%A5%BC.html')
 
@@ -1105,6 +1107,17 @@ class App extends React.Component {
     if (record.id === 941) {
       window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B3%E6%B1%8724%E6%A5%BC.html')
     }
+    iscid([
+      record.iscId,
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+        localStorage.setItem('appkey', res.data.data.appkey)
+        localStorage.setItem('appsecret', res.data.data.appsecret)
+        localStorage.setItem('iscip', res.data.data.host.split(':')[0])
+        localStorage.setItem('iscport', res.data.data.host.split(':')[1])
+        window.location.href = "/app/videoback"
+      }
+    });
   }
 
   state = { onlinevisible: false }

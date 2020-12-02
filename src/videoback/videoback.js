@@ -36,7 +36,7 @@ export const injectScript = (src) => {
 let nowtime = new Date();
 let year = nowtime.getFullYear();
 let month = nowtime.getMonth() + 1 > 9 ? nowtime.getMonth() + 1 : '0' + (nowtime.getMonth() + 1);;
-let date = nowtime.getDate()? nowtime.getDate() : '0' + (nowtime.getDate());
+let date = nowtime.getDate() ? nowtime.getDate() : '0' + (nowtime.getDate());
 
 
 class App extends React.Component {
@@ -45,7 +45,8 @@ class App extends React.Component {
     thirdpartylist: [],
     permissionlist: [],
     warningListDataSource: [],
-    number: "a8945fb3a658472ab0b5a8e454664727",
+    // number: "a8945fb3a658472ab0b5a8e454664727",
+    number: localStorage.getItem('indexCode')
   };
 
   componentWillUnmount() {
@@ -67,6 +68,10 @@ class App extends React.Component {
       that.initPlugin()
     })
 
+    console.log(localStorage.getItem('appkey'))
+    console.log(localStorage.getItem('appsecret'))
+    console.log(localStorage.getItem('iscip'))
+    console.log(localStorage.getItem('iscport'))
     // // 监听resize事件，使插件窗口尺寸跟随DIV窗口变化
     // $(window).resize(() => {
     //   if (oWebControl != null) {
@@ -170,11 +175,15 @@ class App extends React.Component {
     this.getPubKey(() => {
 
       ////////////////////////////////// 请自行修改以下变量值	////////////////////////////////////
-      var appkey = "26227743";                           //综合安防管理平台提供的appkey，必填
-      var secret = this.setEncrypt("aGDGU9FFAFeEcMTtZGbh");   //综合安防管理平台提供的secret，必填
-      var ip = "218.108.33.77";                           //综合安防管理平台IP地址，必填
+      // var appkey = "26227743";                           //综合安防管理平台提供的appkey，必填
+      // var secret = this.setEncrypt("aGDGU9FFAFeEcMTtZGbh");   //综合安防管理平台提供的secret，必填
+      // var ip = "218.108.33.77";                           //综合安防管理平台IP地址，必填
+      // var port = 444;                                    //综合安防管理平台端口，若启用HTTPS协议，默认443
+      var appkey = localStorage.getItem('appkey');                           //综合安防管理平台提供的appkey，必填
+      var secret = this.setEncrypt(localStorage.getItem('appsecret'));   //综合安防管理平台提供的secret，必填
+      var ip = localStorage.getItem('iscip');                           //综合安防管理平台IP地址，必填
+      var port = parseInt(localStorage.getItem('iscport'));                                   //综合安防管理平台端口，若启用HTTPS协议，默认443
       var playMode = 1;                                  //初始播放模式：0-预览，1-回放
-      var port = 444;                                    //综合安防管理平台端口，若启用HTTPS协议，默认443
       var snapDir = "D:\\SnapDir";                       //抓图存储路径
       var videoDir = "D:\\VideoDir";                     //紧急录像或录像剪辑存储路径
       var layout = "1x1";                                //playMode指定模式的布局

@@ -889,6 +889,13 @@ export const isclist = params =>
 
   });
 
+//isc详情
+export const iscid = params =>
+  http.get(config.requestIp + "/isc/" + params[0], {
+
+  });
+
+
 
 //安防平台区域
 export const iscarea = params =>
