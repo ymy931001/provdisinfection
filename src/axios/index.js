@@ -1517,6 +1517,11 @@ export const testai = params =>
     date: params[2],
   });
 
+//生成免密登录地址
+export const getUrlWithOutCode = params =>
+  http.put(config.requestIp + "/admin/getUrlWithOutCode", {
+    adminId: params[0],
+  });
 
 
 

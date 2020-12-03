@@ -26,7 +26,7 @@ import {
   getallRegion,
   putuser,
   deleteuser,
-  puthoteluser, getregion
+  puthoteluser, getregion, getUrlWithOutCode
 } from "../axios";
 import "./user.css";
 import { Link } from 'react-router-dom';
@@ -425,6 +425,7 @@ class App extends React.Component {
       visible: false,
       menuvisible: false,
       deletevisible: false,
+      codevisible: false,
     })
   }
 
@@ -713,6 +714,23 @@ class App extends React.Component {
     });
   }
 
+  showwithoutcode = (text, index, record) => {
+    console.log(record.id)
+    getUrlWithOutCode([
+      record.id
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          codevisible: true,
+          codeaddress: res.data.data
+        })
+        // this.setState({
+        //   menuvisible: true,
+        //   checkedKeys: res.data.data
+        // })
+      }
+    });
+  }
 
   //修改权限
   saveOk = () => {
@@ -920,6 +938,19 @@ class App extends React.Component {
           return (
             <div>
               <span onClick={() => this.showModal(text, index, record)} style={{ color: 'blue', cursor: 'pointer' }}>
+                查看
+              </span>
+            </div>
+          );
+        }
+      }
+      , {
+        title: "免登录地址",
+        dataIndex: "id",
+        render: (text, record, index) => {
+          return (
+            <div>
+              <span onClick={() => this.showwithoutcode(text, index, record)} style={{ color: 'blue', cursor: 'pointer' }}>
                 查看
               </span>
             </div>
@@ -1241,6 +1272,16 @@ class App extends React.Component {
             onCancel={this.handleCancel}
           >
             您确认要删除该用户吗？
+          </Modal>
+          <Modal
+            title="免登录地址"
+            visible={this.state.codevisible}
+            footer={null}
+            width="400px"
+            centered
+            onCancel={this.handleCancel}
+          >
+            {this.state.codeaddress}
           </Modal>
           <Modal
             title="选择管辖区域"
