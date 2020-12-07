@@ -46,6 +46,19 @@ export const newdetectionsearch = (params) => http.get(config.requestIp + "/dete
 });
 
 
+//获取插座数据列表
+export const newsocketdata = (params) => http.get(config.requestIp + "/detection/board", {
+  pageNum: params[0],
+  pageSize: params[1],
+  city: params[2],
+  area: params[3],
+  siteid: params[4],
+  start: params[5],
+  stop: params[6],
+  key: params[7],
+});
+
+
 //检测报告单条记录
 export const newdetection = (params) => http.get(config.requestIp + "/detection/report/" + params[0], {
 

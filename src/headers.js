@@ -102,14 +102,14 @@ class Headers extends Component {
                 <div style={{ marginRight: "20px", float: 'right', height: '64px', display: 'flex', alignItems: 'center', fontSize: '14px' }}>
                     <div style={{ textAlign: 'right' }}>
                         <span style={{ fontSize: '16x', display: 'inline-block', height: '56px' }}>欢迎您，</span>
-                        <Avatar icon="user" style={{ marginRight: '10px', marginBottom: '10px' }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <img src={require('./logo2.png')} alt="" style={{ marginRight: '10px' ,width:'25px'}} />
                         <span style={{ marginRight: '10px' }}>
                             {/* <Icon type="user" style={{ marginRight: '5px' }} /> */}
                             {localStorage.getItem("namezh")}
                         </span>
                     </div>
                     <div style={{ height: "32px", lineHeight: "32px", textAlign: 'right' }}>
-                        <span onClick={this.out} style={{ cursor: 'pointer', marginLeft: '10px' }}> <Icon type="export" /> 退出</span>
+                        <span onClick={this.out} style={{ cursor: 'pointer' }}> <Icon type="export" /> 退出</span>
                     </div>
 
                     {/* <Avatar icon="user" style={{ marginRight: '10px' }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />

@@ -178,6 +178,15 @@ class App extends React.Component {
       {
         title: "酒店名称",
         dataIndex: "siteName",
+        render: (text, record, index) => {
+          return (
+            <div>
+              <a onClick={() => this.findhotel(text, record, index)} style={{ color: '#666' }}>
+                {text}
+              </a>
+            </div>
+          )
+        }
       },
       {
         title: "监控位置",
@@ -444,30 +453,62 @@ class App extends React.Component {
   //房间搜索
   findroom = (text, record, index) => {
     this.setState({
-      keytext: text
-    })
-    newdetectionsearch([
-      this.state.pageNum,
-      this.state.pageNumSize,
-      null,
-      null,
-      record.siteId,
-      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
-      this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
-      text
-    ]).then(res => {
-      if (res.data && res.data.message === "success") {
-        if (res.data.data === null) {
-          this.setState({
-            videoListDataSource: []
-          })
-        } else {
-          this.setState({
-            videoListDataSource: res.data.data.detectionVOList,
-            total: res.data.data.total,
-          })
+      keytext: text,
+      siteId: record.siteId,
+    }, function () {
+      newdetectionsearch([
+        1,
+        this.state.pageNumSize,
+        null,
+        null,
+        this.state.siteId,
+        this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+        this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+        text
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          if (res.data.data === null) {
+            this.setState({
+              videoListDataSource: []
+            })
+          } else {
+            this.setState({
+              videoListDataSource: res.data.data.detectionVOList,
+              total: res.data.data.total,
+            })
+          }
         }
-      }
+      })
+    })
+  }
+
+  //酒店搜索
+  findhotel = (text, record, index) => {
+    this.setState({
+      siteId: record.siteId,
+    }, function () {
+      newdetectionsearch([
+        1,
+        this.state.pageNumSize,
+        null,
+        null,
+        this.state.siteId,
+        this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+        this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          if (res.data.data === null) {
+            this.setState({
+              videoListDataSource: []
+            })
+          } else {
+            this.setState({
+              videoListDataSource: res.data.data.detectionVOList,
+              total: res.data.data.total,
+            })
+          }
+        }
+      })
     })
   }
 
@@ -825,6 +866,7 @@ class App extends React.Component {
       keytext: undefined,
       begintime: undefined,
       endtime: undefined,
+      pageNum: 1,
     }, function () {
       localStorage.setItem('selectarea', [])
       localStorage.setItem('cityid', this.state.cityid)

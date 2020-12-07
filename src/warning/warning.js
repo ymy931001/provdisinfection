@@ -398,7 +398,6 @@ class App extends React.Component {
               </div>
             )
           }
-
         }
       },
       {
@@ -407,8 +406,8 @@ class App extends React.Component {
         render: (text, record, index) => {
           if (text === null || !record.duration) {
             return (
-              <div style={{ color: 'red' }}>
-                暂无
+              <div style={{ color: 'green' }}>
+                {moment(new Date(record.date)).format('YYYY-MM-DD')}
               </div>
             )
           } else {
@@ -418,7 +417,6 @@ class App extends React.Component {
               </div>
             )
           }
-
         }
       }, {
         title: "异常说明",
@@ -441,6 +439,172 @@ class App extends React.Component {
       }
 
     ];
+
+
+    const readycolumns = [
+      {
+        title: "酒店名称",
+        dataIndex: "siteName",
+      },
+      {
+        title: "房间位置",
+        dataIndex: "roomName",
+        render: (text, record, index) => {
+          if (!text) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                {text}
+              </div>
+            )
+          }
+        }
+      },
+      {
+        title: "报警原因",
+        dataIndex: "message",
+        render: (text, record, index) => {
+          if (record.type === 3) {
+            return (
+              <div style={{ color: 'red', cursor: "pointer" }}>
+                <Tooltip placement="topLeft" title={"离线时间：" + record.duration + "小时"}>
+                  {text}
+                </Tooltip>
+              </div>
+            )
+          }
+          else if (record.type === 0) {
+            if (!record.duration) {
+              return (
+                <div style={{ color: 'red' }}>
+                  {text}
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ color: 'red', cursor: "pointer" }}>
+                  <Tooltip placement="topLeft" title={"未开启天数：" + record.duration + "天"}>
+                    消毒柜未开启
+                  </Tooltip>
+                </div>
+
+              )
+            }
+
+          }
+          else {
+            return (
+              <div style={{ color: 'red' }} >
+                {text}
+              </div >
+            )
+          }
+
+        }
+      }, {
+        title: "报警级别",
+        dataIndex: "level",
+        filters: [
+          { text: "预报警", value: 1 },
+          { text: "报警", value: 2 },
+        ],
+        onFilter: (value, record) => record.level == value,  //eslint-disable-line 
+        render: (text, record, index) => {
+          if (text === 1) {
+            return (
+              <div style={{ color: 'orange' }}>
+                预报警
+              </div>
+            )
+          }
+          if (text === 2) {
+            return (
+              <div style={{ color: 'red' }}>
+                报警
+              </div>
+            )
+          }
+          if (record.type === 1) {
+            return (
+              <div style={{ color: '#1890ff' }}>
+                提醒
+              </div>
+            )
+          }
+          if (text === undefined) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          }
+        }
+      }, {
+        title: "处理时长",
+        dataIndex: "duration",
+        sorter: (a, b) => a.duration - b.duration,
+        render: (text, record, index) => {
+          if (!text) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                <span style={{ fontWeight: 'bold', color: "red" }}>{text}</span>  天
+              </div>
+            )
+          }
+        }
+      },
+      {
+        title: "处理时间",
+        dataIndex: "date",
+        render: (text, record, index) => {
+          if (text === null || !record.duration) {
+            return (
+              <div style={{ color: 'green' }}>
+                {moment(new Date(record.date)).format('YYYY-MM-DD')}
+              </div>
+            )
+          } else {
+            return (
+              <div style={{ color: 'green' }}>
+                {moment(new Date(text) - 3600 * 24 * 1000 * record.duration).format('YYYY-MM-DD')}
+              </div>
+            )
+          }
+        }
+      }, {
+        title: "异常说明",
+        dataIndex: "remark",
+        render: (text, record, index) => {
+          if (text === null || text === undefined) {
+            return (
+              <div >
+                <a onClick={() => this.explain(text, record, index)}>添加</a>
+              </div>
+            )
+          } else {
+            return (
+              <div style={{ color: 'red' }}>
+                {text}
+              </div>
+            )
+          }
+        }
+      }
+    ];
+
+
+
 
     const offlineColumns = [
       {
@@ -559,7 +723,7 @@ class App extends React.Component {
                   <div style={{ marginTop: 5 }}>
                     <Table
                       dataSource={this.state.historydata}
-                      columns={otaInfoTableColumns}
+                      columns={readycolumns}
                       pagination={false}
                     />
                     <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>

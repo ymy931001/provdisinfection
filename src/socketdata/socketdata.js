@@ -11,7 +11,7 @@ import {
   Input, message
 } from "antd";
 import {
-  newdetectionsearch,
+  newsocketdata,
   newdetection,
   getregion
 } from "../axios";
@@ -84,6 +84,15 @@ class App extends React.Component {
       {
         title: "所属酒店",
         dataIndex: "siteName",
+        render: (text, record, index) => {
+          return (
+            <div>
+              <a onClick={() => this.findhotel(text, record, index)} style={{ color: '#666' }}>
+                {text}
+              </a>
+            </div>
+          )
+        }
       }, {
         title: "设备位置",
         dataIndex: "name",
@@ -177,7 +186,7 @@ class App extends React.Component {
   }
 
   detectionService = () => {
-    newdetectionsearch([
+    newsocketdata([
       this.state.pageNum,
       this.state.pageNumSize,
       null,
@@ -235,37 +244,64 @@ class App extends React.Component {
   //房间搜索
   findroom = (text, record, index) => {
     this.setState({
-      keytext: text
-    })
-    newdetectionsearch([
-      this.state.pageNum,
-      this.state.pageNumSize,
-      null,
-      null,
-      record.siteId,
-      null,
-      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
-      text
-    ]).then(res => {
-      if (res.data && res.data.message === "success") {
-        // this.setState({
-        //   userlist: res.data.data.detectionVOList,
-        //   total: res.data.data.total,
-        // })
-        var arr = []
-        for (var i in res.data.data.detectionVOList) {
-          if (res.data.data.detectionVOList[i].runtime !== 0) {
-            arr.push(res.data.data.detectionVOList[i])
-          }
+      keytext: text,
+      siteId: record.siteId,
+    }, function () {
+      newsocketdata([
+        1,
+        this.state.pageNumSize,
+        null,
+        null,
+        this.state.siteId,
+        null,
+        this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+        text
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          // var arr = []
+          // for (var i in res.data.data.detectionVOList) {
+          //   if (res.data.data.detectionVOList[i].runtime !== 0) {
+          //     arr.push(res.data.data.detectionVOList[i])
+          //   }
+          // }
+          this.setState({
+            userlist: res.data.data.detectionVOList,
+            total: res.data.data.total
+          })
         }
-        this.setState({
-          userlist: arr,
-          total: res.data.data.total
-        })
-      }
-
+      })
     })
   }
+
+
+  //酒店搜索
+  findhotel = (text, record, index) => {
+    this.setState({
+      keytext: text,
+      siteId: record.siteId,
+    }, function () {
+      newsocketdata([
+        1,
+        this.state.pageNumSize,
+        null,
+        null,
+        this.state.siteId,
+        null,
+        this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+        text
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          this.setState({
+            userlist: res.data.data.detectionVOList,
+            total: res.data.data.total
+          })
+        }
+      })
+    })
+  }
+
+
+
 
 
   handleCancel = (e) => {
@@ -315,7 +351,7 @@ class App extends React.Component {
 
   query = () => {
     console.log(this.state.site)
-    newdetectionsearch([
+    newsocketdata([
       this.state.pageNum,
       this.state.pageNumSize,
       this.state.cityid,
@@ -365,7 +401,7 @@ class App extends React.Component {
       pageNum: page,
       pageNumSize: num,
     }, function () {
-      newdetectionsearch([
+      newsocketdata([
         this.state.pageNum,
         this.state.pageNumSize,
         this.state.cityid,
@@ -404,6 +440,7 @@ class App extends React.Component {
       keytext: undefined,
       begintime: undefined,
       endtime: undefined,
+      pageNum: 1,
     }, function () {
       this.detectionService()
     })
