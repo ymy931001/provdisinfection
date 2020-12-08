@@ -10,6 +10,7 @@ import {
   Input,
   message,
   DatePicker,
+  Pagination,
 } from "antd";
 import {
   readinglist,
@@ -65,6 +66,8 @@ class App extends React.Component {
       begintime: year + '-' + month + '-' + day,
       devicelists: [],
       devicedis: 'none',
+      pageNum: 1,
+      pageNumSize: 10,
       readouts: [
         // //   {
         // //   title: 'MAC',
@@ -390,23 +393,13 @@ class App extends React.Component {
 
 
     boardlists([
-
+      this.state.pageNum,
+      this.state.pageNumSize,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
-
         this.setState({
-          userlist: res.data.data
-        }, function () {
-          console.log(this.state.userlist)
-          if (res.data.data.length < 10) {
-            this.setState({
-              page: false
-            })
-          } else {
-            this.setState({
-              page: true
-            })
-          }
+          userlist: res.data.data.boardList,
+          total: res.data.data.total,
         });
       }
     });
@@ -742,6 +735,8 @@ class App extends React.Component {
 
   query = () => {
     boardlists([
+      1,
+      this.state.pageNumSize,
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
@@ -749,20 +744,9 @@ class App extends React.Component {
       this.state.imei,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
-        console.log(res.data.data)
         this.setState({
-          userlist: res.data.data
-        }, function () {
-          console.log(this.state.userlist)
-          if (res.data.data.length < 10) {
-            this.setState({
-              page: false
-            })
-          } else {
-            this.setState({
-              page: true
-            })
-          }
+          userlist: res.data.data.boardList,
+          total: res.data.data.total,
         });
       }
     });
@@ -833,24 +817,15 @@ class App extends React.Component {
         if (res.data && res.data.message === "success") {
           message.success('添加成功')
           boardlists([
-
+            this.state.pageNum,
+            this.state.pageNumSize,
           ]).then(res => {
             if (res.data && res.data.message === "success") {
               console.log(res.data.data)
               localStorage.removeItem('roomid')
               this.setState({
-                userlist: res.data.data
-              }, function () {
-                console.log(this.state.userlist)
-                if (res.data.data.length < 10) {
-                  this.setState({
-                    page: false
-                  })
-                } else {
-                  this.setState({
-                    page: true
-                  })
-                }
+                userlist: res.data.data.boardList,
+                total: res.data.data.total,
               });
             }
           });
@@ -989,24 +964,15 @@ class App extends React.Component {
       if (res.data && res.data.message === "success") {
         message.success("修改成功")
         boardlists([
-
+          1,
+          this.state.pageNumSize,
         ]).then(res => {
           if (res.data && res.data.message === "success") {
             console.log(res.data.data)
             localStorage.removeItem('roomid')
             this.setState({
-              userlist: res.data.data
-            }, function () {
-              console.log(this.state.userlist)
-              if (res.data.data.length < 10) {
-                this.setState({
-                  page: false
-                })
-              } else {
-                this.setState({
-                  page: true
-                })
-              }
+              userlist: res.data.data.boardList,
+              total: res.data.data.total,
             });
           }
         });
@@ -1037,23 +1003,14 @@ class App extends React.Component {
           deletevisible: false,
         })
         boardlists([
-
+          1,
+          this.state.pageNumSize,
         ]).then(res => {
           if (res.data && res.data.message === "success") {
             console.log(res.data.data)
             this.setState({
-              userlist: res.data.data
-            }, function () {
-              console.log(this.state.userlist)
-              if (res.data.data.length < 10) {
-                this.setState({
-                  page: false
-                })
-              } else {
-                this.setState({
-                  page: true
-                })
-              }
+              userlist: res.data.data.boardList,
+              total: res.data.data.total,
             });
           }
         });
@@ -1086,8 +1043,11 @@ class App extends React.Component {
       addresslist: [],
       keytext: undefined,
       imei: undefined,
+      pageNum: 1,
     }, function () {
       boardlists([
+        1,
+        this.state.pageNumSize,
         this.state.cityid,
         this.state.areaid,
         this.state.siteId,
@@ -1096,23 +1056,40 @@ class App extends React.Component {
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           this.setState({
-            userlist: res.data.data
-          }, function () {
-            if (res.data.data.length < 10) {
-              this.setState({
-                page: false
-              })
-            } else {
-              this.setState({
-                page: true
-              })
-            }
+            userlist: res.data.data.boardList,
+            total: res.data.data.total,
           });
         }
       });
     })
   }
 
+
+  //分页
+
+  pagechange = (page, num) => {
+    this.setState({
+      pageNum: page,
+      pageNumSize: num,
+    }, function () {
+      boardlists([
+        this.state.pageNum,
+        this.state.pageNumSize,
+        this.state.cityid,
+        this.state.areaid,
+        this.state.siteId,
+        this.state.keytext,
+        this.state.imei,
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          this.setState({
+            userlist: res.data.data.boardList,
+            total: res.data.data.total,
+          });
+        }
+      });
+    })
+  }
 
   render() {
     const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
@@ -1169,9 +1146,20 @@ class App extends React.Component {
                 <Table
                   dataSource={this.state.userlist}
                   columns={this.nodeInfoTableColumns}
-                  pagination={this.state.page}
+                  pagination={false}
                 />
+                <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                  <Pagination
+                    onShowSizeChange={this.onShowSizeChange}
+                    defaultCurrent={1}
+                    onChange={this.pagechange}
+                    total={this.state.total}
+                    hideOnSinglePage={true}
+                    current={this.state.pageNum}
+                  />
+                </div>
               </div>
+
             </Card>
 
             <Modal

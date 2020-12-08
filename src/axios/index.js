@@ -120,12 +120,14 @@ export const getroomdevice = params =>
 //获取设备列表
 export const devicelist = params =>
   http.get(config.requestIp + "/camera", {
-    city: params[0],
-    area: params[1],
-    siteid: params[2],
-    mode: params[3],
-    key: params[4],
-    roomid: params[5],
+    pageNum: params[0],
+    pageSize: params[1],
+    city: params[2],
+    area: params[3],
+    siteid: params[4],
+    mode: params[5],
+    key: params[6],
+    roomid: params[7],
   });
 
 
@@ -350,11 +352,13 @@ export const boardlist = params =>
 
 export const boardlists = params =>
   http.get(config.requestIp + "/board", {
-    city: params[0],
-    area: params[1],
-    siteid: params[2],
-    key: params[3],
-    imei: params[4],
+    pageNum: params[0],
+    pageSize: params[1],
+    city: params[2],
+    area: params[3],
+    siteid: params[4],
+    key: params[5],
+    imei: params[6],
   });
 
 //封面

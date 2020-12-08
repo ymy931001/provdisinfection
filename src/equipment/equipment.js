@@ -12,7 +12,8 @@ import {
   Drawer,
   Tree,
   Tabs,
-  Radio
+  Radio,
+  Pagination
 } from "antd";
 import {
   devicelist,
@@ -30,7 +31,7 @@ import {
   deletecamera,
   addhandheld,
   geisctUrl,
-  iscid
+  iscid,
 } from "../axios";
 import "./equipment.css";
 import moment from 'moment';
@@ -49,6 +50,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      pageNum: 1,
+      pageNumSize: 10,
+      handelpageNum: 10,
       videoListDataSource: [],
       device_ip: null,
       sitelist: [],
@@ -538,9 +542,11 @@ class App extends React.Component {
         addresslist: arr
       }, function () {
         this.device()
+        this.handeldevice()
       })
     } else {
       this.device()
+      this.handeldevice()
     }
   }
 
@@ -633,84 +639,16 @@ class App extends React.Component {
           }
           this.setState({
             videoListDataSource: arr,
+            total: arr.length,
             addhandheldSource: arrs,
-          }, function () {
-            if (arr.length < 10) {
-              this.setState({
-                page: false
-              })
-            } else {
-              this.setState({
-                page: true
-              })
-            }
-
-            if (arrs.length < 10) {
-              this.setState({
-                handlepage: false
-              })
-            } else {
-              this.setState({
-                handlepage: true
-              })
-            }
+            handeltotal: arrs.length,
           });
         }
       });
     } else {
       this.device()
+      this.handeldevice()
     }
-
-
-
-
-    // devicelist([
-    //   localStorage.getItem('eqsiteid'),
-    //   localStorage.getItem('eqname'),
-    //   localStorage.getItem('roomid'),
-    // ]).then(res => {
-    //   if (res.data && res.data.message === "success") {
-    //     localStorage.removeItem('roomid')
-    //     var arr = []
-    //     var arrs = []
-    //     for (var i in res.data.data) {
-    //       if (res.data.data[i].mode === 0) {
-    //         arr.push(res.data.data[i])
-    //       }
-    //       if (res.data.data[i].mode === 1) {
-    //         arrs.push(res.data.data[i])
-    //       }
-    //     }
-
-    //     this.setState({
-    //       videoListDataSource: arr,
-    //       addhandheldSource: arrs,
-    //     }, function () {
-    //       if (arr.length < 10) {
-    //         this.setState({
-    //           page: false
-    //         })
-    //       } else {
-    //         this.setState({
-    //           page: true
-    //         })
-    //       }
-
-    //       if (arrs.length < 10) {
-    //         this.setState({
-    //           handlepage: false
-    //         })
-    //       } else {
-    //         this.setState({
-    //           handlepage: true
-    //         })
-    //       }
-    //     });
-    //   }
-    // });
-
-
-
 
     var arr = []
     hotellist().then(res => {
@@ -799,6 +737,8 @@ class App extends React.Component {
         })
         // this.device()
         devicelist([
+          this.state.pageNum,
+          this.state.pageNumSize,
           this.state.cityid === 'null' ? null : this.state.cityid,
           this.state.areaid === 'null' ? null : this.state.areaid,
           this.state.siteId === 'null' ? null : this.state.siteId,
@@ -807,17 +747,8 @@ class App extends React.Component {
         ]).then(res => {
           if (res.data && res.data.message === "success") {
             this.setState({
-              videoListDataSource: res.data.data,
-            }, function () {
-              if (this.state.videoListDataSource.length < 10) {
-                this.setState({
-                  page: false
-                })
-              } else {
-                this.setState({
-                  page: true
-                })
-              }
+              videoListDataSource: res.data.data.cameraList,
+              total: res.data.data.total,
             });
           }
         });
@@ -910,49 +841,41 @@ class App extends React.Component {
 
   device = () => {
     devicelist([
+      this.state.pageNum,
+      this.state.pageNumSize,
       this.state.cityid === 'null' ? null : this.state.cityid,
       this.state.areaid === 'null' ? null : this.state.areaid,
       this.state.siteId === 'null' ? null : this.state.siteId,
+      0,
+      this.state.keytext
     ]).then(res => {
       if (res.data && res.data.message === "success") {
-        var arr = []
-        var arrs = []
-        for (var i in res.data.data) {
-          if (res.data.data[i].mode === 0) {
-            arr.push(res.data.data[i])
-          }
-          if (res.data.data[i].mode === 1) {
-            arrs.push(res.data.data[i])
-          }
-        }
-
         this.setState({
-          videoListDataSource: arr,
-          addhandheldSource: arrs,
-        }, function () {
-          if (arr.length < 10) {
-            this.setState({
-              page: false
-            })
-          } else {
-            this.setState({
-              page: true
-            })
-          }
-
-          if (arrs.length < 10) {
-            this.setState({
-              handlepage: false
-            })
-          } else {
-            this.setState({
-              handlepage: true
-            })
-          }
+          videoListDataSource: res.data.data.cameraList,
+          total: res.data.data.total,
         });
       }
     });
   }
+
+  handeldevice = () => {
+    devicelist([
+      this.state.handelpageNum,
+      this.state.pageNumSize,
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
+      1,
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          addhandheldSource: res.data.data.cameraList,
+          total: res.data.data.total,
+        });
+      }
+    });
+  }
+
 
 
   handleOk = () => {
@@ -991,7 +914,7 @@ class App extends React.Component {
             this.setState({
               visible: false,
             })
-            this.device()
+            this.handeldevice()
           } else {
             message.error(res.data.data)
           }
@@ -1018,7 +941,6 @@ class App extends React.Component {
   }
 
   findlastvideo(text, record, index) {
-
     getbackUrl([
       text,
       moment(new Date().getTime() - 1 * 24 * 3600 * 1000).format('YYYY-MM-DD'),
@@ -1028,9 +950,6 @@ class App extends React.Component {
       if (res.data.data.url === null || res.data.data.url === '') {
         message.error('暂无视频')
       }
-      // else {
-      //   window.location.href = "/app/onlinevideo"
-      // }
     });
 
   }
@@ -1150,6 +1069,8 @@ class App extends React.Component {
     console.log(this.state.site)
     console.log(this.state.name)
     devicelist([
+      this.state.pageNum,
+      this.state.pageNumSize,
       this.state.cityid === 'null' ? null : this.state.cityid,
       this.state.areaid === 'null' ? null : this.state.areaid,
       this.state.siteId === 'null' ? null : this.state.siteId,
@@ -1158,17 +1079,8 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          videoListDataSource: res.data.data,
-        }, function () {
-          if (this.state.videoListDataSource.length < 10) {
-            this.setState({
-              page: false
-            })
-          } else {
-            this.setState({
-              page: true
-            })
-          }
+          videoListDataSource: res.data.data.cameraList,
+          total: res.data.data.total,
         });
       }
     });
@@ -1178,6 +1090,8 @@ class App extends React.Component {
   //手持式筛选
   handlequery = () => {
     devicelist([
+      this.state.handlepageNum,
+      this.state.pageNumSize,
       this.state.cityid === 'null' ? null : this.state.cityid,
       this.state.areaid === 'null' ? null : this.state.areaid,
       this.state.siteId === 'null' ? null : this.state.siteId,
@@ -1185,17 +1099,8 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          addhandheldSource: res.data.data,
-        }, function () {
-          if (this.state.addhandheldSource.length < 10) {
-            this.setState({
-              handlepage: false
-            })
-          } else {
-            this.setState({
-              handlepage: true
-            })
-          }
+          addhandheldSource: res.data.data.cameraList,
+          handeltotal: res.data.data.total,
         });
       }
     });
@@ -1530,6 +1435,8 @@ class App extends React.Component {
       siteId: null,
       addresslist: [],
       keytext: undefined,
+      pageNum: 1,
+      handelpageNum: 1,
     }, function () {
       localStorage.setItem('selectarea', [])
       localStorage.setItem('cityid', this.state.cityid)
@@ -1539,6 +1446,58 @@ class App extends React.Component {
       this.handlequery()
     })
   }
+
+
+  //分页
+
+  pagechange = (page, num) => {
+    this.setState({
+      pageNum: page,
+      pageNumSize: num,
+    }, function () {
+      devicelist([
+        this.state.pageNum,
+        this.state.pageNumSize,
+        this.state.cityid === 'null' ? null : this.state.cityid,
+        this.state.areaid === 'null' ? null : this.state.areaid,
+        this.state.siteId === 'null' ? null : this.state.siteId,
+        0,
+        this.state.keytext,
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          this.setState({
+            videoListDataSource: res.data.data.cameraList,
+            total: res.data.data.total,
+          });
+        }
+      });
+    })
+  }
+
+  handelpagechange = (page, num) => {
+    this.setState({
+      pageNum: page,
+      pageNumSize: num,
+    }, function () {
+      devicelist([
+        this.state.handlepageNum,
+        this.state.pageNumSize,
+        this.state.cityid === 'null' ? null : this.state.cityid,
+        this.state.areaid === 'null' ? null : this.state.areaid,
+        this.state.siteId === 'null' ? null : this.state.siteId,
+        1,
+      ]).then(res => {
+        if (res.data && res.data.message === "success") {
+          this.setState({
+            addhandheldSource: res.data.data.cameraList,
+            handeltotal: res.data.data.total,
+          });
+        }
+      });
+    })
+  }
+
+
 
 
   render() {
@@ -1585,11 +1544,20 @@ class App extends React.Component {
                     <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>
                   </div>
                   <div style={{ marginTop: 20 }}>
-
                     <Table
                       dataSource={this.state.videoListDataSource}
                       columns={this.nodeInfoTableColumns}
-                      pagination={this.state.page}
+                      pagination={false}
+                    />
+                  </div>
+                  <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <Pagination
+                      onShowSizeChange={this.onShowSizeChange}
+                      defaultCurrent={1}
+                      onChange={this.pagechange}
+                      total={this.state.total}
+                      hideOnSinglePage={true}
+                      current={this.state.pageNum}
                     />
                   </div>
                 </TabPane>
@@ -1610,7 +1578,17 @@ class App extends React.Component {
                     <Table
                       dataSource={this.state.addhandheldSource}
                       columns={this.handleColumns}
-                      pagination={this.state.handlepage}
+                      pagination={false}
+                    />
+                  </div>
+                  <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                    <Pagination
+                      onShowSizeChange={this.onShowSizeChange}
+                      defaultCurrent={1}
+                      onChange={this.handelpagechange}
+                      total={this.state.handeltotal}
+                      hideOnSinglePage={true}
+                      current={this.state.handelpageNum}
                     />
                   </div>
                 </TabPane>
