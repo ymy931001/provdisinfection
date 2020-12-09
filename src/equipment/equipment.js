@@ -924,12 +924,14 @@ class App extends React.Component {
   }
 
   findvideo(text, record, index) {
+    console.log(record)
     geisctUrl(
       record,
     ).then(res => {
       console.log(res.data.data)
       localStorage.setItem('videoid', res.data.data)
       localStorage.setItem('hotelnames', record.siteName)
+      localStorage.setItem('roomname', record.roomName)
       if (!res.data.data) {
         message.error('暂无视频')
       } else {

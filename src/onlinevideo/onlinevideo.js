@@ -76,7 +76,7 @@ class App extends React.Component {
 
         <Layout>
           <Content style={{ margin: "16px 16px" }}>
-            <Card title={`${localStorage.getItem('hotelnames')}-监控视频`} headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
+            <Card title={`${localStorage.getItem('hotelnames')}${localStorage.getItem('roomname')}-监控视频`} headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
               extra={<Button type="primary" style={{ background: '#0070CC', border: '1px solid #0070CC', marginRight: '20px' }} onClick={this.showModal}
               >
                 <Link to="/app/equipment">返回</Link>
@@ -92,7 +92,7 @@ class App extends React.Component {
                 <VideoPlayer
 
                   // src="rtsp://39.107.227.244:554/openUrl/e4iRZU4"
-                 src={localStorage.getItem('videoid')}
+                  src={localStorage.getItem('videoid')}
                 ></VideoPlayer>
 
                 {/* <video width="100%" controls="controls" type="application/x-mpegURL" autoPlay="autoplay" loop="loop"  >
