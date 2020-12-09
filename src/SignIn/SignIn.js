@@ -20,10 +20,10 @@ class SignIn extends Component {
 
     let url = window.location.href;
     url = url.split('=', 2);
-    if (url[1] === "1201") {
+    if (url[1] === "1210") {
       login([
-        "hzadmin",
-        "Hz123456"
+        "scadmin",
+        "Sc123456"
       ]).then(res => {
         if (res.data.message === 'success') {
           hotellist().then(res => {
