@@ -878,7 +878,7 @@ class App extends React.Component {
                     <Button type="primary" onClick={this.query}>查询</Button>
                   </div>
                   <Row >
-                    <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingTop: '0px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingTop: '0px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           消毒柜开启时长统计
@@ -892,7 +892,7 @@ class App extends React.Component {
                         </div>
                       </div>
                     </Col>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px', paddingTop: '0px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px', paddingTop: '0px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           洗消时长统计
@@ -906,7 +906,7 @@ class App extends React.Component {
                         </div>
                       </div>
                     </Col>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px', paddingTop: '0px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px', paddingTop: '0px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           设备数量统计
@@ -924,7 +924,7 @@ class App extends React.Component {
                 </div>
                 <div >
                   <Row style={{ marginTop: '0px' }}>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '25px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingRight: '20px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           设备在线率统计
@@ -938,7 +938,7 @@ class App extends React.Component {
                         </div>
                       </div>
                     </Col>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           报警次数统计
@@ -952,7 +952,7 @@ class App extends React.Component {
                         </div>
                       </div>
                     </Col>
-                    <Col span={8} style={{ padding: '10px', paddingLeft: '25px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingLeft: '20px', paddingRight: '20px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           客房保洁时长统计
