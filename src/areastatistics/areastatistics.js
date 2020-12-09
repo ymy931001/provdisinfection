@@ -881,20 +881,6 @@ class App extends React.Component {
                     <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingTop: '0px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
-                          客房保洁时长统计
-                        </div>
-                        <div style={{ padding: '10px' }}>
-                          <Table
-                            dataSource={this.state.firstlist}
-                            columns={rankcolumns}
-                            pagination={this.state.firstlist.length < 5 ? false : paginationProps}
-                          />
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px', paddingTop: '0px' }}>
-                      <div className="linemain">
-                        <div className="ranktitle">
                           消毒柜开启时长统计
                         </div>
                         <div style={{ padding: '10px' }}>
@@ -920,11 +906,7 @@ class App extends React.Component {
                         </div>
                       </div>
                     </Col>
-                  </Row>
-                </div>
-                <div >
-                  <Row style={{ marginTop: '0px' }}>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '25px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px', paddingTop: '0px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           设备数量统计
@@ -938,7 +920,11 @@ class App extends React.Component {
                         </div>
                       </div>
                     </Col>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px' }}>
+                  </Row>
+                </div>
+                <div >
+                  <Row style={{ marginTop: '0px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingRight: '25px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           设备在线率统计
@@ -952,7 +938,7 @@ class App extends React.Component {
                         </div>
                       </div>
                     </Col>
-                    <Col span={8} style={{ padding: '10px', paddingLeft: '25px' }}>
+                    <Col span={8} style={{ padding: '10px', paddingRight: '25px', paddingLeft: '25px' }}>
                       <div className="linemain">
                         <div className="ranktitle">
                           报警次数统计
@@ -965,6 +951,21 @@ class App extends React.Component {
                           />
                         </div>
                       </div>
+                    </Col>
+                    <Col span={8} style={{ padding: '10px', paddingLeft: '25px' }}>
+                      <div className="linemain">
+                        <div className="ranktitle">
+                          客房保洁时长统计
+                        </div>
+                        <div style={{ padding: '10px' }}>
+                          <Table
+                            dataSource={this.state.firstlist}
+                            columns={rankcolumns}
+                            pagination={this.state.firstlist.length < 5 ? false : paginationProps}
+                          />
+                        </div>
+                      </div>
+
                     </Col>
                   </Row>
                 </div>

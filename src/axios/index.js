@@ -1174,7 +1174,9 @@ export const nowalarm = params =>
     begin: params[7],
     end: params[8],
     roomId: params[9],
+    date: params[10],
   });
+
 
 
 //添加报警说明

@@ -459,7 +459,7 @@ class App extends React.Component {
                   <img src={require('./tab2.png')} alt="" className="tabletab" style={{ display: this.state.resdis }} />
                   <img src={require('./tab1.png')} alt="" className="tabletab" style={{ display: this.state.unresdis }} />
                   <div className="reporttitle">
-                    视频监测分析报告
+                    洗消间工作分析报告
                   </div>
                   <div className="contheader">
                     <div className="contwidth">
