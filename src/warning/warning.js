@@ -421,7 +421,7 @@ class App extends React.Component {
       }, {
         title: "报警时长",
         dataIndex: "duration",
-        sorter: (a, b) => a.duration - b.duration,
+        // sorter: (a, b) => a.duration - b.duration,
         render: (text, record, index) => {
           if (!text) {
             return (
@@ -439,22 +439,14 @@ class App extends React.Component {
         }
       },
       {
-        title: "报警时间",
-        dataIndex: "date",
+        title: "报警起始时间",
+        dataIndex: "gmtcreate",
         render: (text, record, index) => {
-          if (text === null || !record.duration) {
-            return (
-              <div style={{ color: 'green' }}>
-                {moment(new Date(record.date)).format('YYYY-MM-DD')}
-              </div>
-            )
-          } else {
-            return (
-              <div style={{ color: 'green' }}>
-                {moment(new Date(text) - 3600 * 24 * 1000 * record.duration).format('YYYY-MM-DD')}
-              </div>
-            )
-          }
+          return (
+            <div style={{ color: 'red' }}>
+              {moment(new Date(text)).format('YYYY-MM-DD')}
+            </div>
+          )
         }
       }, {
         title: "异常说明",
@@ -533,7 +525,6 @@ class App extends React.Component {
 
               )
             }
-
           }
           else {
             return (
@@ -542,7 +533,6 @@ class App extends React.Component {
               </div >
             )
           }
-
         }
       }, {
         title: "报警级别",
@@ -585,7 +575,7 @@ class App extends React.Component {
       }, {
         title: "报警时长",
         dataIndex: "duration",
-        sorter: (a, b) => a.duration - b.duration,
+        // sorter: (a, b) => a.duration - b.duration,
         render: (text, record, index) => {
           if (!text) {
             return (
@@ -603,19 +593,29 @@ class App extends React.Component {
         }
       },
       {
-        title: "报警时间",
+        title: "报警开始时间",
+        dataIndex: "gmtcreate",
+        render: (text, record, index) => {
+          return (
+            <div style={{ color: 'green' }}>
+              {moment(new Date(text)).format('YYYY-MM-DD')}
+            </div>
+          )
+        }
+      }, {
+        title: "报警结束时间",
         dataIndex: "date",
         render: (text, record, index) => {
           if (text === null || !record.duration) {
             return (
               <div style={{ color: 'green' }}>
-                {moment(new Date(record.date)).format('YYYY-MM-DD')}
+                {moment(new Date(record.gmtcreate)).format('YYYY-MM-DD')}
               </div>
             )
           } else {
             return (
               <div style={{ color: 'green' }}>
-                {moment(new Date(text) - 3600 * 24 * 1000 * record.duration).format('YYYY-MM-DD')}
+                {moment(new Date(text)).format('YYYY-MM-DD')}
               </div>
             )
           }
@@ -752,7 +752,7 @@ class App extends React.Component {
       }, {
         title: "处理时长",
         dataIndex: "duration",
-        sorter: (a, b) => a.duration - b.duration,
+        // sorter: (a, b) => a.duration - b.duration,
         render: (text, record, index) => {
           if (!text) {
             return (
@@ -848,7 +848,7 @@ class App extends React.Component {
       }, {
         title: "离线时长",
         dataIndex: "duration",
-        sorter: (a, b) => a.duration - b.duration,
+        // sorter: (a, b) => a.duration - b.duration,
         render: (text, record, index) => {
           return (
             <div>
