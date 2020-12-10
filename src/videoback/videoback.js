@@ -58,8 +58,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({
-      begintime: moment(new Date(year + "-" + month + "-" + date + " " + "00:00:00")),
-      endtime: moment(new Date(year + "-" + month + "-" + date + " " + "23:59:59")),
+      begintime: moment(new Date(`${year}-${month}-${date} 00:00:00`)),
+      endtime: moment(new Date(`${year}-${month}-${date} 23:59:59`)),
     })
     let that = this
     injectScript('https://mainimg.terabits.cn/jsWebControl-1.0.0.min.js').then(res => {
@@ -182,7 +182,7 @@ class App extends React.Component {
       var appkey = localStorage.getItem('appkey');                           //综合安防管理平台提供的appkey，必填
       var secret = this.setEncrypt(localStorage.getItem('appsecret'));   //综合安防管理平台提供的secret，必填
       var ip = localStorage.getItem('iscip');                           //综合安防管理平台IP地址，必填
-      var port = parseInt(localStorage.getItem('iscport'));                                   //综合安防管理平台端口，若启用HTTPS协议，默认443
+      var port = parseInt(localStorage.getItem('iscport'), 10);                                   //综合安防管理平台端口，若启用HTTPS协议，默认443
       var playMode = 1;                                  //初始播放模式：0-预览，1-回放
       var snapDir = "D:\\SnapDir";                       //抓图存储路径
       var videoDir = "D:\\VideoDir";                     //紧急录像或录像剪辑存储路径

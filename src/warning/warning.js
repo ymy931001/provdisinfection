@@ -43,6 +43,7 @@ class App extends React.Component {
       nowpageNum: 1,
       historypageNum: 1,
       pageNumSize: 10,
+      messagetype: "0,1, 2, 4, 5, 6,7,8,9,10",
     };
   }
   onCollapse = collapsed => {
@@ -111,7 +112,7 @@ class App extends React.Component {
       this.state.nowpageNum,
       this.state.pageNumSize,
       false,
-      "0,1, 2, 4, 5, 6,7,8,9",
+      this.state.messagetype,
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
@@ -132,7 +133,7 @@ class App extends React.Component {
       this.state.historypageNum,
       this.state.pageNumSize,
       false,
-      "0,1, 2, 4, 5, 6,7,8,9",
+      this.state.messagetype,
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
@@ -302,7 +303,7 @@ class App extends React.Component {
     })
   }
 
-  //当前报警分页
+  //历史报警分页
   historypagechange = (page, num) => {
     this.setState({
       historypageNum: page,
@@ -312,7 +313,21 @@ class App extends React.Component {
     })
   }
 
+  nowtable = (a, b, c) => {
+    this.setState({
+      messagetype: b.message.join(',') === "" ? "0,1, 2, 4, 5, 6,7,8,9,10" : b.message.join(','),
+    }, function () {
+      this.getnowalarm()
+    })
+  }
 
+  historytable = (a, b, c) => {
+    this.setState({
+      messagetype: b.message.join(',') === "" ? "0,1, 2, 4, 5, 6,7,8,9,10" : b.message.join(','),
+    }, function () {
+      this.gethistoryalarm()
+    })
+  }
 
   render() {
     const otaInfoTableColumns = [
@@ -342,6 +357,12 @@ class App extends React.Component {
       {
         title: "报警原因",
         dataIndex: "message",
+        filters: [
+          { text: "消毒未达标", value: 0 },
+          { text: "无杯具提交记录", value: 1 },
+          { text: "无动检报警", value: 10 },
+        ],
+        // onFilter: (value, record) => record.message == value,  //eslint-disable-line 
         render: (text, record, index) => {
           if (record.type === 3) {
             return (
@@ -383,11 +404,6 @@ class App extends React.Component {
       }, {
         title: "报警级别",
         dataIndex: "level",
-        filters: [
-          { text: "预报警", value: 1 },
-          { text: "报警", value: 2 },
-        ],
-        onFilter: (value, record) => record.level == value,  //eslint-disable-line 
         render: (text, record, index) => {
           if (text === 1) {
             return (
@@ -421,7 +437,6 @@ class App extends React.Component {
       }, {
         title: "报警时长",
         dataIndex: "duration",
-        // sorter: (a, b) => a.duration - b.duration,
         render: (text, record, index) => {
           if (!text) {
             return (
@@ -430,11 +445,19 @@ class App extends React.Component {
               </div>
             )
           } else {
-            return (
-              <div>
-                <span style={{ fontWeight: 'bold', color: "red" }}>{text}</span>  天
-              </div>
-            )
+            if (record.type === 10) {
+              return (
+                <div>
+                  <span style={{ fontWeight: 'bold', color: "red" }}>{Math.floor(text / 24)}</span>  天
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  <span style={{ fontWeight: 'bold', color: "red" }}>{text}</span>  天
+                </div>
+              )
+            }
           }
         }
       },
@@ -498,6 +521,11 @@ class App extends React.Component {
       {
         title: "报警原因",
         dataIndex: "message",
+        filters: [
+          { text: "消毒未达标", value: 0 },
+          { text: "无杯具提交记录", value: 1 },
+          { text: "无动检报警", value: 10 },
+        ],
         render: (text, record, index) => {
           if (record.type === 3) {
             return (
@@ -537,11 +565,11 @@ class App extends React.Component {
       }, {
         title: "报警级别",
         dataIndex: "level",
-        filters: [
-          { text: "预报警", value: 1 },
-          { text: "报警", value: 2 },
-        ],
-        onFilter: (value, record) => record.level == value,  //eslint-disable-line 
+        // filters: [
+        //   { text: "预报警", value: 1 },
+        //   { text: "报警", value: 2 },
+        // ],
+        // onFilter: (value, record) => record.level == value,  //eslint-disable-line 
         render: (text, record, index) => {
           if (text === 1) {
             return (
@@ -575,7 +603,6 @@ class App extends React.Component {
       }, {
         title: "报警时长",
         dataIndex: "duration",
-        // sorter: (a, b) => a.duration - b.duration,
         render: (text, record, index) => {
           if (!text) {
             return (
@@ -584,11 +611,19 @@ class App extends React.Component {
               </div>
             )
           } else {
-            return (
-              <div>
-                <span style={{ fontWeight: 'bold', color: "red" }}>{text}</span>  天
-              </div>
-            )
+            if (record.type === 10) {
+              return (
+                <div>
+                  <span style={{ fontWeight: 'bold', color: "red" }}>{Math.floor(text / 24)}</span>  天
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  <span style={{ fontWeight: 'bold', color: "red" }}>{text}</span>  天
+                </div>
+              )
+            }
           }
         }
       },
@@ -912,6 +947,7 @@ class App extends React.Component {
                       dataSource={this.state.warningListDataSource}
                       columns={otaInfoTableColumns}
                       pagination={false}
+                      onChange={this.nowtable}
                     />
                     <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
                       <Pagination
@@ -930,6 +966,7 @@ class App extends React.Component {
                       dataSource={this.state.historyListDataSource}
                       columns={historyColumns}
                       pagination={false}
+                      onChange={this.historytable}
                     />
                     <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
                       <Pagination

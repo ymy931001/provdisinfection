@@ -534,9 +534,7 @@ class App extends React.Component {
     if (localStorage.getItem('selectarea')) {
       var arr = localStorage.getItem('selectarea').split(',')
       if (arr.length > 2) {
-        for (var i in arr) {
-          arr[2] = parseInt(arr[2])
-        }
+        arr[2] = parseInt(arr[2],10)
       }
       this.setState({
         addresslist: arr

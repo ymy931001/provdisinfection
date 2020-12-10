@@ -83,9 +83,7 @@ class App extends React.Component {
       pageNumSize: 10,
       hotelname: localStorage.getItem('hotelname') === null || localStorage.getItem('hotelname') === "undefined" || localStorage.getItem('hotelname') === undefined ? null : localStorage.getItem('hotelname'),
       // addresslist: localStorage.getItem('addresslist') === "" || localStorage.getItem('addresslist') === null || localStorage.getItem('addresslist') === undefined ? localStorage.getItem('addresslist') : localStorage.getItem('addresslist').split(','),
-      begintime: undefined,
       opentype: true,
-      endtime: undefined,
       pdpage: false,
       indexs: 0,
       time1list: [],
@@ -339,9 +337,7 @@ class App extends React.Component {
     if (localStorage.getItem('selectarea')) {
       var arr = localStorage.getItem('selectarea').split(',')
       if (arr.length > 2) {
-        for (var i in arr) {
-          arr[2] = parseInt(arr[2])
-        }
+        arr[2] = parseInt(arr[2], 10)
       }
       this.setState({
         addresslist: arr

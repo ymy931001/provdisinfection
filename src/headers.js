@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Avatar, Icon } from 'antd';
+import {
+    //  Avatar,
+     Icon 
+    } from 'antd';
 // import adminTypeConst from './config/adminTypeConst';
 
 
