@@ -43,7 +43,7 @@ class App extends React.Component {
       nowpageNum: 1,
       historypageNum: 1,
       pageNumSize: 10,
-      messagetype: "0,1, 2, 4, 5, 6,7,8,9,10",
+      messagetype: "0,1, 2, 4, 5, 6,7,8,9",
     };
   }
   onCollapse = collapsed => {
@@ -315,7 +315,7 @@ class App extends React.Component {
 
   nowtable = (a, b, c) => {
     this.setState({
-      messagetype: b.message.join(',') === "" ? "0,1, 2, 4, 5, 6,7,8,9,10" : b.message.join(','),
+      messagetype: b.message.join(',') === "" ? "0,1, 2, 4, 5, 6,7,8,9" : b.message.join(','),
     }, function () {
       this.getnowalarm()
     })
@@ -323,7 +323,7 @@ class App extends React.Component {
 
   historytable = (a, b, c) => {
     this.setState({
-      messagetype: b.message.join(',') === "" ? "0,1, 2, 4, 5, 6,7,8,9,10" : b.message.join(','),
+      messagetype: b.message.join(',') === "" ? "0,1, 2, 4, 5, 6,7,8,9" : b.message.join(','),
     }, function () {
       this.gethistoryalarm()
     })
