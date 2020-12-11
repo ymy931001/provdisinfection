@@ -887,7 +887,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              <span style={{ fontWeight: 'bold', color: "red" }}>{Math.ceil(text / 24)}</span>  天
+              <span style={{ fontWeight: 'bold', color: "red" }}>{text}</span>  天
             </div>
           )
         }
