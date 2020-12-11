@@ -8,7 +8,7 @@ import {
   DatePicker,
   Cascader,
   Select, Modal, message,
-  Input, Pagination
+  Input, Pagination,
 } from "antd";
 
 import {
@@ -16,7 +16,7 @@ import {
   testindex,
   getregion,
   roomlist,
-  testai
+  testai, nowalarm
 } from "../axios";
 import "./testpage.css";
 import moment from 'moment';
@@ -41,6 +41,7 @@ class App extends React.Component {
     times: moment(new Date().getTime()),
     pageNum: 1,
     pageNumSize: 10,
+    historypageNum: 1,
   };
 
   onCollapse = collapsed => {
@@ -76,7 +77,22 @@ class App extends React.Component {
       }
     });
 
-
+    nowalarm([
+      this.state.historypageNum,
+      this.state.pageNumSize,
+      false,
+      "10",
+      this.state.cityid,
+      this.state.areaid,
+      this.state.siteId,
+      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+    ]).then(res => {
+      this.setState({
+        historyListDataSource: res.data.data.alarmHistoryVOList,
+        historytotal: res.data.data.total,
+      })
+    });
 
 
   }
@@ -388,6 +404,32 @@ class App extends React.Component {
     })
   }
 
+  //历史报警分页
+  historypagechange = (page, num) => {
+    this.setState({
+      historypageNum: page,
+      pageNumSize: num,
+    }, function () {
+      nowalarm([
+        this.state.historypageNum,
+        this.state.pageNumSize,
+        false,
+        "10",
+        this.state.cityid,
+        this.state.areaid,
+        this.state.siteId,
+        this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+        this.state.endtime === undefined ? moment(new Date()).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      ]).then(res => {
+        this.setState({
+          historyListDataSource: res.data.data.alarmHistoryVOList,
+          historytotal: res.data.data.total,
+        })
+      });
+    })
+  }
+
+
 
 
   render() {
@@ -646,6 +688,65 @@ class App extends React.Component {
       }
     ];
 
+    const historyColumns = [
+      {
+        title: "酒店名称",
+        dataIndex: "siteName",
+      },
+      {
+        title: "房间位置",
+        dataIndex: "roomName",
+        render: (text, record, index) => {
+          if (!text) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                {text}
+              </div>
+            )
+          }
+        }
+      },
+      {
+        title: "报警原因",
+        dataIndex: "message",
+        render: (text, record, index) => {
+          return (
+            <div style={{ color: 'red' }} >
+              {text}
+            </div >
+          )
+        }
+      }, {
+        title: "报警时长",
+        dataIndex: "duration",
+        render: (text, record, index) => {
+          return (
+            <div>
+              <span style={{ fontWeight: 'bold', color: "red" }}>{text}</span>  天
+            </div>
+          )
+        }
+      },
+      {
+        title: "报警时间",
+        dataIndex: "gmtcreate",
+        render: (text, record, index) => {
+          return (
+            <div style={{ color: 'green' }}>
+              {moment(new Date(text)).format('YYYY-MM-DD')}
+            </div>
+          )
+        }
+      }
+    ];
+
+
     return (
       <Layout>
         <Layout id="warning">
@@ -728,6 +829,24 @@ class App extends React.Component {
                         total={this.state.total}
                         hideOnSinglePage={true}
                         current={this.state.pageNum}
+                      />
+                    </div>
+                  </div>
+                </TabPane>
+                <TabPane tab="动检报警" key="4">
+                  <div style={{ marginTop: 5 }}>
+                    <Table
+                      dataSource={this.state.historyListDataSource}
+                      columns={historyColumns}
+                      pagination={false}
+                    />
+                    <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
+                      <Pagination
+                        defaultCurrent={1}
+                        onChange={this.historypagechange}
+                        total={this.state.historytotal}
+                        hideOnSinglePage={true}
+                        current={this.state.historypageNum}
                       />
                     </div>
                   </div>
