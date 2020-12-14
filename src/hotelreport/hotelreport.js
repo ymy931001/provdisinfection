@@ -122,12 +122,16 @@ class App extends React.Component {
         arr[2] = parseInt(arr[2], 10)
       }
       this.setState({
-        addresslist: arr
+        addresslist: arr,
       }, function () {
         this.detectionService()
       })
     } else {
-      this.detectionService()
+      this.setState({
+        keytext: localStorage.getItem('keytext')
+      }, function () {
+        this.detectionService()
+      })
     }
   }
 
@@ -169,8 +173,10 @@ class App extends React.Component {
       this.state.siteId === 'null' ? null : this.state.siteId,
       this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
       this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      localStorage.getItem('keytext')
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        localStorage.removeItem('keytext')
         if (res.data.data === null) {
           this.setState({
             videoListDataSource: []

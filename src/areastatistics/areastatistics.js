@@ -551,11 +551,15 @@ class App extends React.Component {
   }
 
   sitechange = (text, record, index) => {
+    localStorage.setItem('keytext', text)
+    localStorage.setItem('menuline', "sub7")
+    localStorage.setItem('menuid', 85)
     window.location.href = "/app/hotelreport";
   }
 
 
   sitechanges = (text, record, index) => {
+    localStorage.setItem('keytext', text)
     window.location.href = "/app/housereport";
   }
 
