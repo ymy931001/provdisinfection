@@ -734,8 +734,8 @@ class App extends React.Component {
         }
       },
       {
-        title: "报警时间",
-        dataIndex: "gmtcreate",
+        title: "截止时间",
+        dataIndex: "date",
         render: (text, record, index) => {
           return (
             <div style={{ color: 'green' }}>
