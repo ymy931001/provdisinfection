@@ -204,6 +204,25 @@ class App extends React.Component {
               )
             }
           }
+        },{
+          title: "视频回放",
+          dataIndex: "streams",
+          key: 'streams',
+          render: (text, record, index) => {
+            if (record.onlinestatus === true) {
+              return (
+                <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                  查看
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                  暂无
+                </div>
+              )
+            }
+          }
         },
         {
           title: "添加时间",
@@ -271,6 +290,25 @@ class App extends React.Component {
             if (record.onlinestatus === true) {
               return (
                 <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                  查看
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                  暂无
+                </div>
+              )
+            }
+          }
+        },{
+          title: "视频回放",
+          dataIndex: "streams",
+          key: 'streams',
+          render: (text, record, index) => {
+            if (record.onlinestatus === true) {
+              return (
+                <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
                   查看
                 </div>
               )
@@ -1021,7 +1059,6 @@ class App extends React.Component {
     localStorage.setItem('indexCode', record.indexCode)
     if (record.id === 957) {
       window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B3%E6%B1%8725%E6%A5%BC.html')
-
     }
     if (record.id === 941) {
       window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B3%E6%B1%8724%E6%A5%BC.html')
