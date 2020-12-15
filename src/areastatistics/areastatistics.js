@@ -414,7 +414,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              {!text ? "无" : (text * 100).toFixed(1) + "%"}
+              {text === null || text === undefined ? "无" : (text * 100).toFixed(1) + "%"}
             </div>
           )
         }
@@ -426,7 +426,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              {!text ? "无" : (text * 100).toFixed(1) + "%"}
+              {text === null || text === undefined ? "无" : (text * 100).toFixed(1) + "%"}
             </div>
           )
         }
