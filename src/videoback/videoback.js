@@ -11,6 +11,7 @@ import {
 } from "antd";
 import moment from 'moment';
 import "./videoback.css";
+import { Link } from 'react-router-dom';
 
 
 
@@ -309,7 +310,11 @@ class App extends React.Component {
       <Layout>
         <Layout id="warning">
           <Content style={{ margin: "16px 16px" }} >
-            <Card title="视频回放" headStyle={{ fontWeight: 'bold', fontSize: '18px' }}>
+            <Card title="视频回放" headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
+              extra={<Button type="primary" style={{ background: '#0070CC', border: '1px solid #0070CC', marginRight: '20px' }} onClick={this.showModal}
+              >
+                <Link to="/app/equipment">返回</Link>
+              </Button>}>
               <div id="operate" className="operate">
                 <div className="module">
                   <div className="item" style={{ marginTop: '10px', marginBottom: '10px' }}>
