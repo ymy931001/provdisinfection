@@ -5,7 +5,6 @@ import {
   Card,
   Button,
   Input,
-  message,
   Cascader,
   Pagination,
   DatePicker,
@@ -13,12 +12,12 @@ import {
 import {
   getregion,
   sitelist,
-  gethandheld,
+  gethandheld, iscid
 } from "../axios";
 import "./guestroomvideo.css";
 import moment from 'moment';
 
-const { Content} = Layout;
+const { Content } = Layout;
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 
@@ -46,11 +45,11 @@ class App extends React.Component {
     this.nodeInfoTableColumns = [
       {
         title: "酒店名称",
-        dataIndex: "siteId",
+        dataIndex: "siteName",
         render: (text, record, index) => {
           return (
             <div>
-              {this.state.sitelist[text]}
+              {text}
             </div>
           )
         }
@@ -200,15 +199,30 @@ class App extends React.Component {
 
   //查看回放
   findback = (text, record, index) => {
-    console.log(record)
-    if (record.picture === undefined) {
-      message.error('暂无图片')
-    } else {
-      localStorage.setItem('backlist', record.picture)
-      setTimeout(function () {
-        window.location.href = "/app/backvideo";
-      }, 1000);
-    }
+    localStorage.setItem('indexCode', record.indexcode)
+    localStorage.setItem('hotelnames', record.siteName)
+    localStorage.setItem('roomname', !record.roomName ? "" : record.roomName)
+    localStorage.setItem('iscdate', record.date)
+    iscid([
+      record.iscId,
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+        localStorage.setItem('appkey', res.data.data.appkey)
+        localStorage.setItem('appsecret', res.data.data.appsecret)
+        localStorage.setItem('iscip', res.data.data.host.split(':')[0])
+        localStorage.setItem('iscport', res.data.data.host.split(':')[1])
+        window.location.href = "/app/handleback"
+      }
+    });
+    // console.log(record)
+    // if (record.picture === undefined) {
+    //   message.error('暂无图片')
+    // } else {
+    //   localStorage.setItem('backlist', record.picture)
+    //   setTimeout(function () {
+    //     window.location.href = "/app/backvideo";
+    //   }, 1000);
+    // }
 
     // handheldbackUrl([
     //   text
