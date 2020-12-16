@@ -567,8 +567,17 @@ class App extends React.Component {
           var newarr = []
           var arrlist = []
           for (var i in res.data.data) {
-            if (res.data.data[res.data.data.length - 1].loadStatus === false) {
-              if (parseInt(i, 10) !== res.data.data.length - 1) {
+            if (parseInt(i, 10) !== res.data.data.length - 1) {
+              if (res.data.data[i].loadStatus === res.data.data[parseInt(i, 10) + 1].loadStatus) {
+                if (res.data.data[i].loadStatus === false) {
+                  arr.push(res.data.data[i].gmtcreate)
+                  newarr.push("")
+                }
+                if (res.data.data[i].loadStatus === true) {
+                  arr.push("")
+                  newarr.push(res.data.data[i].gmtcreate)
+                }
+              } else {
                 if (res.data.data[i].loadStatus === false) {
                   arr.push(res.data.data[i].gmtcreate)
                 }
@@ -584,7 +593,27 @@ class App extends React.Component {
                 newarr.push(res.data.data[i].gmtcreate)
               }
             }
+
+            // if (res.data.data[res.data.data.length - 1].loadStatus === false) {
+            //   if (parseInt(i, 10) !== res.data.data.length - 1) {
+            //     if (res.data.data[i].loadStatus === false) {
+            //       arr.push(res.data.data[i].gmtcreate)
+            //     }
+            //     if (res.data.data[i].loadStatus === true) {
+            //       newarr.push(res.data.data[i].gmtcreate)
+            //     }
+            //   }
+            // } else {
+            //   if (res.data.data[i].loadStatus === false) {
+            //     arr.push(res.data.data[i].gmtcreate)
+            //   }
+            //   if (res.data.data[i].loadStatus === true) {
+            //     newarr.push(res.data.data[i].gmtcreate)
+            //   }
+            // }
           }
+
+
           if (res.data.data[0].loadStatus === true) {
             arr.push("使用中")
           }
@@ -594,18 +623,22 @@ class App extends React.Component {
               "end": arr[j]
             })
           }
+
           this.setState({
             readout: arrlist,
+          }, function () {
+            if (arrlist.length < 10) {
+              this.setState({
+                pages: false
+              })
+            } else {
+              this.setState({
+                pages: true
+              })
+            }
           });
-          if (arrlist.length < 10) {
-            this.setState({
-              pages: false
-            })
-          } else {
-            this.setState({
-              pages: true
-            })
-          }
+
+
         } else {
           this.setState({
             readout: [],
