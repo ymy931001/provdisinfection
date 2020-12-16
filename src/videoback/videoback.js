@@ -5,7 +5,6 @@ import JSEncrypt from 'jsencrypt'
 import {
   Layout,
   Card,
-  Input,
   Button,
   DatePicker
 } from "antd";
@@ -140,7 +139,7 @@ class App extends React.Component {
         oWebControl.JS_StartService("window", {
           dllPath: "./VideoPluginConnect.dll"
         }).then(function () {
-          oWebControl.JS_CreateWnd("playWnd", 500, 300).then(function () {         //JS_CreateWnd创建视频播放窗口，宽高可设定
+          oWebControl.JS_CreateWnd("playWnd", 700, 400).then(function () {         //JS_CreateWnd创建视频播放窗口，宽高可设定
             console.log("JS_CreateWnd success");
             that.init();                                 //创建播放实例成功后初始化
           });
@@ -217,7 +216,7 @@ class App extends React.Component {
           //reconnectDuration：reconnectTime           //重连间隔
         })
       }).then(function (oData) {
-        oWebControl.JS_Resize(500, 300);  // 初始化后resize一次，规避firefox下首次显示窗口后插件窗口未与DIV窗口重合问题
+        oWebControl.JS_Resize(700, 400);  // 初始化后resize一次，规避firefox下首次显示窗口后插件窗口未与DIV窗口重合问题
       });
     });
   }
@@ -281,6 +280,13 @@ class App extends React.Component {
     })
   }
 
+  //打开全屏
+  openfull = () => {
+    oWebControl.JS_RequestInterface({
+      funcName: "setFullScreen"
+    })
+  }
+
 
 
   number = (e) => {
@@ -310,22 +316,21 @@ class App extends React.Component {
       <Layout>
         <Layout id="warning">
           <Content style={{ margin: "16px 16px" }} >
-            <Card title="视频回放" headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
+            <Card title={`${localStorage.getItem('hotelnames')}${localStorage.getItem('roomname')}-视频回放`} headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
               extra={<Button type="primary" style={{ background: '#0070CC', border: '1px solid #0070CC', marginRight: '20px' }} onClick={this.showModal}
               >
                 <Link to="/app/equipment">返回</Link>
               </Button>}>
               <div id="operate" className="operate">
                 <div className="module">
-                  <div className="item" style={{ marginTop: '10px', marginBottom: '10px' }}>
+                  {/* <div className="item" style={{ marginTop: '10px', marginBottom: '10px' }}>
                     <span className="label">监控点编号：</span>
                     <Input placeholder="请输入监控点编号" style={{ width: '300px', marginRight: '20px' }}
                       value={this.state.number}
                       onChange={this.number}
                     />
-                    {/* <input id="cameraIndexCode" type="text" value="a8945fb3a658472ab0b5a8e454664727" /> */}
-                  </div>
-                  <div className="item" style={{ marginBottom: '10px' }}>
+                  </div> */}
+                  <div className="item" style={{ marginBottom: '10px', marginTop: '10px', }}>
                     <span className="label">回放开始时间：</span>
                     <DatePicker
                       showTime
@@ -352,6 +357,7 @@ class App extends React.Component {
                     <span className="label"></span>
                     <Button type="primary" onClick={() => this.startPlayBack()}> 回放</Button>
                     <Button onClick={() => this.endPlayback()} style={{ marginLeft: '15px' }}>停止全部回放</Button>
+                    <Button type="primary" onClick={() => this.openfull()} style={{ marginLeft: '15px' }}>全屏</Button>
                   </div>
                 </div>
               </div>

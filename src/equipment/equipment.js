@@ -204,7 +204,7 @@ class App extends React.Component {
               )
             }
           }
-        },{
+        }, {
           title: "视频回放",
           dataIndex: "streams",
           key: 'streams',
@@ -301,7 +301,7 @@ class App extends React.Component {
               )
             }
           }
-        },{
+        }, {
           title: "视频回放",
           dataIndex: "streams",
           key: 'streams',
@@ -1057,6 +1057,8 @@ class App extends React.Component {
   backvideo = (text, record, index) => {
     console.log(record)
     localStorage.setItem('indexCode', record.indexCode)
+    localStorage.setItem('hotelnames', record.siteName)
+    localStorage.setItem('roomname', !record.roomName ? "" : record.roomName)
     if (record.id === 957) {
       window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B3%E6%B1%8725%E6%A5%BC.html')
     }
@@ -1068,6 +1070,7 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === 'success') {
         localStorage.setItem('appkey', res.data.data.appkey)
+
         localStorage.setItem('appsecret', res.data.data.appsecret)
         localStorage.setItem('iscip', res.data.data.host.split(':')[0])
         localStorage.setItem('iscport', res.data.data.host.split(':')[1])
