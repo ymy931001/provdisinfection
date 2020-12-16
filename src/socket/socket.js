@@ -566,6 +566,9 @@ class App extends React.Component {
           var arr = []
           var newarr = []
           var arrlist = []
+          if (res.data.data[0].loadStatus === true) {
+            arr.push("使用中")
+          }
           for (var i in res.data.data) {
             if (parseInt(i, 10) !== res.data.data.length - 1) {
               if (res.data.data[i].loadStatus === res.data.data[parseInt(i, 10) + 1].loadStatus) {
@@ -611,11 +614,6 @@ class App extends React.Component {
             //     newarr.push(res.data.data[i].gmtcreate)
             //   }
             // }
-          }
-
-
-          if (res.data.data[0].loadStatus === true) {
-            arr.push("使用中")
           }
           for (var j in arr) {
             arrlist.push({
