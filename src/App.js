@@ -63,6 +63,8 @@ import testpage from "./testpage/testpage";
 import backvideo from "./backvideo/backvideo";
 import videoback from "./videoback/videoback";
 import handleback from "./handleback/handleback";
+import videopreview from "./videopreview/videopreview";
+
 
 import Headers from './headers';
 import moment from 'moment';
@@ -653,6 +655,7 @@ class App extends Component {
                   <Route path="/app/testpage" component={testpage} />
                   <Route path="/app/handleback" component={handleback} />
                   <Route path="/app/videoback" component={videoback} />
+                  <Route path="/app/videopreview" component={videopreview} />
                 </Switch>
               </Content>
             </Layout>

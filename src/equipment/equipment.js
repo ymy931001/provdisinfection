@@ -960,18 +960,32 @@ class App extends React.Component {
   }
 
   findvideo(text, record, index) {
-    console.log(record)
-    geisctUrl(
-      record,
-    ).then(res => {
-      console.log(res.data.data)
-      localStorage.setItem('videoid', res.data.data)
-      localStorage.setItem('hotelnames', record.siteName)
-      localStorage.setItem('roomname', !record.roomName ? "" : record.roomName)
-      if (!res.data.data) {
-        message.error('暂无视频')
-      } else {
-        window.location.href = "/app/onlinevideo"
+    localStorage.setItem('indexCode', record.indexCode)
+    localStorage.setItem('hotelnames', record.siteName)
+    localStorage.setItem('roomname', !record.roomName ? "" : record.roomName)
+    // geisctUrl(
+    //   record,
+    // ).then(res => {
+    //   console.log(res.data.data)
+    //   localStorage.setItem('videoid', res.data.data)
+    //   localStorage.setItem('hotelnames', record.siteName)
+    //   localStorage.setItem('roomname', !record.roomName ? "" : record.roomName)
+    //   if (!res.data.data) {
+    //     message.error('暂无视频')
+    //   } else {
+    //     window.location.href = "/app/onlinevideo"
+    //   }
+    // });
+
+    iscid([
+      record.iscId,
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+        localStorage.setItem('appkey', res.data.data.appkey)
+        localStorage.setItem('appsecret', res.data.data.appsecret)
+        localStorage.setItem('iscip', res.data.data.host.split(':')[0])
+        localStorage.setItem('iscport', res.data.data.host.split(':')[1])
+        window.location.href = "/app/videopreview"
       }
     });
 

@@ -287,6 +287,9 @@ class App extends React.Component {
     })
   }
 
+  download = () => {
+    window.open("http://disimg.terabits.cn/VideoWebPlugin.exe", '_self')
+  }
 
 
   number = (e) => {
@@ -358,6 +361,7 @@ class App extends React.Component {
                     <Button type="primary" onClick={() => this.startPlayBack()}> 回放</Button>
                     <Button onClick={() => this.endPlayback()} style={{ marginLeft: '15px' }}>停止全部回放</Button>
                     <Button type="primary" onClick={() => this.openfull()} style={{ marginLeft: '15px' }}>全屏</Button>
+                    <Button type="primary" onClick={() => this.download()} style={{ marginLeft: '15px' }}>插件下载</Button>
                   </div>
                 </div>
               </div>
