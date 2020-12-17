@@ -255,7 +255,7 @@ class App extends React.Component {
                     <Button type="primary" onClick={() => this.startpreivew()}> 预览</Button>
                     <Button type="primary" onClick={() => this.openfull()} style={{ marginLeft: '15px' }}>全屏</Button>
                     <Button type="primary" onClick={() => this.download()} style={{ marginLeft: '15px', marginRight: '10px' }}>插件下载</Button>
-                   （若无插件请点击此按钮进行插座下载并安装）
+                   （若无插件请点击此按钮进行插件下载并安装）
                   </div>
                 </div>
               </div>
