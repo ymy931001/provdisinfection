@@ -243,7 +243,7 @@ class App extends React.Component {
       <Layout>
         <Layout id="warning">
           <Content style={{ margin: "16px 16px" }} >
-            <Card title={`${localStorage.getItem('hotelnames')}${localStorage.getItem('roomname')}-视频回放`} headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
+            <Card title={`${localStorage.getItem('hotelnames')}${localStorage.getItem('roomname')}-实时画面`} headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
               extra={<Button type="primary" style={{ background: '#0070CC', border: '1px solid #0070CC', marginRight: '20px' }} onClick={this.showModal}
               >
                 <Link to="/app/equipment">返回</Link>
@@ -254,7 +254,8 @@ class App extends React.Component {
                     <span className="label"></span>
                     <Button type="primary" onClick={() => this.startpreivew()}> 预览</Button>
                     <Button type="primary" onClick={() => this.openfull()} style={{ marginLeft: '15px' }}>全屏</Button>
-                    <Button type="primary" onClick={() => this.download()} style={{ marginLeft: '15px' }}>插件下载</Button>
+                    <Button type="primary" onClick={() => this.download()} style={{ marginLeft: '15px', marginRight: '10px' }}>插件下载</Button>
+                   （若无插件请点击此按钮进行插座下载并安装）
                   </div>
                 </div>
               </div>
