@@ -206,6 +206,7 @@ class App extends React.Component {
     return encrypt.encrypt(value);
   }
 
+  //预览
   startpreivew = () => {
     var cameraIndexCode = this.state.number;
     console.log(cameraIndexCode)
@@ -213,6 +214,9 @@ class App extends React.Component {
     var transMode = 1;                                      //传输协议：0-UDP，1-TCP
     var gpuMode = 0;                                        //是否启用GPU硬解，0-不启用，1-启用
     var wndId = -1;                                         //播放窗口序号（在2x2以上布局下可指定播放窗口）
+    oWebControl.JS_RequestInterface({
+      funcName: "setFullScreen"
+    })
     oWebControl.JS_RequestInterface({
       funcName: "startPreview",
       argument: JSON.stringify({
@@ -223,6 +227,7 @@ class App extends React.Component {
         wndId: wndId                                     //可指定播放窗口
       })
     })
+
   }
 
 

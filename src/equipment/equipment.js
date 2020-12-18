@@ -906,7 +906,7 @@ class App extends React.Component {
       if (res.data && res.data.message === "success") {
         this.setState({
           addhandheldSource: res.data.data.cameraList,
-          total: res.data.data.total,
+          handeltotal: res.data.data.total,
         });
       }
     });
@@ -963,31 +963,36 @@ class App extends React.Component {
     localStorage.setItem('indexCode', record.indexCode)
     localStorage.setItem('hotelnames', record.siteName)
     localStorage.setItem('roomname', !record.roomName ? "" : record.roomName)
-    // geisctUrl(
-    //   record,
-    // ).then(res => {
-    //   console.log(res.data.data)
-    //   localStorage.setItem('videoid', res.data.data)
-    //   localStorage.setItem('hotelnames', record.siteName)
-    //   localStorage.setItem('roomname', !record.roomName ? "" : record.roomName)
-    //   if (!res.data.data) {
-    //     message.error('暂无视频')
-    //   } else {
-    //     window.location.href = "/app/onlinevideo"
-    //   }
-    // });
+    console.log(record)
+    if (!record.indexCode) {
+      geisctUrl(
+        record,
+      ).then(res => {
+        console.log(res.data.data)
+        localStorage.setItem('videoid', res.data.data)
+        localStorage.setItem('hotelnames', record.siteName)
+        localStorage.setItem('roomname', !record.roomName ? "" : record.roomName)
+        if (!res.data.data) {
+          message.error('暂无视频')
+        } else {
+          window.location.href = "/app/onlinevideo"
+        }
+      });
+    } else {
+      iscid([
+        record.iscId,
+      ]).then(res => {
+        if (res.data && res.data.message === 'success') {
+          localStorage.setItem('appkey', res.data.data.appkey)
+          localStorage.setItem('appsecret', res.data.data.appsecret)
+          localStorage.setItem('iscip', res.data.data.host.split(':')[0])
+          localStorage.setItem('iscport', res.data.data.host.split(':')[1])
+          window.location.href = "/app/videopreview"
+        }
+      });
+    }
 
-    iscid([
-      record.iscId,
-    ]).then(res => {
-      if (res.data && res.data.message === 'success') {
-        localStorage.setItem('appkey', res.data.data.appkey)
-        localStorage.setItem('appsecret', res.data.data.appsecret)
-        localStorage.setItem('iscip', res.data.data.host.split(':')[0])
-        localStorage.setItem('iscport', res.data.data.host.split(':')[1])
-        window.location.href = "/app/videopreview"
-      }
-    });
+
 
 
   }
@@ -1079,18 +1084,23 @@ class App extends React.Component {
     if (record.id === 941) {
       window.open('https://mainimg.terabits.cn/%E7%91%9E%E4%B8%BD%E6%B1%9F%E6%B2%B3%E6%B1%8724%E6%A5%BC.html')
     }
-    iscid([
-      record.iscId,
-    ]).then(res => {
-      if (res.data && res.data.message === 'success') {
-        localStorage.setItem('appkey', res.data.data.appkey)
+    if (!record.iscId) {
+      message.error('暂无回放视频')
+    } else {
+      iscid([
+        record.iscId,
+      ]).then(res => {
+        if (res.data && res.data.message === 'success') {
+          localStorage.setItem('appkey', res.data.data.appkey)
 
-        localStorage.setItem('appsecret', res.data.data.appsecret)
-        localStorage.setItem('iscip', res.data.data.host.split(':')[0])
-        localStorage.setItem('iscport', res.data.data.host.split(':')[1])
-        window.location.href = "/app/videoback"
-      }
-    });
+          localStorage.setItem('appsecret', res.data.data.appsecret)
+          localStorage.setItem('iscip', res.data.data.host.split(':')[0])
+          localStorage.setItem('iscport', res.data.data.host.split(':')[1])
+          window.location.href = "/app/videoback"
+        }
+      });
+    }
+
   }
 
   state = { onlinevisible: false }
@@ -1144,7 +1154,7 @@ class App extends React.Component {
   //手持式筛选
   handlequery = () => {
     devicelist([
-      this.state.handlepageNum,
+      this.state.handelpageNum,
       this.state.pageNumSize,
       this.state.cityid === 'null' ? null : this.state.cityid,
       this.state.areaid === 'null' ? null : this.state.areaid,
@@ -1530,11 +1540,11 @@ class App extends React.Component {
 
   handelpagechange = (page, num) => {
     this.setState({
-      pageNum: page,
+      handelpageNum: page,
       pageNumSize: num,
     }, function () {
       devicelist([
-        this.state.handlepageNum,
+        this.state.handelpageNum,
         this.state.pageNumSize,
         this.state.cityid === 'null' ? null : this.state.cityid,
         this.state.areaid === 'null' ? null : this.state.areaid,
