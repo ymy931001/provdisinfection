@@ -248,7 +248,7 @@ class App extends React.Component {
   }
 
   download = () => {
-    window.open("http://disimg.terabits.cn/VideoWebPlugin.exe", '_self')
+    window.open("https://mainimg.terabits.cn/VideoWebPlugin.exe", '_self')
   }
 
 
