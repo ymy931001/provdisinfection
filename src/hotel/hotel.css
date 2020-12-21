@@ -10,7 +10,7 @@
 
  .ant-card-bordered{
     min-height: 90vh;
-    box-shadow: 1px 1px 5px 1px #999;
+    box-shadow: 1px 1px 5px 1px #eae9e9;
   }
 
  .ant-card-body{
@@ -55,7 +55,7 @@
 
 
 .linemain{
-    border-bottom: 1px solid #999;
+    /* border-bottom: 1px solid #999; */
     padding-bottom: 15px;
     margin-bottom: 10px;
 }

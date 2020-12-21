@@ -460,11 +460,20 @@ class App extends React.Component {
         defaultSortOrder: 'descend',
         sorter: (a, b) => a.rate - b.rate,
         render: (text, record, index) => {
-          return (
-            <div>
-              {(text * 100).toFixed(1)} %
-            </div>
-          )
+          if (!text) {
+            return (
+              <div>
+                统计中
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                {(text * 100).toFixed(1)} %
+              </div>
+            )
+          }
+
         }
       }
     ];
@@ -741,6 +750,13 @@ class App extends React.Component {
             arr2[c].pm2 = parseInt(c, 10) + 1
           }
 
+          arr4.sort(function (a, b) {
+            return a.rate < b.rate ? 1 : -1
+          })
+          for (var d in arr4) {
+            arr4[d].pm4 = parseInt(d, 10) + 1
+          }
+
           arr5.sort(function (a, b) {
             return a.alarmCount < b.alarmCount ? 1 : -1
           })
@@ -948,10 +964,10 @@ class App extends React.Component {
                 </div>
               </div>
             </Card>
-            <Card title="运行概览-数据榜单" headStyle={{ fontWeight: 'bold', fontSize: '18px', marginTop: '20px' }} >
-              <div>
+            <Card title="运行概览-数据榜单" headStyle={{ fontWeight: 'bold', fontSize: '18px', marginTop: '20px' }}
+              extra={
                 <div style={{ marginLeft: '10px' }}>
-                  <Radio.Group value={this.state.size} onChange={this.handleSizeChange}>
+                  <Radio.Group value={this.state.size} onChange={this.handleSizeChange} buttonStyle="solid">
                     <Radio.Button value="week">近7天</Radio.Button>
                     <Radio.Button value="month">近一月</Radio.Button>
                     <Radio.Button value="year">近半年</Radio.Button>
@@ -967,6 +983,8 @@ class App extends React.Component {
                   />
                   <Button type="primary" onClick={this.query}>查询</Button>
                 </div>
+              } >
+              <div>
                 <Row >
                   <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingTop: '0px' }}>
                     <div className="linemain">
