@@ -271,12 +271,34 @@ class App extends React.Component {
                 </div>
               )
             }
-            if (text === -1) {
+            if (text === - 1) {
               return (
                 <div>
-                  <span style={{ color: 'red' }}>
-                    <Tooltip placement="topLeft" title={'离线时间过长'}>
-                      &nbsp;&nbsp;异常
+                  <span style={{ color: 'red', cursor: "pointer" }}>
+                    <Tooltip title={"插座长时间离线"}>
+                      <span>设备离线</span>
+                    </Tooltip>
+                  </span>
+                </div>
+              )
+            }
+            if (text === -2) {
+              return (
+                <div>
+                  <span style={{ color: 'red', cursor: "pointer" }}>
+                    <Tooltip title={"摄像头长时间离线"}>
+                      <span>设备离线</span>
+                    </Tooltip>
+                  </span>
+                </div>
+              )
+            }
+            if (text === -3) {
+              return (
+                <div>
+                  <span style={{ color: 'red', cursor: "pointer" }}>
+                    <Tooltip title={"摄像头和插座均长时间离线"}>
+                      <span>设备离线</span>
                     </Tooltip>
                   </span>
                 </div>

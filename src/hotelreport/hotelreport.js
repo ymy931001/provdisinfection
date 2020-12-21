@@ -7,7 +7,7 @@ import {
   Input,
   Cascader,
   DatePicker,
-  Pagination
+  Pagination, Tooltip
 } from "antd";
 import {
   getregion,
@@ -84,6 +84,39 @@ class App extends React.Component {
             return (
               <div>
                 <span style={{ color: 'green' }}>已消毒</span>
+              </div>
+            )
+          }
+          else if (text === - 1) {
+            return (
+              <div>
+                <span style={{ color: 'red', cursor: "pointer" }}>
+                  <Tooltip title={"插座长时间离线"}>
+                    <span>设备离线</span>
+                  </Tooltip>
+                </span>
+              </div>
+            )
+          }
+          else if (text === -2) {
+            return (
+              <div>
+                <span style={{ color: 'red', cursor: "pointer" }}>
+                  <Tooltip title={"摄像头长时间离线"}>
+                    <span>设备离线</span>
+                  </Tooltip>
+                </span>
+              </div>
+            )
+          }
+          else if (text === -3) {
+            return (
+              <div>
+                <span style={{ color: 'red', cursor: "pointer" }}>
+                  <Tooltip title={"摄像头和插座均长时间离线"}>
+                    <span>设备离线</span>
+                  </Tooltip>
+                </span>
               </div>
             )
           } else {

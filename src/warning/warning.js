@@ -43,7 +43,8 @@ class App extends React.Component {
       nowpageNum: 1,
       historypageNum: 1,
       pageNumSize: 10,
-      messagetype: "0,1, 2, 4, 5, 6,7,8,9",
+      messagetype: "0,1, 4, 5, 6,7,8,9",
+      offlinetype: "2,3"
     };
   }
   onCollapse = collapsed => {
@@ -92,7 +93,7 @@ class App extends React.Component {
     getalarm([
       this.state.pageNum,
       this.state.pageNumSize,
-      3,
+      this.state.offlinetype,
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
@@ -315,7 +316,7 @@ class App extends React.Component {
 
   nowtable = (a, b, c) => {
     this.setState({
-      messagetype: b.message.join(',') === "" ? "0,1, 2, 4, 5, 6,7,8,9" : b.message.join(','),
+      messagetype: b.message.join(',') === "" ? "0,1,  4, 5, 6,7,8,9" : b.message.join(','),
     }, function () {
       this.getnowalarm()
     })
@@ -323,11 +324,21 @@ class App extends React.Component {
 
   historytable = (a, b, c) => {
     this.setState({
-      messagetype: b.message.join(',') === "" ? "0,1, 2, 4, 5, 6,7,8,9" : b.message.join(','),
+      messagetype: b.message.join(',') === "" ? "0,1,  4, 5, 6,7,8,9" : b.message.join(','),
     }, function () {
       this.gethistoryalarm()
     })
   }
+
+  offlinetable = (a, b, c) => {
+    this.setState({
+      offlinetype: b.message.join(',') === "" ? "2,3" : b.message.join(','),
+    }, function () {
+      this.getdevicealarm()
+    })
+  }
+
+
 
   render() {
     const otaInfoTableColumns = [
@@ -873,6 +884,10 @@ class App extends React.Component {
       {
         title: "报警原因",
         dataIndex: "message",
+        filters: [
+          { text: "摄像头离线", value: 2 },
+          { text: "插座离线", value: 3 },
+        ],
         render: (text, record, index) => {
           return (
             <div style={{ color: 'red' }} >
@@ -1003,6 +1018,7 @@ class App extends React.Component {
                       dataSource={this.state.offlinedata}
                       columns={offlineColumns}
                       pagination={false}
+                      onChange={this.offlinetable}
                     />
                     <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
                       <Pagination
