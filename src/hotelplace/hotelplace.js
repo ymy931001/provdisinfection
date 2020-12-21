@@ -135,17 +135,24 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
-          timelist: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings),
+          timelist: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings).sort(function (a, b) {
+            return a.begin < b.begin ? -1 : 1
+          }),
           timelist1: !res.data.data.timepairs ? (!res.data.data.timePiarsList ? [] : res.data.data.timePiarsList) : JSON.parse(res.data.data.timepairs),
           detection: res.data.data,
           worktime: parseFloat(res.data.data.worktime / 60).toFixed(2),
           runtime: parseFloat(res.data.data.runtime / 60).toFixed(2),
           roomlist: res.data.data,
-          readout: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings),
-          readouts: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings),
+          readout: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings).sort(function (a, b) {
+            return a.begin < b.begin ? -1 : 1
+          }),
+          readouts: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings).sort(function (a, b) {
+            return a.begin < b.begin ? -1 : 1
+          }),
           decendingdatas: !res.data.data.timepairs ? (!res.data.data.timePiarsList ? [] : res.data.data.timePiarsList) : JSON.parse(res.data.data.timepairs),
         }, function () {
           this.readoutlist()
+
           // this.initialize = setInterval(() => this.readoutlist(), 0);
           if (this.state.roomlist.sceneId === 2) {
             this.setState({
