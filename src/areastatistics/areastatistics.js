@@ -460,7 +460,7 @@ class App extends React.Component {
         defaultSortOrder: 'descend',
         sorter: (a, b) => a.rate - b.rate,
         render: (text, record, index) => {
-          if (!text) {
+          if (text === undefined || text === null) {
             return (
               <div>
                 统计中
