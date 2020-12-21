@@ -60,7 +60,8 @@
 #arealist  .ant-row{
     margin-left: 0 !important;
     margin-right: 0 !important;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* #arealist .ant-layout-content{
@@ -93,6 +94,10 @@
     cursor: pointer;
 }
 
+
+#arealist .ant-card-bordered{
+    min-height: 0vh;
+}
 #arealist  .firstcircle{
     display: inline-block;
     border-radius: 50%;
@@ -100,9 +105,9 @@
     height: 20px;
     background: red;
     color:white;
-    font-size: 16px;
     display: flex;
     align-items: center;
+    font-size: 12px;
     justify-content: center;
 }
 
@@ -113,7 +118,7 @@
     height: 20px;
     background: orange;
     color:white;
-    font-size: 16px;
+    font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,8 +131,8 @@
     height: 20px;
     background: green;
     color:white;
-    font-size: 16px;
     display: flex;
+    font-size: 12px;
     align-items: center;
     justify-content: center;
 }
@@ -140,7 +145,7 @@
     background: white;
     border:1px solid #333;
     color:#333;
-    font-size: 16px;
+    font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: center;

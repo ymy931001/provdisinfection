@@ -320,40 +320,6 @@ class App extends React.Component {
 
 
     this.rankcolumnsfive = [
-      // {
-      //   title: "排序",
-      //   dataIndex: "aNum",
-      //   render: (text, record, index) => {
-      //     if (index === 0) {
-      //       return (
-      //         <div className="firsttitle">
-      //           <span className="firstcircle"> {index + 1}</span>
-      //         </div>
-      //       )
-      //     }
-      //     else if (index === 1) {
-      //       return (
-      //         <div className="firsttitle">
-      //           <span className="twocircle"> {index + 1}</span>
-      //         </div>
-      //       )
-      //     }
-      //     else if (index === 2) {
-      //       return (
-      //         <div className="firsttitle">
-      //           <span className="threecircle"> {index + 1}</span>
-      //         </div>
-      //       )
-      //     }
-      //     else {
-      //       return (
-      //         <div className="firsttitle">
-      //           <span className="othercircle"> {index + 1}</span>
-      //         </div>
-      //       )
-      //     }
-      //   }
-      // },
       {
         title: "网点名",
         dataIndex: "siteName",
@@ -366,29 +332,78 @@ class App extends React.Component {
         }
       },
       {
-        title: "摄像头数量",
+        title: "摄像头",
         dataIndex: "cameraCount",
         // defaultSortOrder: 'descend',
         sorter: (a, b) => a.cameraCount - b.cameraCount,
         render: (text, record, index) => {
-          return (
-            <div>
-              {text} 个
-            </div>
-          )
+          if (text === null || text === undefined) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else if (text === 0) {
+            return (
+              <div>
+                无设备
+              </div>
+            )
+          }
+          else {
+            if (!record.cameraOnlineRate) {
+              return (
+                <div>
+                  { text}/{text}(100%)
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  { Math.round(text * (record.cameraOnlineRate))}/{text}({(record.cameraOnlineRate * 100).toFixed(1)}%)
+                </div>
+              )
+            }
+          }
+
         }
       },
       {
-        title: "插座数量",
+        title: "插座",
         dataIndex: "boardCount",
         // defaultSortOrder: 'descend',
         sorter: (a, b) => a.boardCount - b.boardCount,
         render: (text, record, index) => {
-          return (
-            <div>
-              {text} 个
-            </div>
-          )
+          if (text === null || text === undefined) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else if (text === 0) {
+            return (
+              <div>
+                无设备
+              </div>
+            )
+          } else {
+            if (!record.cameraOnlineRate) {
+              return (
+                <div>
+                  { text}/{text}(100%)
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  { Math.round(text * (record.boardOnlineRate))}/{text}({(record.boardOnlineRate * 100).toFixed(1)}%)
+                </div>
+              )
+            }
+
+          }
+
+
         }
       }
     ];
@@ -396,6 +411,39 @@ class App extends React.Component {
 
     this.rankcolumnsfour = [
       {
+        title: "排序",
+        dataIndex: "pm4",
+        render: (text, record, index) => {
+          if (text === 1) {
+            return (
+              <div className="firsttitle">
+                <span className="firstcircle"> {text}</span>
+              </div>
+            )
+          }
+          else if (text === 2) {
+            return (
+              <div className="firsttitle">
+                <span className="twocircle"> {text}</span>
+              </div>
+            )
+          }
+          else if (text === 3) {
+            return (
+              <div className="firsttitle">
+                <span className="threecircle"> {text}</span>
+              </div>
+            )
+          }
+          else {
+            return (
+              <div className="firsttitle">
+                <span className="othercircle"> {text}</span>
+              </div>
+            )
+          }
+        }
+      }, {
         title: "网点名",
         dataIndex: "siteName",
         render: (text, record, index) => {
@@ -407,31 +455,60 @@ class App extends React.Component {
         }
       },
       {
-        title: "插座",
-        dataIndex: "boardOnlineRate",
-        sorter: (a, b) => a.boardOnlineRate - b.boardOnlineRate,
-        // defaultSortOrder: 'descend',
+        title: "达标率",
+        dataIndex: "rate",
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.rate - b.rate,
         render: (text, record, index) => {
           return (
             <div>
-              {text === null || text === undefined ? "无" : (text * 100).toFixed(1) + "%"}
-            </div>
-          )
-        }
-      },
-      {
-        title: "摄像头",
-        dataIndex: "cameraOnlineRate",
-        sorter: (a, b) => a.cameraOnlineRate - b.cameraOnlineRate,
-        render: (text, record, index) => {
-          return (
-            <div>
-              {text === null || text === undefined ? "无" : (text * 100).toFixed(1) + "%"}
+              {(text * 100).toFixed(1)} %
             </div>
           )
         }
       }
     ];
+
+
+
+    // this.rankcolumnsfour = [
+    //   {
+    //     title: "网点名",
+    //     dataIndex: "siteName",
+    //     render: (text, record, index) => {
+    //       return (
+    //         <div style={{ cursor: 'pointer' }} onClick={() => this.sitechange(text, record, index)}>
+    //           {text}
+    //         </div>
+    //       )
+    //     }
+    //   },
+    //   {
+    //     title: "插座",
+    //     dataIndex: "boardOnlineRate",
+    //     sorter: (a, b) => a.boardOnlineRate - b.boardOnlineRate,
+    //     // defaultSortOrder: 'descend',
+    //     render: (text, record, index) => {
+    //       return (
+    //         <div>
+    //           {text === null || text === undefined ? "无" : (text * 100).toFixed(1) + "%"}
+    //         </div>
+    //       )
+    //     }
+    //   },
+    //   {
+    //     title: "摄像头",
+    //     dataIndex: "cameraOnlineRate",
+    //     sorter: (a, b) => a.cameraOnlineRate - b.cameraOnlineRate,
+    //     render: (text, record, index) => {
+    //       return (
+    //         <div>
+    //           {text === null || text === undefined ? "无" : (text * 100).toFixed(1) + "%"}
+    //         </div>
+    //       )
+    //     }
+    //   }
+    // ];
 
 
   }
@@ -529,6 +606,13 @@ class App extends React.Component {
           })
           for (var c in arr2) {
             arr2[c].pm2 = parseInt(c, 10) + 1
+          }
+
+          arr4.sort(function (a, b) {
+            return a.rate < b.rate ? 1 : -1
+          })
+          for (var d in arr4) {
+            arr4[d].pm4 = parseInt(d, 10) + 1
           }
 
           arr5.sort(function (a, b) {
@@ -862,218 +946,120 @@ class App extends React.Component {
                     </Col>
                   </Row>
                 </div>
-
-                <div style={{ marginTop: '20px' }}>
-                  <div style={{ marginLeft: '10px' }}>
-                    <Radio.Group value={this.state.size} onChange={this.handleSizeChange}>
-                      <Radio.Button value="week">近7天</Radio.Button>
-                      <Radio.Button value="month">近一月</Radio.Button>
-                      <Radio.Button value="year">近半年</Radio.Button>
-                    </Radio.Group>
-                    <RangePicker
-                      style={{ marginLeft: '20px', marginRight: '20px' }}
-                      format={dateFormat}
-                      ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
-                      onChange={this.timeonChange}
-                      value={[this.state.begintime, this.state.endtime]}
-                      disabledDate={disabledDate}
-                      picker="month"
-                    />
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                  </div>
-                  <Row >
-                    <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingTop: '0px' }}>
-                      <div className="linemain">
-                        <div className="ranktitle">
-                          消毒柜开启时长统计
-                        </div>
-                        <div style={{ padding: '10px' }}>
-                          <Table
-                            dataSource={this.state.twolist}
-                            columns={rankcolumnstwo}
-                            pagination={this.state.twolist.length < 5 ? false : paginationProps}
-                          />
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px', paddingTop: '0px' }}>
-                      <div className="linemain">
-                        <div className="ranktitle">
-                          洗消时长统计
-                        </div>
-                        <div style={{ padding: '10px' }}>
-                          <Table
-                            dataSource={this.state.threelist}
-                            columns={rankcolumnsthree}
-                            pagination={this.state.threelist.length < 5 ? false : paginationProps}
-                          />
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px', paddingTop: '0px' }}>
-                      <div className="linemain">
-                        <div className="ranktitle">
-                          设备数量统计
-                        </div>
-                        <div style={{ padding: '10px' }}>
-                          <Table
-                            dataSource={this.state.fourlist}
-                            columns={rankcolumnsfive}
-                            pagination={this.state.fourlist.length < 5 ? false : paginationProps}
-                          />
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-                <div >
-                  <Row style={{ marginTop: '0px' }}>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '20px' }}>
-                      <div className="linemain">
-                        <div className="ranktitle">
-                          设备在线率统计
-                        </div>
-                        <div style={{ padding: '10px' }}>
-                          <Table
-                            dataSource={this.state.fivelist}
-                            columns={rankcolumnsfour}
-                            pagination={this.state.fivelist.length < 5 ? false : paginationProps}
-                          />
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px' }}>
-                      <div className="linemain">
-                        <div className="ranktitle">
-                          报警次数统计
-                        </div>
-                        <div style={{ padding: '10px' }}>
-                          <Table
-                            dataSource={this.state.sixlist}
-                            columns={rankcolumnssix}
-                            pagination={this.state.sixlist.length < 5 ? false : paginationProps}
-                          />
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={8} style={{ padding: '10px', paddingLeft: '20px', paddingRight: '20px' }}>
-                      <div className="linemain">
-                        <div className="ranktitle">
-                          客房保洁时长统计
-                        </div>
-                        <div style={{ padding: '10px' }}>
-                          <Table
-                            dataSource={this.state.firstlist}
-                            columns={rankcolumns}
-                            pagination={this.state.firstlist.length < 5 ? false : paginationProps}
-                          />
-                        </div>
-                      </div>
-
-                    </Col>
-                  </Row>
-                </div>
-                {/* <div className="areatitle">
-                  区域消毒情况统计
-                </div>
-                <div className="weekmonthyear">
-                  <Button type="primary"
-                    onClick={this.weekchange}
-                    className="recentweek"
-                    style={{ background: this.state.weekchangeba, border: "none" }}
-                  >近一周</Button>
-                  <Button type="primary"
-                    onClick={this.monthchange}
-                    className="recentmonth"
-                    style={{ background: this.state.monthchangeba, border: "none" }}
-                  >近一月</Button>
-                  <Button type="primary"
-                    onClick={this.yearchange}
-                    className="recentyear"
-                    style={{ background: this.state.yearchangeba, border: "none" }}
-                  >近一年</Button>
-                </div> */}
-
-                {/* 
-                <Chart
-                  height={window.innerHeight}
-                  data={data}
-                  padding={"auto"}
-                  scale={cols}
-                  height={400}
-                  forceFit
-                >
-                  <Tooltip crosshairs />
-                  <Axis />
-                  <Legend />
-                  <Geom
-                    type="area"
-                    position="month*temperature"
-                    color="city"
-                    shape="smooth"
-                  />
-                  <Geom
-                    type="line"
-                    position="month*temperature"
-                    color="city"
-                    shape="smooth"
-                    size={2}
-                  />
-                </Chart> */}
-
-                {/* <Chart height={400} data={data} scale={cols} forceFit>
-                  <Legend />
-                  <Axis name="month" />
-                  <Axis
-                    name="temperature"
-                    // title={title}
-                    label={{
-                      formatter: val => `${val}%`
-                    }}
-
-                  />
-                  <Tooltip
-                    crosshairs={{
-                      type: "y"
-                    }}
-                  />
-                  <Geom
-                    type="area"
-                    position="month*temperature"
-                    size={2}
-                    color={"city"}
-                    shape={"smooth"}
-                    tooltip={[
-                      'month*temperature*city', (month, temperature, city) => {
-                        return {
-                          name: city + "消毒率：",
-
-                          value: temperature + "%"
-                        }
-                      }
-                    ]}
-                  />
-                  <Geom
-                    type="point"
-                    position="month*temperature*nohotel"
-                    size={4}
-                    shape={"smooth"}
-                    color={"city"}
-                    style={{
-                      stroke: "#fff",
-                      lineWidth: 1
-                    }}
-                    tooltip={[
-                      'month*temperature*nohotel', (month, temperature, nohotel) => {
-                        return {
-                          name: '消毒率：' + temperature + "%",
-                          value: '未达标酒店：' + nohotel
-                        }
-                      }
-                    ]}
-                  />
-                </Chart> */}
               </div>
+            </Card>
+            <Card title="运行概览-数据榜单" headStyle={{ fontWeight: 'bold', fontSize: '18px', marginTop: '20px' }} >
+              <div>
+                <div style={{ marginLeft: '10px' }}>
+                  <Radio.Group value={this.state.size} onChange={this.handleSizeChange}>
+                    <Radio.Button value="week">近7天</Radio.Button>
+                    <Radio.Button value="month">近一月</Radio.Button>
+                    <Radio.Button value="year">近半年</Radio.Button>
+                  </Radio.Group>
+                  <RangePicker
+                    style={{ marginLeft: '20px', marginRight: '20px' }}
+                    format={dateFormat}
+                    ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
+                    onChange={this.timeonChange}
+                    value={[this.state.begintime, this.state.endtime]}
+                    disabledDate={disabledDate}
+                    picker="month"
+                  />
+                  <Button type="primary" onClick={this.query}>查询</Button>
+                </div>
+                <Row >
+                  <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingTop: '0px' }}>
+                    <div className="linemain">
+                      <div className="ranktitle">
+                        消毒柜开启时长统计
+                        </div>
+                      <div style={{ padding: '10px' }}>
+                        <Table
+                          dataSource={this.state.twolist}
+                          columns={rankcolumnstwo}
+                          pagination={this.state.twolist.length < 5 ? false : paginationProps}
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                  <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px', paddingTop: '0px' }}>
+                    <div className="linemain">
+                      <div className="ranktitle">
+                        洗消时长统计
+                        </div>
+                      <div style={{ padding: '10px' }}>
+                        <Table
+                          dataSource={this.state.threelist}
+                          columns={rankcolumnsthree}
+                          pagination={this.state.threelist.length < 5 ? false : paginationProps}
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                  <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px', paddingTop: '0px' }}>
+                    <div className="linemain">
+                      <div className="ranktitle">
+                        各单位消毒达标率统计
+                        </div>
+                      <div style={{ padding: '10px' }}>
+                        <Table
+                          dataSource={this.state.fivelist}
+                          columns={rankcolumnsfour}
+                          pagination={this.state.fivelist.length < 5 ? false : paginationProps}
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+              <div >
+                <Row style={{ marginTop: '0px' }}>
+                  <Col span={8} style={{ padding: '10px', paddingRight: '20px' }}>
+                    <div className="linemain">
+                      <div className="ranktitle">
+                        设备统计
+                        </div>
+                      <div style={{ padding: '10px' }}>
+                        <Table
+                          dataSource={this.state.fourlist}
+                          columns={rankcolumnsfive}
+                          pagination={this.state.fourlist.length < 5 ? false : paginationProps}
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                  <Col span={8} style={{ padding: '10px', paddingRight: '20px', paddingLeft: '20px' }}>
+                    <div className="linemain">
+                      <div className="ranktitle">
+                        报警次数统计
+                        </div>
+                      <div style={{ padding: '10px' }}>
+                        <Table
+                          dataSource={this.state.sixlist}
+                          columns={rankcolumnssix}
+                          pagination={this.state.sixlist.length < 5 ? false : paginationProps}
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                  <Col span={8} style={{ padding: '10px', paddingLeft: '20px', paddingRight: '20px' }}>
+                    <div className="linemain">
+                      <div className="ranktitle">
+                        客房保洁时长统计
+                        </div>
+                      <div style={{ padding: '10px' }}>
+                        <Table
+                          dataSource={this.state.firstlist}
+                          columns={rankcolumns}
+                          pagination={this.state.firstlist.length < 5 ? false : paginationProps}
+                        />
+                      </div>
+                    </div>
+
+                  </Col>
+                </Row>
+              </div>
+
             </Card>
           </Content>
         </Layout>
