@@ -353,6 +353,35 @@ class App extends React.Component {
     });
   }
 
+  //今日数据
+  todaydata = () => {
+    detectionService([
+      1,
+      10,
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
+      moment(new Date()).format("YYYY-MM-DD"),
+      moment(new Date()).format("YYYY-MM-DD"),
+      this.state.keytext,
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        if (res.data.data === null) {
+          this.setState({
+            videoListDataSource: []
+          })
+        } else {
+          this.setState({
+            videoListDataSource: res.data.data.detectionVOList,
+            total: res.data.data.total,
+            pageNum: 1,
+          })
+        }
+      }
+    });
+  }
+
+
 
   //分页
 
@@ -487,12 +516,13 @@ class App extends React.Component {
                   placeholder="选择酒店" />
                     时间&nbsp;:
                     <RangePicker
-                  style={{ marginLeft: '20px', marginRight: '20px', width: '300px' }}
+                  style={{ marginLeft: '10px', marginRight: '10px', width: '300px' }}
                   format={dateFormat}
                   ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
                   onChange={this.timeonChange}
                   value={[this.state.begintime, this.state.endtime]}
                 />
+                <Button type="primary" onClick={this.todaydata}>今日</Button>
                 <div style={{ marginTop: "20px" }}>
                   关键字搜索&nbsp;: &nbsp;&nbsp;&nbsp;
                 <Input placeholder="请输入关键字" style={{ width: '300px', marginRight: '20px' }}
