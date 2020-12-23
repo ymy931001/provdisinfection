@@ -6,7 +6,7 @@ import {
   Button,
   Input,
   Cascader,
-  DatePicker
+  DatePicker, Pagination
 } from "antd";
 import {
   getregion,
@@ -64,8 +64,7 @@ class App extends React.Component {
           }
 
         }
-      },
-      {
+      }, {
         title: "监测日期",
         dataIndex: "date",
         render: (text, record, index) => {
@@ -75,7 +74,18 @@ class App extends React.Component {
             </div>
           )
         }
+      }, {
+        title: "保洁时长（分）",
+        dataIndex: "worktime",
+        render: (text, record, index) => {
+          return (
+            <div>
+              {parseFloat(text / 60).toFixed(1)}
+            </div>
+          )
+        }
       },
+
       {
         title: "监测报告",
         dataIndex: "id",
@@ -364,7 +374,17 @@ class App extends React.Component {
                 <Table
                   dataSource={this.state.videoListDataSource}
                   columns={nodeInfoTableColumns}
-                  pagination={this.state.page}
+                  pagination={false}
+                />
+              </div>
+              <div className="pageone">
+                <Pagination
+                  onShowSizeChange={this.onShowSizeChange}
+                  defaultCurrent={1}
+                  onChange={this.pagechange}
+                  total={this.state.total}
+                  hideOnSinglePage={true}
+                  current={this.state.pageNum}
                 />
               </div>
             </Card>
