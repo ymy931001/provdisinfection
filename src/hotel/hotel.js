@@ -614,12 +614,19 @@ class App extends React.Component {
         },
 
         {
-          title: "详细地址",
+          title: "酒店详情",
           dataIndex: "address",
+          // render: (text, record, index) => {
+          //   return (
+          //     <div>
+          //       {text}
+          //     </div>
+          //   )
+          // }
           render: (text, record, index) => {
             return (
-              <div>
-                {text}
+              <div onClick={() => this.lookdetail(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+                详情
               </div>
             )
           }
@@ -862,6 +869,10 @@ class App extends React.Component {
     console.log(date, dateString);
   }
 
+
+  lookdetail = () => {
+    console.log(111)
+  }
 
   handleCancel = () => {
     this.setState({

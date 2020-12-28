@@ -2,7 +2,7 @@ import React from "react";
 import {
   Layout,
   Card,
-  Button,
+  Button, Tooltip
 } from "antd";
 import {
   sitelist,
@@ -15,6 +15,47 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 const { Content } = Layout;
+
+
+const timelinelist = [
+  {
+    "left": '0%',
+    "width": "1px",
+  },
+  {
+    "left": '12.5%',
+    "width": "1px",
+  },
+  {
+    "left": '25%',
+    "width": "1px",
+  },
+  {
+    "left": '37.5%',
+    "width": "1px",
+  },
+  {
+    "left": '50%',
+    "width": "1px",
+  },
+  {
+    "left": '62.5%',
+    "width": "1px",
+  },
+  {
+    "left": '75%',
+    "width": "1px",
+  },
+  {
+    "left": '87.5%',
+    "width": "1px",
+  },
+  {
+    "left": '99.8%',
+    "width": "1px",
+  },
+]
+
 
 
 
@@ -34,12 +75,6 @@ class App extends React.Component {
       timelist1: [],
       handledata: [],
       picturelist: [],
-      // resdis: 'none',
-      // unresdis: 'none',
-      // unreport: 'none',
-      // cameradis: 'none',
-      // resultyes: 'none',
-      // resultno: 'none',
       time1list: [],
       time2list: [],
     };
@@ -52,33 +87,7 @@ class App extends React.Component {
 
   componentWillMount() {
     document.title = "酒店消毒--监测报告";
-    getDeviceList().then(res => {
-      this.setState({
-        deviceList: res.data.data
-      })
-    });
     this.detectionService()
-
-    sitelist([
-
-    ]).then(res => {
-      if (res.data && res.data.message === "success") {
-        var arr = {}
-        var arrs = []
-        for (var i in res.data.data) {
-          arr[res.data.data[i].id] = res.data.data[i].sitename
-          arrs.push({
-            'id': res.data.data[i].id,
-            "name": res.data.data[i].sitename,
-          })
-        }
-        console.log(arr)
-        this.setState({
-          sitelist: arr,
-          hotellist: arrs
-        });
-      }
-    });
   }
 
   componentDidMount() {
@@ -105,8 +114,35 @@ class App extends React.Component {
             unreport: 'block',
             chazuo: 'none',
             cameradis: 'none',
+
           })
         } else {
+
+
+          if (res.data.data.detectionVOList[0].detail != null && res.data.data.detectionVOList[0].detail != "null") {
+            if (JSON.parse(res.data.data.detectionVOList[0].detail).length != 0) {  //eslint-disable-line
+              var time = JSON.parse(res.data.data.detectionVOList[0].detail)
+              var arr = []
+              for (var a in time) {
+                var num1 = moment(time[a].beginTime).format('HH:mm:ss')
+                var num2 = moment(time[a].endTime).format('HH:mm:ss')
+                arr.push({
+                  'left': ((Number(num1.split(':')[0] * 3600) + Number(num1.split(':')[1] * 60) + Number(num1.split(':')[2])) / 86400).toFixed(5) * 660 + "px",
+                  'width': ((Number(num2.split(':')[0] * 3600) + Number(num2.split(':')[1] * 60) + Number(num2.split(':')[2]) -
+                    Number(num1.split(':')[0] * 3600) - Number(num1.split(':')[1] * 60) - Number(num1.split(':')[2])) / 864).toFixed(1) <= 0.1 ?
+                    '1px' : ((Number(num2.split(':')[0] * 3600) + Number(num2.split(':')[1] * 60) + Number(num2.split(':')[2]) -
+                      Number(num1.split(':')[0] * 3600) - Number(num1.split(':')[1] * 60) - Number(num1.split(':')[2])) / 864).toFixed(1) + '%',
+                  'time': moment(time[a].beginTime).format('HH:mm:ss') + " ~ " + moment(time[a].endTime).format('HH:mm:ss')
+                })
+              }
+              console.log(arr)
+              this.setState({
+                time1list: arr,
+              })
+            }
+          }
+
+
           if (res.data.data.detectionVOList[0].picture != undefined) {   //eslint-disable-line
             var arr = []
             for (var i in JSON.parse(res.data.data.detectionVOList[0].picture)) {
@@ -118,6 +154,8 @@ class App extends React.Component {
             this.setState({
               handledata: res.data.data.detectionVOList[0],
               picturelist: arr,  //eslint-disable-line
+              siteName: res.data.data.detectionVOList[0].siteName,
+              timelist1: JSON.parse(res.data.data.detectionVOList[0].detail)
             }, function () {
               console.log(this.state.handledata.date)
               console.log(this.state.picturelist)
@@ -131,7 +169,11 @@ class App extends React.Component {
             this.setState({
               handledata: res.data.data.detectionVOList[0],
               picturelist: [],
-              imgdis: 'block'
+              imgdis: 'block',
+              siteName: res.data.data.detectionVOList[0].siteName,
+              timelist1: JSON.parse(res.data.data.detectionVOList[0].detail)
+            }, function () {
+              console.log(this.state.timelist1)
             })
           }
 
@@ -140,93 +182,26 @@ class App extends React.Component {
     })
   }
 
-
-  //选择时间
-  onChange = (value, dateString) => {
-    console.log(value, dateString)
-    this.setState({
-      time: dateString,
-    });
-  }
-
-  //设备位置选择
-  addresschange = (e) => {
-    console.log(e)
-    this.setState({
-      site: e[0],
-      name: e[1],
-      addresslist: e
-    });
-  }
-
-  //查询
-  query = () => {
-    detectionService([
-      this.state.pageNum,
-      this.state.pageNumSize,
-      this.state.site,
-      this.state.name,
-      this.state.time,
-      this.state.time,
-    ]).then(res => {
-      if (res.data && res.data.message === "success") {
-        if (res.data.data.detectionVOList.length === 0) {
-          this.setState({
-            unreport: 'block',
-            chazuo: 'none',
-            cameradis: 'none',
-          })
-        } else {
-          this.setState({
-            unreport: 'none',
-            chazuo: 'none',
-            cameradis: 'block',
-            detection: res.data.data.detectionVOList[0],
-            roomlist: res.data.data.detectionVOList[0],
-          }, function () {
-            if (this.state.detection.result === 0) {
-              this.setState({
-                resdis: 'none',
-                unresdis: 'block',
-                unreport: 'none',
-              })
-            }
-            if (this.state.detection.result === 1) {
-              this.setState({
-                resdis: 'block',
-                unresdis: 'none',
-                unreport: 'none',
-              })
-            }
-            console.log(this.state.roomlist)
-            console.log(this.state.detection)
-          })
-        }
-      }
-    })
-  }
-
-
-
   render() {
     const { handledata } = this.state;
-
-
-    // const timeoption1 = this.state.timelist.map((province) =>
-    //   <tr>
-    //     <td className="tabletd">{moment(new Date(province.begin)).format('YYYY-MM-DD HH:mm:ss')}</td>
-    //     <td className="tabletd">{moment(new Date(province.end)).format('YYYY-MM-DD HH:mm:ss')}</td>
-    //     <td className="tabletd">{((new Date(province.end) - new Date(province.begin)) / 60000).toFixed(1)}分钟</td>
-    //   </tr>
-    // );
-
     // const timeoption2 = this.state.timelist1.map((province) =>
     //   <tr>
-    //     <td className="tabletd" style={{ width: '266px' }}>{moment(new Date(province.start)).format('YYYY-MM-DD HH:mm:ss')}</td>
-    //     <td className="tabletd" style={{ width: '266px' }}>{moment(new Date(province.end)).format('YYYY-MM-DD HH:mm:ss')}</td>
-    //     <td className="tabletd" style={{ width: '127px' }}>{((new Date(province.end) - new Date(province.start)) / 60000).toFixed(1)}分钟</td>
+    //     <td className="tabletd" style={{ width: '266px' }}>{moment(new Date(province.beginTime)).format('YYYY-MM-DD HH:mm:ss')}</td>
+    //     <td className="tabletd" style={{ width: '266px' }}>{moment(new Date(province.endTime)).format('YYYY-MM-DD HH:mm:ss')}</td>
     //   </tr>
     // );
+
+    const time1line = this.state.time1list.map((province) =>
+      <Tooltip title={province.time}>
+        <span style={{ position: 'absolute', width: province.width, left: province.left, height: '10px', top: '-10px', background: '#139df4' }} ></span>
+      </Tooltip>
+    );
+    const timelines = timelinelist.map((province) =>
+      <Tooltip>
+        <span style={{ position: 'absolute', width: province.width, left: province.left, height: '5px', top: '-5px', background: '#999' }} >
+        </span>
+      </Tooltip>
+    );
 
     const pictureoption = this.state.picturelist.map((province) =>
 
@@ -249,22 +224,7 @@ class App extends React.Component {
               }
             >
               <div>
-                {/* <div className="header">
-                  <div>
-                    位置选择&nbsp;: &nbsp;&nbsp;&nbsp;
-                  <Cascader
-                      fieldNames={{ label: 'name', value: 'id' }}
-                      options={this.state.deviceList}
-                      onChange={this.addresschange}
-                      // value={this.state.addresslist}
-                      changeOnSelect
-                      style={{ width: "250px", marginRight: '20px' }}
-                      placeholder="选择房间位置" />
-                    时间&nbsp;:&nbsp;&nbsp;
-                    <DatePicker onChange={this.onChange} style={{ marginRight: '20px' }} />
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                  </div>
-                </div> */}
+
                 {/* <div style={{ fontSize: '80px', textAlign: 'center', marginTop: '100px', display: this.state.unreport }}>
                   暂无报告
                 </div> */}
@@ -278,7 +238,7 @@ class App extends React.Component {
                   <div className="contheader">
                     <div className="contwidth">
                       <span className="conttitle">监测单位：</span>
-                      {this.state.sitelist[handledata.siteId]}
+                      {this.state.siteName}
                     </div>
                     <div className="contwidth">
                       <span className="conttitle">监测日期：</span>
@@ -296,15 +256,30 @@ class App extends React.Component {
                     </div>
 
                   </div>
-                  {/* <div className="reportresult" style={{ marginTop: '20px' }} >
+                  <div className="reportresult" style={{ marginTop: '40px' }} >
                     监测详情
                   </div>
-                  <div className="tablescrolls">
+                  <div style={{ paddingRight: '45px' }}>
+                    <div className="timeline" >
+                      <div className="lefttime">0时</div>
+                      <div className="lefttime1">3时</div>
+                      <div className="lefttime2">6时</div>
+                      <div className="lefttime3">9时</div>
+                      <div className="lefttime4">12时</div>
+                      <div className="lefttime5">15时</div>
+                      <div className="lefttime6">18时</div>
+                      <div className="lefttime7">21时</div>
+                      <div className="righttime">24时</div>
+                      {time1line}
+                      {/* {time2line} */}
+                      {timelines}
+                    </div>
+                  </div>
+                  {/* <div className="tablescrolls">
                     <table border="1" style={{ width: '100%', textAlign: 'center', border: '1px solid #cacaca', }} align="center">
                       <tr>
-                        <td className="tabletitle" style={{ width: '266px' }}>监测开始时间</td>
-                        <td className="tabletitle" style={{ width: '266px' }}>监测结束时间</td>
-                        <td className="tabletitle" style={{ width: '127px' }}>监测时长</td>
+                        <td className="tabletitle" style={{ width: '266px' }}>开始时间</td>
+                        <td className="tabletitle" style={{ width: '266px' }}>结束时间</td>
                       </tr>
                     </table>
                   </div> */}
