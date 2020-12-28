@@ -872,6 +872,7 @@ class App extends React.Component {
 
   lookdetail = (text, record, index) => {
     console.log(record)
+    // window.location.href = "/app/hoteldetail";
     sitedetail([
       record.id,
     ]).then(res => {

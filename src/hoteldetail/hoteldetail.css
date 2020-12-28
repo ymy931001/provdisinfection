@@ -1,0 +1,114 @@
+#nodeManage {
+    background: white;
+    min-height: 500px;
+}
+
+.gutter-example-nodemanage .ant-row > div {
+    background: transparent;
+    border: 0;
+}
+
+.gutter-box-nodemanage {
+    text-align:left;
+}
+
+.ant-input-disabled{
+    color: black;
+    text-align: center;
+}
+
+.ant-input-group{
+    margin: 8px;
+}
+
+
+
+.addinput{
+    width: 80%;
+    margin:0 auto;
+    margin-bottom: 20px;
+}
+ .addinput span{
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+}
+ .addtextarea{
+    width: 65%;
+    margin:0 auto;
+}
+
+#mapcontent  .ant-upload.ant-upload-select{
+    width: 60%;
+}
+
+ .explains{
+    float: left;
+    width: 40%;
+}
+ .explainspan{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+.bottom{
+    height: 50px;
+    line-height: 50px;
+    margin-top: 50px;
+    text-align: right;
+}
+
+.clearfix::after{
+    visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+
+#mapcontent .mapcontainer{
+    width: 660px;
+    height: 500px;
+    float: left;
+    position: relative;
+}
+
+#mapcontent #mapContainer{
+    width: 660px;
+    height: 550px;
+}
+
+
+#mapcontent .ant-input-group{
+    margin: 0;
+}
+
+
+@media screen and (max-width: 1480px) {
+    #mapcontent .mapcontainer{
+        width: 560px;
+        height: 400px;
+    }
+    
+    #mapcontent #mapContainer{
+        width: 560px;
+        height: 450px;
+    }
+    
+  }
+
+  @media screen and (max-width: 1300px) {
+    #mapcontent .mapcontainer{
+        width: 500px;
+        height: 350px;
+    }
+    
+    #mapcontent #mapContainer{
+        width: 500px;
+        height: 350px;
+    }
+    
+  }

@@ -307,7 +307,7 @@ export const sitelist = params =>
     key: params[0],
     city: params[1],
     area: params[2],
-    siteid: params[3],
+    siteIds: params[3],
   });
 
 //网点列表

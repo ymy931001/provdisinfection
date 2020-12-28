@@ -64,7 +64,7 @@ import backvideo from "./backvideo/backvideo";
 import videoback from "./videoback/videoback";
 import handleback from "./handleback/handleback";
 import videopreview from "./videopreview/videopreview";
-
+import hoteldetail from "./hoteldetail/hoteldetail";
 
 import Headers from './headers';
 import moment from 'moment';
@@ -656,6 +656,7 @@ class App extends Component {
                   <Route path="/app/handleback" component={handleback} />
                   <Route path="/app/videoback" component={videoback} />
                   <Route path="/app/videopreview" component={videopreview} />
+                  <Route path="/app/hoteldetail" component={hoteldetail} />
                 </Switch>
               </Content>
             </Layout>
