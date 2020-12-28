@@ -118,17 +118,21 @@ class App extends React.Component {
       message.error('请选择所属区域')
     } else if (this.state.activationvalue === null) {
       message.error('请选择杯具管理功能')
-    } else if (!this.state.completename) {
-      message.error('请输入酒店全称')
-    } else if (!this.state.creditCode) {
+    }
+    //  else if (!this.state.completename) {
+    //   message.error('请输入酒店全称')
+    // } 
+    else if (!this.state.creditCode) {
       message.error('请输入酒店信用代码')
-    } else if (!this.state.faRen) {
-      message.error('请输入酒店法人姓名')
-    } else if (!this.state.phone) {
-      message.error('请输入酒店法人手机号')
-    } else if (!this.state.xukeimg) {
-      message.error('请上传酒店许可证')
-    } else {
+    }
+    // else if (!this.state.faRen) {
+    //   message.error('请输入酒店法人姓名')
+    // } else if (!this.state.phone) {
+    //   message.error('请输入酒店法人手机号')
+    // } else if (!this.state.xukeimg) {
+    //   message.error('请上传酒店许可证')
+    // }
+    else {
       addsite([
         this.state.hotelname,
         this.state.hoteladdress,
@@ -617,14 +621,14 @@ class App extends React.Component {
                           <Radio value={false}>不具有此功能</Radio>
                         </Radio.Group>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">酒店全称：</span>
+                      {/* <p style={{ marginTop: "20px" }}><span className="explainspan">酒店全称：</span>
                         <Input placeholder="请输入酒店全称"
                           style={{ width: '60%' }}
                           id="address"
                           value={this.state.completename}
                           onChange={this.completename}
                           onBlur={this.hotelblur}
-                        /></p>
+                        /></p> */}
                       <p style={{ marginTop: "20px" }}><span className="explainspan">信用代码：</span>
                         <Input placeholder="请输入信用代码"
                           style={{ width: '60%' }}
@@ -632,7 +636,7 @@ class App extends React.Component {
                           value={this.state.creditCode}
                           onChange={this.creditCode}
                         /></p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">法人姓名：</span>
+                      {/* <p style={{ marginTop: "20px" }}><span className="explainspan">法人姓名：</span>
                         <Input placeholder="请输入法人姓名"
                           style={{ width: '60%' }}
                           id="address"
@@ -646,7 +650,7 @@ class App extends React.Component {
                           id="address"
                           value={this.state.phone}
                           onChange={this.phone}
-                        /></p>
+                        /></p> */}
                       <p style={{ marginTop: "20px" }}><span className="explainspan">许可证：</span>
                         <Upload
                           action='http://iva.terabits.cn:9090/upload/file'

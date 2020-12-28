@@ -25,7 +25,7 @@ import {
   deletesite,
   getsterilizer,
   bindQRcode,
-  deletecleaner, getregion
+  deletecleaner, getregion, sitedetail
 } from "../axios";
 import "./hotel.css";
 import QRCode from 'qrcode-react';
@@ -870,8 +870,15 @@ class App extends React.Component {
   }
 
 
-  lookdetail = () => {
-    console.log(111)
+  lookdetail = (text, record, index) => {
+    console.log(record)
+    sitedetail([
+      record.id,
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+
+      }
+    });
   }
 
   handleCancel = () => {

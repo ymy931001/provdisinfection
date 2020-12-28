@@ -299,7 +299,7 @@ class App extends React.Component {
                     <img src="http://maoyang.terabits.cn/1591083190362.jpg" alt="" style={{ width: "50%" }} /> */}
                   </div>
                   <div style={{ fontSize: '80px', textAlign: 'center', marginTop: '50px', display: this.state.imgdis }}>
-                    暂无图片
+                    <img src="https://mainimg.terabits.cn/81ffd9644185d0f4f78ba82bf6ce2d5.png" alt="" style={{ width: "80%" }} />
                   </div>
 
                 </div>

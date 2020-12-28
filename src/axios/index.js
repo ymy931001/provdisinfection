@@ -1542,6 +1542,15 @@ export const getUrlWithOutCode = params =>
     adminId: params[0],
   });
 
+//网点详情
+export const sitedetail = params =>
+  http.get(config.requestIp + "/site/detail", {
+    siteId: params[0],
+  });
+
+
+
+
 
 
 // //获取萤石云授权
