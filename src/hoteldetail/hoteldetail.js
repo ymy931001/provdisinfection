@@ -140,7 +140,7 @@ class App extends React.Component {
             >
               <div className="current">
                 <div className="current_text">
-                  <div className="clearfix" >
+                  <div className="clearfix" style={{display:"flex",justifyContent:'space-around'}} >
                     <div style={{ display: 'inline-block' }}>
                       <p style={{ marginTop: "20px" }}><span className="explainspan">酒店全称：</span>
                         <span className="textright"> {datalist.comp_name}</span>
