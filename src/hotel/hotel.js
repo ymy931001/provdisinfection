@@ -872,14 +872,10 @@ class App extends React.Component {
 
   lookdetail = (text, record, index) => {
     console.log(record)
-    // window.location.href = "/app/hoteldetail";
-    sitedetail([
-      record.id,
-    ]).then(res => {
-      if (res.data && res.data.message === 'success') {
-
-      }
-    });
+    window.location.href = "/app/hoteldetail";
+    localStorage.setItem('hotelid', record.id)
+    localStorage.setItem('hotelname', record.sitename)
+    localStorage.setItem('creditcode', record.creditcode)
   }
 
   handleCancel = () => {

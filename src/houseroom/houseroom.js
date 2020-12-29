@@ -181,6 +181,7 @@ class App extends React.Component {
       deletevisible: false,
       roomvisible: false,
       deleteclear: false,
+      changevisible: false,
     })
   }
 
@@ -690,27 +691,9 @@ class App extends React.Component {
         title: "报警阈值",
         dataIndex: "standard",
         render: (text, record, index) => {
-          const editable = this.isEditing(record);
           return (
             <div>
-              {editable ? (
-                <div>
-                  <Select
-                    style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
-                    placeholder="请选择报警阈值"
-                    onChange={this.standardchange}
-                    value={this.state.standard}
-                  >
-                    <Option key="1" >1天</Option>
-                    <Option key="2" >2天</Option>
-                    <Option key="3" >3天</Option>
-                  </Select>
-                </div>
-              ) : (
-                  <div>
-                    {text} 天
-                  </div>
-                )}
+              {text} 天
             </div>
           );
         }
@@ -771,27 +754,11 @@ class App extends React.Component {
         title: '操作',
         dataIndex: 'id',
         render: (text, record, index) => {
-          const editable = this.isEditing(record);
           return (
             <div>
-              {editable ? (
-                <span>
-                  <EditableContext.Consumer>
-                    {form => (
-                      <a
-
-                        onClick={() => this.save(form, record.key, text)}
-                        style={{ marginRight: 8 }}
-                      >
-                        保存
-                      </a>
-                    )}
-                  </EditableContext.Consumer>
-                  <a onClick={() => this.cancel(record.key, text)} >取消</a>
-                </span>
-              ) : (
-                  <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
-                )}
+              <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
+                <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
+              </span>
               <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
                 <a><img src={require('./delete.png')} alt="" /></a>
               </span>
@@ -976,6 +943,17 @@ class App extends React.Component {
             onCancel={this.handleCancel}
           >
             您确定要删除该房间吗？
+          </Modal>
+          <Modal
+            title="修改房间信息"
+            visible={this.state.changevisible}
+            onOk={this.changeOk}
+            width="400px"
+            okText="删除"
+            centered
+            onCancel={this.handleCancel}
+          >
+
           </Modal>
           <Modal
             title="删除保洁员"

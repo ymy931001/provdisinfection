@@ -12,19 +12,43 @@ import {
   Radio, Upload, Icon
 } from "antd";
 import {
-  addsite,
-  allProvinceCityDistrict,
-  findenterprise, isclist, iscarea, iscdevice
+  sitedetail,
 } from "../axios";
 import "./hoteldetail.css";
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 const { Content } = Layout;
-const { Search } = Input;
-const { DirectoryTree } = Tree;
-const AMap = window.AMap;
-const Option = Select.Option;
+
+const watertype = {
+  1: "集中式供水",
+  2: "二次供水",
+  3: "分散式供水",
+  4: "其他",
+}
+
+const operationstatus = {
+  0: "正常",
+  1: "暂停营业",
+  2: "关闭",
+  3: "注销",
+}
+
+const leval = {
+  "01": "A",
+  "02": "B",
+  "03": "C",
+  "05": "不予评级",
+  "09": "未评级",
+}
+
+const jzgslx = {
+  1: "公共供水",
+  2: "自建设式供水",
+  3: "分质供水",
+  0: "未选择"
+}
+
 
 class App extends React.Component {
   constructor(props) {
@@ -37,43 +61,39 @@ class App extends React.Component {
       iscplatformid: '',
       activationvalue: null,
       treeData: [],
-      xukeimg: 'http://disimg.terabits.cn/timg.jpg'
+      datalist: []
     };
   }
 
   componentWillMount() {
     document.title = "酒店详情";
-    isclist([
+    sitedetail([
+      localStorage.getItem('hotelid'),
     ]).then(res => {
-      if (res.data && res.data.code === 0) {
-        var arr = []
-        for (var i in res.data.data) {
-          arr.push({
-            'id': i,
-            "value": res.data.data[i]
-          })
-        }
+      if (res.data && res.data.message === 'success') {
         this.setState({
-          iscplatform: arr
+          datalist: res.data.data.value
+        }, function () {
+          console.log(this.state.datalist)
         })
       }
     });
   }
 
   componentDidMount() {
- 
+
   }
 
 
-  
+
 
   render() {
-   
+    const { datalist } = this.state
     return (
-      <Layout id="mapcontent">
+      <Layout id="hoteldetail">
         <Layout>
           <Content style={{ margin: "16px 16px" }} >
-            <Card title="酒店详情" headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
+            <Card title={<span> {localStorage.getItem('hotelname')}酒店详情</span>} headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
               extra={
                 <Button type="primary" style={{ background: '#0070CC', border: '1px solid #0070CC', marginRight: '20px' }}>
                   <Link to="/app/hotel">返回</Link>
@@ -83,55 +103,69 @@ class App extends React.Component {
               <div className="current">
                 <div className="current_text">
                   <div className="clearfix" >
-                    <div className="explains">
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">酒店名称：</span> <Input placeholder="请输入单位名称" style={{ width: '60%' }}
-                        id="facilityLocation"
-
-                        value={this.state.hotelname}
-                        onChange={(e) => this.changeData(e)}
-                      /></p>
+                    <div style={{ display: 'inline-block' }}>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">酒店全称：</span>
+                        <span className="textright"> {datalist.comp_name}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">法人姓名：</span>
+                        <span className="textright"> {datalist.principal}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">法人电话：</span>
+                        <span className="textright">{datalist.pphone}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">法人身份证：</span>
+                        <span className="textright">{datalist.idcard}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">负责人姓名：</span>
+                        <span className="textright">{datalist.applicant}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">负责人电话：</span>
+                        <span className="textright">{datalist.applicant_phone}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">社会信用代码：</span>
+                        <span className="textright">{localStorage.getItem('creditcode')}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">职工总数：</span>
+                        <span className="textright">{datalist.total_staff} 人</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">持健康合格证明人数：</span>
+                        <span className="textright">{datalist.total_health_cert} 人</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">应体检人数：</span>
+                        <span className="textright">{datalist.test_employees} 人</span>
+                      </p>
+                    </div>
+                    <div style={{ display: 'inline-block' }}>
                       <p style={{ marginTop: "20px" }}><span className="explainspan">详细地址：</span>
-                        <Input placeholder="请输入详细地址"
-                          style={{ width: '60%' }}
-                          id="address"
-                          value={this.state.hoteladdress}
-                          onChange={this.addresschange}
-                        /></p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">负责人：</span>
-                        <Input placeholder="请输入负责人姓名"
-                          style={{ width: '60%' }}
-                          value={this.state.personname}
-                          onChange={this.personname}
-                        /></p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">联系电话：</span>
-                        <Input placeholder="请输入联系电话"
-                          style={{ width: '60%' }}
-                          value={this.state.personphone}
-                          onChange={this.personphone}
-                        /></p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">所属区域：</span>
-                        <Search
-                          placeholder="请选择所属区域"
-                          enterButton="区域列表"
-                          size="middle"
-                          onSearch={this.iscquery}
-                          value={this.state.cameraname}
-                          style={{ width: '60%', fontSize: '14px', verticalAlign: 'middle', textAlign: 'left' }}
-                        />
+                        <span className="textright">{datalist.bus_addr}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">杯具管理：</span>
-                        <Radio.Group onChange={this.activationchange} value={this.state.activationvalue}>
-                          <Radio value={true}>具有此功能</Radio>
-                          <Radio value={false}>不具有此功能</Radio>
-                        </Radio.Group>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">营业面积（m²）：</span>
+                        <span className="textright">{datalist.total_area}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">信用代码：</span>
-                        <Input placeholder="请输入信用代码"
-                          style={{ width: '60%' }}
-                          id="address"
-                          value={this.state.creditCode}
-                          onChange={this.creditCode}
-                        /></p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">经营状态：</span>
+                        <span className="textright">{operationstatus[datalist.operation_status]}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">集中式供水类型：</span>
+                        <span className="textright">{jzgslx[datalist.jzgslx]}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">饮用水类型：</span>
+                        <span className="textright">{watertype[datalist.water_type]}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">集中空调通风系统：</span>
+                        <span className="textright">{datalist.central_air_sys === "1" ? "有" : "无"}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">监督机构编码：</span>
+                        <span className="textright">{datalist.r_orgcode}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">处置单位：</span>
+                        <span className="textright">{datalist.r_orgname}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">被监督单位唯一标识：</span>
+                        <span className="textright">{datalist.comp_no}</span>
+                      </p>
+                      <p style={{ marginTop: "20px" }}><span className="explainspan">量化等级：</span>
+                        <span className="textright">{leval[datalist.project_level1]}</span>
+                      </p>
                     </div>
                   </div>
 

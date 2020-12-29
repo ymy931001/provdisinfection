@@ -22,34 +22,16 @@
 }
 
 
-
-.addinput{
-    width: 80%;
-    margin:0 auto;
-    margin-bottom: 20px;
-}
- .addinput span{
+#hoteldetail .explainspan{
     display: inline-block;
-    width: 25%;
+    width: 200px;
     text-align: right;
-}
- .addtextarea{
-    width: 65%;
-    margin:0 auto;
+    font-size: 16px;
+    color:#999
 }
 
-#mapcontent  .ant-upload.ant-upload-select{
-    width: 60%;
-}
-
- .explains{
-    float: left;
-    width: 40%;
-}
- .explainspan{
-    display: inline-block;
-    width: 100px;
-    text-align: right;
+#hoteldetail  .textright{
+    font-size: 16px;
 }
 
 .bottom{
@@ -69,46 +51,3 @@
 }
 
 
-#mapcontent .mapcontainer{
-    width: 660px;
-    height: 500px;
-    float: left;
-    position: relative;
-}
-
-#mapcontent #mapContainer{
-    width: 660px;
-    height: 550px;
-}
-
-
-#mapcontent .ant-input-group{
-    margin: 0;
-}
-
-
-@media screen and (max-width: 1480px) {
-    #mapcontent .mapcontainer{
-        width: 560px;
-        height: 400px;
-    }
-    
-    #mapcontent #mapContainer{
-        width: 560px;
-        height: 450px;
-    }
-    
-  }
-
-  @media screen and (max-width: 1300px) {
-    #mapcontent .mapcontainer{
-        width: 500px;
-        height: 350px;
-    }
-    
-    #mapcontent #mapContainer{
-        width: 500px;
-        height: 350px;
-    }
-    
-  }
