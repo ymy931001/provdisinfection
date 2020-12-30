@@ -88,6 +88,13 @@ const economiccode = {
   "90": "其它",
 }
 
+const yycsxz = {
+  1: "社会性游泳场所",
+  2: "宾馆饭店内设游泳场所",
+  3: "学校内设游泳场所",
+  4: "体育系统使用的游泳场所",
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -108,13 +115,13 @@ class App extends React.Component {
     sitedetail([
       localStorage.getItem('hotelid'),
     ]).then(res => {
-      if (res.data && res.data.message === 'success') {
-        this.setState({
-          datalist: res.data.data.value
-        }, function () {
-          console.log(this.state.datalist)
-        })
-      }
+      // if (res.data && res.data.message === 'success') {
+      this.setState({
+        datalist: JSON.parse(res.data).value
+      }, function () {
+        console.log(this.state.datalist)
+      })
+      // }
     });
   }
 
@@ -140,104 +147,125 @@ class App extends React.Component {
             >
               <div className="current">
                 <div className="current_text">
-                  <div className="clearfix" style={{display:"flex",justifyContent:'space-around'}} >
+                  <div className="clearfix" style={{ display: "flex", justifyContent: 'space-around' }} >
                     <div style={{ display: 'inline-block' }}>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">酒店全称：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">酒店全称：</span>
                         <span className="textright"> {datalist.comp_name}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">法人姓名：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">法人姓名：</span>
                         <span className="textright"> {datalist.principal}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">法人电话：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">法人电话：</span>
                         <span className="textright">{datalist.pphone}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">法人身份证：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">法人身份证：</span>
                         <span className="textright">{datalist.idcard}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">法人身份证件名称：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">法人身份证件名称：</span>
                         <span className="textright">{cardtype[datalist.cardtype]}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">负责人姓名：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">负责人姓名：</span>
                         <span className="textright">{datalist.applicant}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">负责人电话：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">负责人电话：</span>
                         <span className="textright">{datalist.applicant_phone}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">企业性质：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">企业性质：</span>
                         <span className="textright">{economiccode[datalist.economic_code]}</span>
                       </p>
 
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">社会信用代码：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">社会信用代码：</span>
                         <span className="textright">{localStorage.getItem('creditcode')}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">职工总数：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">卫生许可证号：</span>
+                        <span className="textright">{datalist.health_license}</span>
+                      </p>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">有效期开始日期：</span>
+                        <span className="textright">{datalist.licensestart}</span>
+                      </p>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">有效期截止日期：</span>
+                        <span className="textright">{datalist.licenseend}</span>
+                      </p>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">职工总数：</span>
                         <span className="textright">{datalist.total_staff} 人</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">从业人员数：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">从业人员数：</span>
                         <span className="textright">{datalist.total_employees} 人</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">持健康合格证明人数：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">持健康合格证明人数：</span>
                         <span className="textright">{datalist.total_health_cert} 人</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">卫生知识培训合格人数：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">卫生知识培训合格人数：</span>
                         <span className="textright">{datalist.train_pass_emps} 人</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">应体检人数：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">应体检人数：</span>
                         <span className="textright">{datalist.test_employees} 人</span>
                       </p>
-                      {/* <p style={{ marginTop: "20px" }}><span className="explainspan">每场额定接待人数：</span>
-                        <span className="textright">{datalist.edjdry} 人</span>
-                      </p> */}
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">量化等级：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">每场额定接待人数：</span>
+                        <span className="textright">{datalist.edjdry === null ? "" : datalist.edjdry + "人"}</span>
+                      </p>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">量化等级：</span>
                         <span className="textright">{leval[datalist.project_level1]}</span>
                       </p>
                     </div>
                     <div style={{ display: 'inline-block' }}>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">注册地址：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">注册地址：</span>
                         <span className="textright">{datalist.reg_addr}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">注册地址编码：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">注册地址编码：</span>
                         <span className="textright">{datalist.reg_addrCode}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">经营地址：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">经营地址：</span>
                         <span className="textright">{datalist.bus_addr}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">经营地址编码：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">经营地址编码：</span>
                         <span className="textright">{datalist.bus_addrCode}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">营业面积（m²）：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">营业面积（m²）：</span>
                         <span className="textright">{datalist.total_area}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">经营状态：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">实际使用面积（m²）：</span>
+                        <span className="textright">{datalist.sjsymj}</span>
+                      </p>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">经营状态：</span>
                         <span className="textright">{operationstatus[datalist.operation_status]}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">集中式供水类型：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">集中式供水类型：</span>
                         <span className="textright">{jzgslx[datalist.jzgslx]}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">饮用水类型：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">饮用水类型：</span>
                         <span className="textright">{watertype[datalist.water_type]}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">游泳池类别：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">游泳池类别：</span>
                         <span className="textright">{yycslb[datalist.yycslb]}</span>
                       </p>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">游泳池性质：</span>
+                        <span className="textright">{yycsxz[datalist.yycsxz]}</span>
+                      </p>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">游泳池总面积：</span>
+                        <span className="textright">{datalist.total_yyc_area}</span>
+                      </p>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">游泳池总容积：</span>
+                        <span className="textright">{datalist.total_yyc_vol}</span>
+                      </p>
 
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">集中空调通风系统：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">集中空调通风系统：</span>
                         <span className="textright">{datalist.central_air_sys === "1" ? "有" : "无"}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">公共用品用具保洁设施：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">公共用品用具保洁设施：</span>
                         <span className="textright">{datalist.purifier_facility === "1" ? "有" : "无"}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">公共用品用具消毒设施：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">公共用品用具消毒设施：</span>
                         <span className="textright">{datalist.disinfect_facility === "1" ? "有" : "无"}</span>
                       </p>
 
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">监督机构编码：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">监督机构编码：</span>
                         <span className="textright">{datalist.r_orgcode}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">处置单位：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">处置单位：</span>
                         <span className="textright">{datalist.r_orgname}</span>
                       </p>
-                      <p style={{ marginTop: "20px" }}><span className="explainspan">被监督单位唯一标识：</span>
+                      <p style={{ marginTop: "10px" }}><span className="explainspan">被监督单位唯一标识：</span>
                         <span className="textright">{datalist.comp_no}</span>
                       </p>
 
