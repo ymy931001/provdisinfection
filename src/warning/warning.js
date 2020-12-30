@@ -474,7 +474,7 @@ class App extends React.Component {
       },
       {
         title: "报警起始时间",
-        dataIndex: "gmtcreate",
+        dataIndex: "beginTime",
         render: (text, record, index) => {
           return (
             <div style={{ color: 'red' }}>
@@ -640,7 +640,7 @@ class App extends React.Component {
       },
       {
         title: "报警开始时间",
-        dataIndex: "gmtcreate",
+        dataIndex: "beginTime",
         render: (text, record, index) => {
           return (
             <div style={{ color: 'green' }}>
@@ -908,8 +908,8 @@ class App extends React.Component {
         }
       },
       {
-        title: "报警时间",
-        dataIndex: "date",
+        title: "离线时间",
+        dataIndex: "beginTime",
         render: (text, record, index) => {
           if (text === null) {
             return (
@@ -920,8 +920,11 @@ class App extends React.Component {
           } else {
             return (
               <div style={{ color: 'green' }}>
-                {moment(new Date(text) - 3600 * 24 * 1000 * (Math.ceil(record.duration / 24))).format('YYYY-MM-DD')}
+                {moment(new Date(text)).format('YYYY-MM-DD')}
               </div>
+              // <div style={{ color: 'green' }}>
+              //   {moment(new Date(text) - 3600 * 24 * 1000 * (Math.ceil(record.duration / 24))).format('YYYY-MM-DD')}
+              // </div>
             )
           }
 
