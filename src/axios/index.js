@@ -653,10 +653,8 @@ export const putroom = params =>
   http.put(config.requestIp + "/room/", {
     id: params[0],
     name: params[1],
-    cleanerid: params[2],
+    sceneid: params[2],
     standard: params[3],
-    remark: params[4],
-    siteid: params[5],
   });
 
 

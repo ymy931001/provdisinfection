@@ -33,58 +33,11 @@ const { Content } = Layout;
 const { TextArea } = Input;
 const Option = Select.Option;
 
-const FormItem = Form.Item;
-const EditableContext = React.createContext();
-const EditableRow = ({ form, index, ...props }) => (
-  <EditableContext.Provider value={form}>
-    <tr {...props} />
-  </EditableContext.Provider>
-);
-
-const EditableFormRow = Form.create()(EditableRow);
-class EditableCell extends React.Component {
-  getInput = () => {
-    if (this.props.inputType === 'number') {
-      return <InputNumber />;
-    }
-    return <Input />;
-  };
-  render() {
-    const {
-      editing,
-      dataIndex,
-      title,
-      inputType,
-      record,
-      index,
-      ...restProps
-    } = this.props;
-    return (
-      <EditableContext.Consumer>
-        {(form) => {
-          const { getFieldDecorator } = form;
-          return (
-            <td {...restProps}>
-              {editing ? (
-                <FormItem style={{ margin: 0 }}>
-                  {getFieldDecorator(dataIndex, {
-                    rules: [{
-                      required: true,
-                      message: `Please Input ${title}!`,
-                    }],
-                    initialValue: record[dataIndex],
-                  })(this.getInput())}
-                </FormItem>
-              ) : restProps.children}
-            </td>
-          );
-        }}
-      </EditableContext.Consumer>
-    );
-  }
+const roomtype = {
+  "1": "摄像头插座都有",
+  "3": "只有插座",
+  "4": "只有摄像头"
 }
-
-
 
 
 
@@ -237,87 +190,55 @@ class App extends React.Component {
   }
 
 
-
-  //编辑
-
-  isEditing = (record) => {
-    return record.id === this.state.editingKey
-  };
-
   edit(text, record, index) {
-    console.log(record)
+    // console.log(record)
     this.setState({
-      editingKey: record.id,
+      // editingKey: record.id,
       siteId: record.siteId,
       roomid: record.id,
-      sceneId: record.sceneId,
+      sceneIds: record.sceneId,
       name: record.name,
+      roomnames: record.name,
+      changevisible: true,
       cleanerId: record.cleanerId,
-      standard: record.standard,
+      standards: record.standard,
     });
   }
-  cancel = () => {
-    this.setState({ editingKey: '' });
-  };
+
 
 
   //编辑保存
-  save(form, key, text) {
-    form.validateFields((error, row) => {
-      if (error) {
-        return;
-      }
-      const newData = [...this.state.roomlist];
-      const index = newData.findIndex(item => key === item.key);
-      console.log(newData[index])
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
+  save = () => {
+    putroom([
+      this.state.roomid,
+      this.state.roomnames,
+      this.state.sceneIds,
+      this.state.standards,
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+        message.success("信息修改成功");
         this.setState({
-          roomlist: newData, editingKey: '',
-          remark: newData[index].remark,
-          name: newData[index].name,
-        }, () => {
-          putroom([
-            this.state.roomid,
-            this.state.name,
-            this.state.cleanerId,
-            this.state.standard,
-            this.state.remark,
-            localStorage.getItem('hotelid'),
-          ]).then(res => {
-            if (res.data && res.data.message === 'success') {
-              message.success("信息修改成功");
-              roomlist([
-                localStorage.getItem('hotelid')
-              ]).then(res => {
-                if (res.data && res.data.message === "success") {
-                  this.setState({
-                    roomlist: res.data.data
-                  }, function () {
-                    if (res.data.data.length < 10) {
-                      this.setState({
-                        page: false
-                      })
-                    } else {
-                      this.setState({
-                        page: true
-                      })
-                    }
-                  });
-                }
-              });
-            }
-          });
-
+          changevisible: false,
+        })
+        roomlist([
+          localStorage.getItem('hotelid')
+        ]).then(res => {
+          if (res.data && res.data.message === "success") {
+            this.setState({
+              roomlist: res.data.data
+            }, function () {
+              if (res.data.data.length < 10) {
+                this.setState({
+                  page: false
+                })
+              } else {
+                this.setState({
+                  page: true
+                })
+              }
+            });
+          }
         });
-
-      } else {
-        newData.push(this.state.roomlist);
-        this.setState({ roomlist: newData, editingKey: '' });
       }
     });
   }
@@ -326,6 +247,14 @@ class App extends React.Component {
     console.log(value)
     this.setState({
       sceneId: value
+    })
+  }
+
+
+  scenechanges = (value) => {
+    console.log(value)
+    this.setState({
+      sceneIds: value
     })
   }
   //绑定摄像头弹框
@@ -453,6 +382,13 @@ class App extends React.Component {
   roomname = (e) => {
     this.setState({
       roomname: e.target.value
+    })
+  }
+
+  //房间roomname
+  roomnames = (e) => {
+    this.setState({
+      roomnames: e.target.value
     })
   }
 
@@ -597,6 +533,13 @@ class App extends React.Component {
   standardchange = (value) => {
     this.setState({
       standard: value
+    })
+  }
+
+  //报警阈值修改
+  standardchanges = (value) => {
+    this.setState({
+      standards: value
     })
   }
 
@@ -756,7 +699,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div>
-              <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
+              <span style={{ marginLeft: '20px' }}>
                 <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
               </span>
               <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
@@ -779,7 +722,7 @@ class App extends React.Component {
           inputType: col.dataIndex === 'age' ? 'number' : 'text',
           dataIndex: col.dataIndex,
           title: col.title,
-          editing: this.isEditing(record),
+          // editing: this.isEditing(record),
         }),
       };
     });
@@ -789,8 +732,7 @@ class App extends React.Component {
 
     const components = {
       body: {
-        row: EditableFormRow,
-        cell: EditableCell,
+
       },
     };
     return (
@@ -947,13 +889,41 @@ class App extends React.Component {
           <Modal
             title="修改房间信息"
             visible={this.state.changevisible}
-            onOk={this.changeOk}
+            onOk={this.save}
             width="400px"
-            okText="删除"
+            okText="确定"
             centered
             onCancel={this.handleCancel}
           >
-
+            <span> <span style={{ color: 'red' }}>*</span> 房间名称：</span>
+            <Input placeholder="请输入房间名称"
+              style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+              autoComplete="off"
+              onChange={this.roomnames}
+              value={this.state.roomnames}
+            />
+            <span> <span style={{ color: 'red' }}>*</span> 房间类型：</span>
+            <Select
+              style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+              placeholder="请选择房间类型"
+              onChange={this.scenechanges}
+              value={roomtype[this.state.sceneIds]}
+            >
+              <Option key="1" >摄像头插座都有</Option>
+              <Option key="3" >只有插座</Option>
+              <Option key="4" >只有摄像头</Option>
+            </Select>
+            <span> <span style={{ color: 'red' }}>*</span> 报警阈值：</span>
+            <Select
+              style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+              placeholder="请选择报警阈值"
+              onChange={this.standardchanges}
+              value={this.state.standards}
+            >
+              <Option key="1" >1天</Option>
+              <Option key="2" >2天</Option>
+              <Option key="3" >3天</Option>
+            </Select>
           </Modal>
           <Modal
             title="删除保洁员"
