@@ -355,6 +355,10 @@ class App extends React.Component {
 
   //今日数据
   todaydata = () => {
+    this.setState({
+      begintime: moment(new Date()),
+      endtime: moment(new Date()),
+    })
     detectionService([
       1,
       10,
