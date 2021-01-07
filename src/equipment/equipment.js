@@ -176,11 +176,21 @@ class App extends React.Component {
                 </div>
               )
             }
-            if (text === false) {
+            else if (text === false) {
               return (
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <a onClick={() => this.showonline(text, record, index)} style={{ color: '#e72e2e' }}
                   ><span className="circle1"></span> 离线</a>
+                </div>
+              )
+            }
+            else {
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a style={{ color: '#e72e2e' }}
+                  >
+                    未知
+                  </a>
                 </div>
               )
             }
@@ -273,11 +283,21 @@ class App extends React.Component {
                 </div>
               )
             }
-            if (text === false) {
+            else if (text === false) {
               return (
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <a onClick={() => this.showonline(text, record, index)} style={{ color: '#e72e2e' }}
                   ><span className="circle1"></span> 离线</a>
+                </div>
+              )
+            }
+            else {
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a style={{ color: '#e72e2e' }}
+                  >
+                    未知
+                  </a>
                 </div>
               )
             }
@@ -362,11 +382,18 @@ class App extends React.Component {
                 </div>
               )
             }
-            if (text === false) {
+            else if (text === false) {
               return (
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <a onClick={() => this.showonline(text, record, index)} style={{ color: '#e72e2e' }}
                   ><span className="circle1"></span> 离线</a>
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a style={{ color: '#e72e2e' }}
+                  > 未知</a>
                 </div>
               )
             }
@@ -444,11 +471,18 @@ class App extends React.Component {
                 </div>
               )
             }
-            if (text === false) {
+            else if (text === false) {
               return (
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <a onClick={() => this.showonline(text, record, index)} style={{ color: '#e72e2e' }}
                   ><span className="circle1"></span> 离线</a>
+                </div>
+              )
+            } else {
+              return (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a style={{ color: '#e72e2e' }}
+                  > 未知</a>
                 </div>
               )
             }
