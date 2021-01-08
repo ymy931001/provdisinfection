@@ -1321,7 +1321,7 @@ class App extends React.Component {
     ]).then(res => {
       if (res.data && res.data.msg === "SUCCESS") {
         for (var i in res.data.data.list) {
-          res.data.data.list[i].key = res.data.data.list[i].cameraName
+          res.data.data.list[i].key = res.data.data.list[i].cameraIndexCode
         }
         this.setState({
           iscdata: res.data.data.list
