@@ -123,7 +123,7 @@ class App extends React.Component {
             if (text === false) {
               return (
                 <div style={{ color: 'red', cursor: 'pointer' }}>
-                  离线
+                  下线
                 </div>
               )
             }
@@ -156,6 +156,10 @@ class App extends React.Component {
         {
           title: "设备状态",
           dataIndex: "onlineStatus",
+          filters: [
+            { text: "在线", value: true },
+            { text: "离线", value: false },
+          ],
           render: (text, record, index) => {
             if (text === true) {
               return (
@@ -248,6 +252,10 @@ class App extends React.Component {
         {
           title: "设备状态",
           dataIndex: "onlineStatus",
+          filters: [
+            { text: "在线", value: true },
+            { text: "离线", value: false },
+          ],
           render: (text, record, index) => {
             if (text === true) {
               return (
@@ -393,8 +401,8 @@ class App extends React.Component {
 
 
     boardlists([
-      this.state.pageNum,
-      this.state.pageNumSize,
+      1,
+      10,
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -767,12 +775,13 @@ class App extends React.Component {
   query = () => {
     boardlists([
       1,
-      this.state.pageNumSize,
+      10,
       this.state.cityid,
       this.state.areaid,
       this.state.siteId,
       this.state.keytext,
       this.state.imei,
+      this.state.devicestatus
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -848,8 +857,8 @@ class App extends React.Component {
         if (res.data && res.data.message === "success") {
           message.success('添加成功')
           boardlists([
-            this.state.pageNum,
-            this.state.pageNumSize,
+            1,
+            10,
           ]).then(res => {
             if (res.data && res.data.message === "success") {
               console.log(res.data.data)
@@ -996,7 +1005,7 @@ class App extends React.Component {
         message.success("修改成功")
         boardlists([
           1,
-          this.state.pageNumSize,
+          10,
         ]).then(res => {
           if (res.data && res.data.message === "success") {
             console.log(res.data.data)
@@ -1035,7 +1044,7 @@ class App extends React.Component {
         })
         boardlists([
           1,
-          this.state.pageNumSize,
+          10,
         ]).then(res => {
           if (res.data && res.data.message === "success") {
             console.log(res.data.data)
@@ -1078,7 +1087,7 @@ class App extends React.Component {
     }, function () {
       boardlists([
         1,
-        this.state.pageNumSize,
+        10,
         this.state.cityid,
         this.state.areaid,
         this.state.siteId,
@@ -1111,6 +1120,7 @@ class App extends React.Component {
         this.state.siteId,
         this.state.keytext,
         this.state.imei,
+        this.state.devicestatus
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           this.setState({
@@ -1121,6 +1131,33 @@ class App extends React.Component {
       });
     })
   }
+
+  //插座筛选
+  socketlist = (a, b, c, d) => {
+    console.log(b.onlineStatus[0])
+    this.setState({
+      devicestatus: b.onlineStatus[0]
+    })
+    boardlists([
+      1,
+      10,
+      this.state.cityid,
+      this.state.areaid,
+      this.state.siteId,
+      this.state.keytext,
+      this.state.imei,
+      b.onlineStatus[0]
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          userlist: res.data.data.boardList,
+          total: res.data.data.total,
+        });
+      }
+    });
+  }
+
+
 
   render() {
     const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
@@ -1170,7 +1207,8 @@ class App extends React.Component {
                   onChange={this.keytext}
                 />
                 <Button type="primary" onClick={this.query}>查询</Button>
-                <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>
+                <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>、
+
                 {/* <Button type="primary" style={{ marginLeft: '20px' }}>
                   <Link to="/app/withoutsocket">未绑定插座列表</Link>
                 </Button> */}
@@ -1178,6 +1216,7 @@ class App extends React.Component {
                   dataSource={this.state.userlist}
                   columns={this.nodeInfoTableColumns}
                   pagination={false}
+                  onChange={this.socketlist}
                 />
                 <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
                   <Pagination

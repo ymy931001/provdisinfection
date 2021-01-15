@@ -128,7 +128,10 @@ export const devicelist = params =>
     mode: params[5],
     key: params[6],
     roomid: params[7],
+    onlineStatus: params[8],
   });
+
+
 
 
 //删除设备列表
@@ -359,6 +362,7 @@ export const boardlists = params =>
     siteid: params[4],
     key: params[5],
     imei: params[6],
+    onlineStatus: params[7],
   });
 
 //封面

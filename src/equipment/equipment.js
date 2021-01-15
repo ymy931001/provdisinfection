@@ -167,6 +167,10 @@ class App extends React.Component {
           title: "联网状态",
           dataIndex: "onlinestatus",
           key: 'onlinestatus',
+          filters: [
+            { text: "在线", value: true },
+            { text: "离线", value: false },
+          ],
           render: (text, record, index) => {
             if (text === true) {
               return (
@@ -274,6 +278,10 @@ class App extends React.Component {
           title: "联网状态",
           dataIndex: "onlinestatus",
           key: 'onlinestatus',
+          filters: [
+            { text: "在线", value: true },
+            { text: "离线", value: false },
+          ],
           render: (text, record, index) => {
             if (text === true) {
               return (
@@ -373,6 +381,10 @@ class App extends React.Component {
           title: "联网状态",
           dataIndex: "onlinestatus",
           key: 'onlinestatus',
+          filters: [
+            { text: "在线", value: true },
+            { text: "离线", value: false },
+          ],
           render: (text, record, index) => {
             if (text === true) {
               return (
@@ -462,6 +474,10 @@ class App extends React.Component {
           title: "联网状态",
           dataIndex: "onlinestatus",
           key: 'onlinestatus',
+          filters: [
+            { text: "在线", value: true },
+            { text: "离线", value: false },
+          ],
           render: (text, record, index) => {
             if (text === true) {
               return (
@@ -814,6 +830,8 @@ class App extends React.Component {
           this.state.siteId === 'null' ? null : this.state.siteId,
           0,
           this.state.keytext,
+          localStorage.getItem("roomid"),
+          this.state.devicestatus
         ]).then(res => {
           if (res.data && res.data.message === "success") {
             this.setState({
@@ -917,7 +935,9 @@ class App extends React.Component {
       this.state.areaid === 'null' ? null : this.state.areaid,
       this.state.siteId === 'null' ? null : this.state.siteId,
       0,
-      this.state.keytext
+      this.state.keytext,
+      localStorage.getItem("roomid"),
+      this.state.devicestatus
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -936,6 +956,9 @@ class App extends React.Component {
       this.state.areaid === 'null' ? null : this.state.areaid,
       this.state.siteId === 'null' ? null : this.state.siteId,
       1,
+      null,
+      null,
+      this.state.scdevicestatus
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -1174,6 +1197,8 @@ class App extends React.Component {
       this.state.siteId === 'null' ? null : this.state.siteId,
       0,
       this.state.keytext,
+      localStorage.getItem("roomid"),
+      this.state.devicestatus
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -1194,6 +1219,9 @@ class App extends React.Component {
       this.state.areaid === 'null' ? null : this.state.areaid,
       this.state.siteId === 'null' ? null : this.state.siteId,
       1,
+      null,
+      null,
+      this.state.scdevicestatus
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         this.setState({
@@ -1561,6 +1589,8 @@ class App extends React.Component {
         this.state.siteId === 'null' ? null : this.state.siteId,
         0,
         this.state.keytext,
+        localStorage.getItem("roomid"),
+        this.state.devicestatus
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           this.setState({
@@ -1584,6 +1614,9 @@ class App extends React.Component {
         this.state.areaid === 'null' ? null : this.state.areaid,
         this.state.siteId === 'null' ? null : this.state.siteId,
         1,
+        null,
+        null,
+        this.state.scdevicestatus
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           this.setState({
@@ -1595,7 +1628,57 @@ class App extends React.Component {
     })
   }
 
+  //固定摄像头筛选
+  gdcamra = (a, b, c, d) => {
+    console.log(b.onlinestatus[0])
+    this.setState({
+      devicestatus: b.onlinestatus[0]
+    })
+    devicelist([
+      1,
+      10,
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
+      0,
+      this.state.keytext,
+      localStorage.getItem("roomid"),
+      b.onlinestatus[0],
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          videoListDataSource: res.data.data.cameraList,
+          total: res.data.data.total,
+        });
+      }
+    });
+  }
 
+  //手持摄像头筛选
+  sccamra = (a, b, c, d) => {
+    console.log(b.onlinestatus[0])
+    this.setState({
+      scdevicestatus: b.onlinestatus[0]
+    })
+    devicelist([
+      1,
+      10,
+      this.state.cityid === 'null' ? null : this.state.cityid,
+      this.state.areaid === 'null' ? null : this.state.areaid,
+      this.state.siteId === 'null' ? null : this.state.siteId,
+      1,
+      null,
+      null,
+      b.onlinestatus[0]
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          addhandheldSource: res.data.data.cameraList,
+          handeltotal: res.data.data.total,
+        });
+      }
+    });
+  }
 
 
   render() {
@@ -1640,12 +1723,14 @@ class App extends React.Component {
                     />
                     <Button type="primary" onClick={this.query}>查询</Button>
                     <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>
+                    <Button type="primary" onClick={this.export} style={{ marginLeft: '15px' }}>数据导出</Button>
                   </div>
                   <div style={{ marginTop: 20 }}>
                     <Table
                       dataSource={this.state.videoListDataSource}
                       columns={this.nodeInfoTableColumns}
                       pagination={false}
+                      onChange={this.gdcamra}
                     />
                   </div>
                   <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
@@ -1677,6 +1762,7 @@ class App extends React.Component {
                       dataSource={this.state.addhandheldSource}
                       columns={this.handleColumns}
                       pagination={false}
+                      onChange={this.sccamra}
                     />
                   </div>
                   <div className="pageone" style={{ textAlign: 'right', marginTop: '10px' }}>
