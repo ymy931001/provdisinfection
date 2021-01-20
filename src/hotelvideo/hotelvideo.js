@@ -10,7 +10,7 @@ import {
   Input,
   DatePicker,
   Pagination,
-  Tooltip
+  Tooltip, Select
 } from "antd";
 import {
   // newdetection,
@@ -25,7 +25,7 @@ import moment from 'moment';
 
 const { Content } = Layout;
 const { RangePicker } = DatePicker;
-
+const { Option } = Select
 
 const timelinelist = [
   {
@@ -256,22 +256,14 @@ class App extends React.Component {
               )
             }
           } else {
-            if (text === 0) {
-              return (
-                <div>
-                  <span style={{ color: 'red' }}>未达标</span>
-                </div>
-              )
-            }
             if (text === 1) {
               return (
                 <div>
-                  <Button type="primary" style={{ border: '1px solid #28A745', background: '#28A745', borderRadius: '50px', fontSize: '14px' }}>已消毒</Button>
-                  {/* <span style={{ color: 'green' }}>已消毒</span> */}
+                  <span style={{ color: 'green' }}>已消毒</span>
                 </div>
               )
             }
-            if (text === - 1) {
+            else if (text === - 1) {
               return (
                 <div>
                   <span style={{ color: 'red', cursor: "pointer" }}>
@@ -282,7 +274,7 @@ class App extends React.Component {
                 </div>
               )
             }
-            if (text === -2) {
+            else if (text === -2) {
               return (
                 <div>
                   <span style={{ color: 'red', cursor: "pointer" }}>
@@ -293,7 +285,7 @@ class App extends React.Component {
                 </div>
               )
             }
-            if (text === -3) {
+            else if (text === -3) {
               return (
                 <div>
                   <span style={{ color: 'red', cursor: "pointer" }}>
@@ -303,28 +295,14 @@ class App extends React.Component {
                   </span>
                 </div>
               )
-            }
-            if (record.status === 5) {
-              if (text === 2) {
-                return (
-                  <div>
-                    <span style={{ color: 'red' }}>未达标</span>
-                  </div>
-                )
-              }
             } else {
-              if (text === 2) {
-                return (
-                  <div>
-                    <span style={{ color: 'red' }}>未达标</span>
-                  </div>
-                )
-              }
-            }
-            if (text === null) {
               return (
                 <div>
-                  <span >无</span>
+                  <Tooltip placement="topLeft" title={
+                    record.result === 0 ? "消毒柜工作时间和洗消时长均未达标" : record.result === 2 ? "消毒柜工作时间未达标" : record.result === 3 ? "洗消时长未达标" : ''
+                  }>
+                    <span style={{ color: 'red', cursor: 'pointer' }}>未达标</span>
+                  </Tooltip>
                 </div>
               )
             }
@@ -428,6 +406,8 @@ class App extends React.Component {
       this.state.siteId === 'null' ? null : this.state.siteId,
       this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
       this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      this.state.keytext,
+      this.state.result
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         if (res.data.data === null) {
@@ -482,7 +462,8 @@ class App extends React.Component {
         this.state.siteId,
         this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
         this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
-        text
+        text,
+        this.state.result,
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           if (res.data.data === null) {
@@ -513,6 +494,8 @@ class App extends React.Component {
         this.state.siteId,
         this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
         this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+        this.state.keytext,
+        this.state.result
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           if (res.data.data === null) {
@@ -681,6 +664,7 @@ class App extends React.Component {
       this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
       this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
       this.state.keytext,
+      this.state.result
     ]).then(res => {
       if (res.data && res.data.message === "success") {
         if (res.data.data === null) {
@@ -856,6 +840,7 @@ class App extends React.Component {
         this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
         this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
         this.state.keytext,
+        this.state.result
       ]).then(res => {
         if (res.data && res.data.message === "success") {
           if (res.data.data === null) {
@@ -885,6 +870,7 @@ class App extends React.Component {
       begintime: undefined,
       endtime: undefined,
       pageNum: 1,
+      result: undefined,
     }, function () {
       localStorage.setItem('selectarea', [])
       localStorage.setItem('cityid', this.state.cityid)
@@ -900,6 +886,14 @@ class App extends React.Component {
   keytext = (e) => {
     this.setState({
       keytext: e.target.value
+    })
+  }
+
+  //监测结果筛选
+  resultype = (value) => {
+    console.log(value)
+    this.setState({
+      result: value
     })
   }
 
@@ -935,11 +929,11 @@ class App extends React.Component {
 
                   value={this.state.addresslist}
                   changeOnSelect
-                  style={{ width: "350px", marginRight: '20px' }}
+                  style={{ width: "320px", marginRight: '20px' }}
                   placeholder="选择酒店" />
-                    时间&nbsp;:
-                    <RangePicker
-                  style={{ marginLeft: '20px', marginRight: '20px', width: '300px' }}
+                <span style={{ display: 'inline-block', width: '70px', textAlign: 'right' }}>时间&nbsp;:</span>
+                <RangePicker
+                  style={{ marginLeft: '10px', marginRight: '20px', width: '300px' }}
                   format={dateFormat}
                   ranges={{ 今天: [moment().startOf('day'), moment().endOf('day')], '本月': [moment().startOf('month'), moment().endOf('month')] }}
                   onChange={this.timeonChange}
@@ -947,10 +941,22 @@ class App extends React.Component {
                 />
                 <div style={{ marginTop: "20px" }}>
                   关键字搜索&nbsp;: &nbsp;&nbsp;&nbsp;
-                <Input placeholder="请输入关键字" style={{ width: '300px', marginRight: '20px' }}
+                <Input placeholder="请输入关键字" style={{ width: '320px', marginRight: '20px' }}
                     value={this.state.keytext}
                     onChange={this.keytext}
                   />
+                  <span style={{ display: 'inline-block', width: '70px', textAlign: 'right' }}>监测结果&nbsp;:</span>
+                  <Select
+                    style={{ marginLeft: '10px', marginRight: '10px', width: '300px' }}
+                    placeholder="请选择监测结果"
+                    value={this.state.result}
+                    onChange={this.resultype}
+                  >
+                    <Option value="0">均未达标</Option>
+                    <Option value="1">达标</Option>
+                    <Option value="2">消毒柜未达标</Option>
+                    <Option value="3">洗消时长未达标</Option>
+                  </Select>
                   <Button type="primary" onClick={this.query}>查询</Button>
                   <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>
                 </div>

@@ -29,6 +29,7 @@ export const detectionService = (params) => http.get(config.requestIp + "/detect
   start: params[5],
   stop: params[6],
   key: params[7],
+  result: params[8],
 });
 
 
@@ -43,6 +44,7 @@ export const newdetectionsearch = (params) => http.get(config.requestIp + "/dete
   start: params[5],
   stop: params[6],
   key: params[7],
+  result: params[8],
 });
 
 

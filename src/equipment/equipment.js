@@ -13,7 +13,7 @@ import {
   Tree,
   Tabs,
   Radio,
-  Pagination
+  Pagination, AutoComplete
 } from "antd";
 import {
   devicelist,
@@ -42,7 +42,6 @@ const { DirectoryTree } = Tree;
 const { TabPane } = Tabs;
 const { Search } = Input;
 const { TextArea } = Input;
-
 
 
 
@@ -87,6 +86,7 @@ class App extends React.Component {
       password: null,
       roomId: null,
       iscplatform: [],
+      hoteloptions: [],
       cityid: localStorage.getItem('cityid'),
       areaid: localStorage.getItem('areaid'),
       siteId: localStorage.getItem('siteId'),
@@ -737,16 +737,19 @@ class App extends React.Component {
     }
 
     var arr = []
+    var newarr = {}
     hotellist().then(res => {
       console.log(res.data)
       for (var i in res.data.data) {
-        arr.push({
-          'id': i,
-          'value': res.data.data[i]
-        })
+        arr.push(res.data.data[i])
+        newarr[i] = res.data.data[i]
       }
+      console.log(newarr)
       this.setState({
-        sitelist: arr
+        hoteloptions: arr,
+        sitelist: newarr,
+      }, function () {
+        console.log(this.state.sitelist)
       });
     });
   }
@@ -757,27 +760,33 @@ class App extends React.Component {
 
   //网点选择
   handleChanges = (value, b) => {
-    console.log(value, b.props.children);
-    this.setState({
-      siteid: value,
-    }, function () {
-      roomlist([
-        this.state.siteid
-      ]).then(res => {
-        if (res.data && res.data.message === "success") {
-          var arr = []
-          for (var i in res.data.data) {
-            arr.push({
-              'id': res.data.data[i].id,
-              'name': res.data.data[i].name,
-            })
-          }
-          this.setState({
-            roomlist: arr
-          })
-        }
-      });
-    })
+    console.log(value, b);
+    const { sitelist } = this.state
+    for (var i in sitelist) {
+      if (sitelist[i] === value) {
+        this.setState({
+          siteid: i,
+        }, function () {
+          roomlist([
+            this.state.siteid
+          ]).then(res => {
+            if (res.data && res.data.message === "success") {
+              var arr = []
+              for (var i in res.data.data) {
+                arr.push({
+                  'id': res.data.data[i].id,
+                  'name': res.data.data[i].name,
+                })
+              }
+              this.setState({
+                roomlist: arr
+              })
+            }
+          });
+        })
+      }
+    }
+
   }
 
 
@@ -1078,6 +1087,7 @@ class App extends React.Component {
 
 
   showModal = () => {
+    console.log(this.state.sitelist)
     this.setState({
       visible: true,
     })
@@ -1680,10 +1690,16 @@ class App extends React.Component {
     });
   }
 
+  //数据导出
+  export = () => {
+    window.open("http://iva.terabits.cn:9090/camera/getExcel?Authorization=" + localStorage.getItem('authorization') + "&onlineStatus=false", "_self")
+  }
+
+
 
   render() {
     // console.log(this.state.AutoCompletedata)
-    const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
+    // const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
     // const cameratypelist = this.state.cameralist.map((province) => <Option key={province.type}  >{province.desc}</Option>);
     const isclistoption = this.state.iscplatform.map((province) => <Option key={province.id}  >{province.value}</Option>);
     const roomoption = this.state.roomlist.map((province) => <Option key={province.id}>{province.name}</Option>);
@@ -1723,7 +1739,7 @@ class App extends React.Component {
                     />
                     <Button type="primary" onClick={this.query}>查询</Button>
                     <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>
-                    <Button type="primary" onClick={this.export} style={{ marginLeft: '15px' }}>数据导出</Button>
+                    <Button type="primary" onClick={this.export} style={{ marginLeft: '15px', display: this.state.typenone }}>离线数据导出</Button>
                   </div>
                   <div style={{ marginTop: 20 }}>
                     <Table
@@ -1958,13 +1974,22 @@ class App extends React.Component {
             </div>
             <div>
               <span>所属酒店：</span>
-              <Select
+              {/* <Select
                 style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
                 placeholder="请选择所属酒店"
                 onChange={this.handleChanges}
               >
                 {prooptions}
-              </Select>
+              </Select> */}
+              <AutoComplete
+                style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+                dataSource={this.state.hoteloptions}
+                placeholder="请选择所属酒店"
+                onChange={this.handleChanges}
+                filterOption={(inputValue, option) =>
+                  option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                }
+              />
             </div>
 
             <div style={{ display: this.state.roomdis }}>

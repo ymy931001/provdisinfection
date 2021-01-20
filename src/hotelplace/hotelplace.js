@@ -199,7 +199,7 @@ class App extends React.Component {
               resultno: 'inline-block',
             })
           }
-          if (this.state.detection.result === 2) {
+          if (this.state.detection.result === 0 || this.state.detection.result === 2 || this.state.detection.result === 3) {
             this.setState({
               resultyes: 'inline-block',
               resultno: 'none',
