@@ -10,7 +10,7 @@ import {
   Input,
   message,
   DatePicker,
-  Pagination,
+  Pagination,AutoComplete
 } from "antd";
 import {
   readinglist,
@@ -68,6 +68,7 @@ class App extends React.Component {
       devicedis: 'none',
       pageNum: 1,
       pageNumSize: 10,
+      hoteloptions:[],
       readouts: [
         // //   {
         // //   title: 'MAC',
@@ -448,18 +449,22 @@ class App extends React.Component {
     });
 
     var arr = []
+    var newarr = {}
     hotellist().then(res => {
-      console.log(res.data.data)
+      console.log(res.data)
       for (var i in res.data.data) {
-        arr.push({
-          'id': i,
-          'value': res.data.data[i]
-        })
+        arr.push(res.data.data[i])
+        newarr[i] = res.data.data[i]
       }
+      console.log(newarr)
       this.setState({
-        sitelist: arr
+        hoteloptions: arr,
+        sitelist: newarr,
+      }, function () {
+        console.log(this.state.sitelist)
       });
     });
+
   }
 
   onChange = (date, dateString) => {
@@ -474,30 +479,38 @@ class App extends React.Component {
     })
   }
 
+
   //网点选择
   handleChanges = (value, b) => {
-    console.log(value, b.props.children);
-    this.setState({
-      siteid: value,
-    }, function () {
-      roomlist([
-        this.state.siteid
-      ]).then(res => {
-        if (res.data && res.data.message === "success") {
-          var arr = []
-          for (var i in res.data.data) {
-            arr.push({
-              'id': res.data.data[i].id,
-              'name': res.data.data[i].name,
-            })
-          }
-          this.setState({
-            roomlist: arr
-          })
-        }
-      });
-    })
+    console.log(value, b);
+    const { sitelist } = this.state
+    for (var i in sitelist) {
+      if (sitelist[i] === value) {
+        this.setState({
+          siteid: i,
+        }, function () {
+          roomlist([
+            this.state.siteid
+          ]).then(res => {
+            if (res.data && res.data.message === "success") {
+              var arr = []
+              for (var i in res.data.data) {
+                arr.push({
+                  'id': res.data.data[i].id,
+                  'name': res.data.data[i].name,
+                })
+              }
+              this.setState({
+                roomlist: arr
+              })
+            }
+          });
+        })
+      }
+    }
+
   }
+
 
   //房间选择
   roomchange = (value) => {
@@ -1160,7 +1173,7 @@ class App extends React.Component {
 
 
   render() {
-    const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
+    // const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
     const roomoption = this.state.roomlist.map((province) => <Option key={province.id}>{province.name}</Option>);
     // const borardtypelist = this.state.boardlist.map((province) => <Option key={province.type}>{province.desc}</Option>);
     const alldevicelist = this.state.devicelists.map((province) => <Option key={province.imei} name={province.id}>
@@ -1377,13 +1390,22 @@ class App extends React.Component {
                 </div>
                 <div>
                   <span>所属酒店：</span>
-                  <Select
+                  {/* <Select
                     style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
                     placeholder="请选择所属酒店"
                     onChange={this.handleChanges}
                   >
                     {prooptions}
-                  </Select>
+                  </Select> */}
+                  <AutoComplete
+                    style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+                    dataSource={this.state.hoteloptions}
+                    placeholder="请选择所属酒店"
+                    onChange={this.handleChanges}
+                    filterOption={(inputValue, option) =>
+                      option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                    }
+                  />
                 </div>
                 <div>
                   <span>所属房间：</span>
