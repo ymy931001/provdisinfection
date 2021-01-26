@@ -319,6 +319,10 @@ class App extends React.Component {
         {
           title: "设备状态",
           dataIndex: "onlineStatus",
+          filters: [
+            { text: "在线", value: true },
+            { text: "离线", value: false },
+          ],
           render: (text, record, index) => {
             if (text === true) {
               return (
