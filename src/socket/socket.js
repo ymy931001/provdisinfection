@@ -10,7 +10,7 @@ import {
   Input,
   message,
   DatePicker,
-  Pagination,AutoComplete
+  Pagination, AutoComplete
 } from "antd";
 import {
   readinglist,
@@ -68,7 +68,7 @@ class App extends React.Component {
       devicedis: 'none',
       pageNum: 1,
       pageNumSize: 10,
-      hoteloptions:[],
+      hoteloptions: [],
       readouts: [
         // //   {
         // //   title: 'MAC',
@@ -1176,6 +1176,14 @@ class App extends React.Component {
 
 
 
+  //数据导出
+  export = () => {
+    window.open("http://iva.terabits.cn:9090/board/getExcel?Authorization=" + localStorage.getItem('authorization') + "&onlineStatus=false", "_self")
+  }
+
+
+
+
   render() {
     // const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
     const roomoption = this.state.roomlist.map((province) => <Option key={province.id}>{province.name}</Option>);
@@ -1224,7 +1232,8 @@ class App extends React.Component {
                   onChange={this.keytext}
                 />
                 <Button type="primary" onClick={this.query}>查询</Button>
-                <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>、
+                <Button onClick={this.reset} style={{ marginLeft: '15px' }}>重置</Button>
+                <Button type="primary" onClick={this.export} style={{ marginLeft: '15px', display: this.state.typenone }}>离线数据导出</Button>
 
                 {/* <Button type="primary" style={{ marginLeft: '20px' }}>
                   <Link to="/app/withoutsocket">未绑定插座列表</Link>
