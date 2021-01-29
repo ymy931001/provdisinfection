@@ -204,38 +204,48 @@ class App extends React.Component {
           dataIndex: "streams",
           key: 'streams',
           render: (text, record, index) => {
-            if (record.onlinestatus === true) {
-              return (
-                <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  查看
-                </div>
-              )
-            } else {
-              return (
-                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  暂无
-                </div>
-              )
-            }
+            return (
+              <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                查看
+              </div>
+            )
+            // if (record.onlinestatus === true) {
+            //   return (
+            //     <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       查看
+            //     </div>
+            //   )
+            // } else {
+            //   return (
+            //     <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       暂无
+            //     </div>
+            //   )
+            // }
           }
         }, {
           title: "视频回放",
           dataIndex: "streams",
           key: 'streams',
           render: (text, record, index) => {
-            if (record.onlinestatus === true) {
-              return (
-                <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  查看
-                </div>
-              )
-            } else {
-              return (
-                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  暂无
-                </div>
-              )
-            }
+            return (
+              <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                查看
+              </div>
+            )
+            // if (record.onlinestatus === true) {
+            //   return (
+            //     <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       查看
+            //     </div>
+            //   )
+            // } else {
+            //   return (
+            //     <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       暂无
+            //     </div>
+            //   )
+            // }
           }
         },
         {
@@ -315,38 +325,48 @@ class App extends React.Component {
           dataIndex: "streams",
           key: 'streams',
           render: (text, record, index) => {
-            if (record.onlinestatus === true) {
-              return (
-                <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  查看
-                </div>
-              )
-            } else {
-              return (
-                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  暂无
-                </div>
-              )
-            }
+            return (
+              <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                查看
+              </div>
+            )
+            // if (record.onlinestatus === true) {
+            //   return (
+            //     <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       查看
+            //     </div>
+            //   )
+            // } else {
+            //   return (
+            //     <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       暂无
+            //     </div>
+            //   )
+            // }
           }
         }, {
           title: "视频回放",
           dataIndex: "streams",
           key: 'streams',
           render: (text, record, index) => {
-            if (record.onlinestatus === true) {
-              return (
-                <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  查看
-                </div>
-              )
-            } else {
-              return (
-                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  暂无
-                </div>
-              )
-            }
+            return (
+              <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                查看
+              </div>
+            )
+            // if (record.onlinestatus === true) {
+            //   return (
+            //     <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       查看
+            //     </div>
+            //   )
+            // } else {
+            //   return (
+            //     <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       暂无
+            //     </div>
+            //   )
+            // }
           }
         },
         // {
@@ -415,38 +435,48 @@ class App extends React.Component {
           dataIndex: "streams",
           key: 'streams',
           render: (text, record, index) => {
-            if (record.onlinestatus === true) {
-              return (
-                <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  查看
-                </div>
-              )
-            } else {
-              return (
-                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  暂无
-                </div>
-              )
-            }
+            return (
+              <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                查看
+              </div>
+            )
+            // if (record.onlinestatus === true) {
+            //   return (
+            //     <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       查看
+            //     </div>
+            //   )
+            // } else {
+            //   return (
+            //     <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       暂无
+            //     </div>
+            //   )
+            // }
           }
         }, {
           title: "视频回放",
           dataIndex: "streams",
           key: 'streams',
           render: (text, record, index) => {
-            if (record.onlinestatus === true) {
-              return (
-                <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  查看
-                </div>
-              )
-            } else {
-              return (
-                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  暂无
-                </div>
-              )
-            }
+            return (
+              <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                查看
+              </div>
+            )
+            // if (record.onlinestatus === true) {
+            //   return (
+            //     <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       查看
+            //     </div>
+            //   )
+            // } else {
+            //   return (
+            //     <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       暂无
+            //     </div>
+            //   )
+            // }
           }
         },
         {
@@ -508,38 +538,48 @@ class App extends React.Component {
           dataIndex: "streams",
           key: 'streams',
           render: (text, record, index) => {
-            if (record.onlinestatus === true) {
-              return (
-                <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  查看
-                </div>
-              )
-            } else {
-              return (
-                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  暂无
-                </div>
-              )
-            }
+            return (
+              <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                查看
+              </div>
+            )
+            // if (record.onlinestatus === true) {
+            //   return (
+            //     <div onClick={() => this.findvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       查看
+            //     </div>
+            //   )
+            // } else {
+            //   return (
+            //     <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       暂无
+            //     </div>
+            //   )
+            // }
           }
         }, {
           title: "视频回放",
           dataIndex: "streams",
           key: 'streams',
           render: (text, record, index) => {
-            if (record.onlinestatus === true) {
-              return (
-                <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  查看
-                </div>
-              )
-            } else {
-              return (
-                <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
-                  暂无
-                </div>
-              )
-            }
+            return (
+              <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+                查看
+              </div>
+            )
+            // if (record.onlinestatus === true) {
+            //   return (
+            //     <div onClick={() => this.backvideo(text, record, index)} style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       查看
+            //     </div>
+            //   )
+            // } else {
+            //   return (
+            //     <div style={{ color: '#40a9ff', cursor: 'pointer' }} >
+            //       暂无
+            //     </div>
+            //   )
+            // }
           }
         }
         , {
