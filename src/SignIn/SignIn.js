@@ -13,11 +13,12 @@ class SignIn extends Component {
 
   componentwillMount = () => {
     localStorage.clear();
-
-
   }
   componentDidMount = () => {
-
+    localStorage.removeItem('selectarea');
+    localStorage.removeItem('cityid');
+    localStorage.removeItem('areaid');
+    localStorage.removeItem('siteId');
     let url = window.location.href;
     url = url.split('=', 2);
     if (url[1] === "1210") {
@@ -123,6 +124,7 @@ class SignIn extends Component {
           localStorage.setItem("lastLogin", res.data.data.lastLogin);
           localStorage.setItem("rolename", arrs.join(','));
           localStorage.removeItem('addresslist');
+          localStorage.removeItem('site');
           localStorage.setItem("type", arr);
           localStorage.setItem("areaId", res.data.data.areaId);
           localStorage.setItem("currenttime", new Date().getTime());
