@@ -5,7 +5,7 @@ import {
   Button,
   Input,
   message,
-  Select,
+  Select,AutoComplete
 } from "antd";
 import {
   adduser,
@@ -33,7 +33,8 @@ class App extends React.Component {
     userdis: 'none',
     superdis: 'none',
     arealist: [],
-    areaid: []
+    areaid: [],
+    hoteloptions: [],
   };
 
   componentWillMount() {
@@ -62,16 +63,19 @@ class App extends React.Component {
 
 
     var arr = []
+    var newarr = {}
     hotellist().then(res => {
-      console.log(res.data.data)
+      console.log(res.data)
       for (var i in res.data.data) {
-        arr.push({
-          'id': i,
-          'value': res.data.data[i]
-        })
+        arr.push(res.data.data[i])
+        newarr[i] = res.data.data[i]
       }
+      console.log(newarr)
       this.setState({
-        sitelist: arr
+        hoteloptions: arr,
+        sitelist: newarr,
+      }, function () {
+        console.log(this.state.sitelist)
       });
     });
 
@@ -117,12 +121,27 @@ class App extends React.Component {
     // }
   }
 
-  handleChanges = (value) => {
-    console.log(value);
-    this.setState({
-      siteid: value
-    })
-  }
+  // handleChanges = (value) => {
+  //   console.log(value);
+  //   this.setState({
+  //     siteid: value
+  //   })
+  // }
+
+
+    //网点选择
+    handleChanges = (value, b) => {
+      console.log(value, b);
+      const { sitelist } = this.state
+      for (var i in sitelist) {
+        if (sitelist[i] === value) {
+          this.setState({
+            siteid: i,
+          })
+        }
+      }
+  
+    }
 
   areaChanges = (value) => {
     console.log(value);
@@ -239,7 +258,7 @@ class App extends React.Component {
 
 
   render() {
-    const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
+    // const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
     const usertypeions = this.state.rolelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
     // const arealistions = this.state.arealist.map((province) => <Option key={province.id}  >{province.name}</Option>);
 
@@ -300,14 +319,24 @@ class App extends React.Component {
               </div> */}
               <div className='addinput' style={{ display: this.state.userdis }}>
                 <span>所属酒店：</span>
-                <Select
+                {/* <Select
                   style={{ width: '60%', marginRight: '20px' }}
                   placeholder="请选择所属酒店"
                   onChange={this.handleChanges}
                 >
                   {prooptions}
-                </Select>
+                </Select> */}
+                <AutoComplete
+                  style={{ width: '60%' }}
+                  dataSource={this.state.hoteloptions}
+                  placeholder="请选择所属酒店"
+                  onChange={this.handleChanges}
+                  filterOption={(inputValue, option) =>
+                    option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                  }
+                />
               </div>
+
               <div className='addinput'>
                 <span>备注：</span>
                 <TextArea rows={4} style={{ width: '60%', verticalAlign: 'top' }}
