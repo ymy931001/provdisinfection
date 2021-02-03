@@ -1252,6 +1252,7 @@ class App extends React.Component {
             mask={false}
           >
             <Transfer
+              showSearch
               dataSource={this.state.mockData}
               listStyle={{
                 width: 300,
