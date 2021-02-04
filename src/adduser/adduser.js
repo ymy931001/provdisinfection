@@ -140,7 +140,6 @@ class App extends React.Component {
           })
         }
       }
-  
     }
 
   areaChanges = (value) => {

@@ -14,7 +14,7 @@ import {
   Form,
   Tabs,
   Cascader,
-  Tree
+  Tree, AutoComplete
 } from "antd";
 import {
   userlist,
@@ -26,7 +26,7 @@ import {
   getallRegion,
   putuser,
   deleteuser,
-  puthoteluser, getregion, getUrlWithOutCode
+  puthoteluser, getregion, getUrlWithOutCode, getPassword, changePassword
 } from "../axios";
 import "./user.css";
 import { Link } from 'react-router-dom';
@@ -125,6 +125,7 @@ class App extends React.Component {
       arealist: [],
       sitelists: [],
       permissionlist: [],
+      hoteloptions: [],
       deviceList: [],
       typelist: [{
         'id': '0',
@@ -180,23 +181,44 @@ class App extends React.Component {
 
     this.getMock();
 
+
+    var arr = []
+    var newarr = {}
     hotellist().then(res => {
-      console.log(res.data.data)
-      var arr = []
+      console.log(res.data)
       for (var i in res.data.data) {
-        arr.push({
-          i: res.data.data[i]
-        })
+        arr.push(res.data.data[i])
+        newarr[i] = res.data.data[i]
       }
-      arr.push({
-        '无': undefined
-      })
-      console.log(arr)
+      console.log(newarr)
       this.setState({
-        sitelist: res.data.data,
-        sitelists: arr,
+        hoteloptions: arr,
+        sitelist: newarr,
+      }, function () {
+        console.log(this.state.sitelist)
       });
     });
+
+
+    // hotellist().then(res => {
+    //   console.log(res.data.data)
+    //   var arr = []
+    //   for (var i in res.data.data) {
+    //     arr.push({
+    //       i: res.data.data[i]
+    //     })
+    //   }
+    //   arr.push({
+    //     '无': undefined
+    //   })
+    //   console.log(arr)
+    //   this.setState({
+    //     sitelist: res.data.data,
+    //     sitelists: arr,
+    //   });
+    // });
+
+
 
     getregion().then(res => {
       if (res.data && res.data.message === "success") {
@@ -395,23 +417,6 @@ class App extends React.Component {
 
   }
 
-  typeChange = (value) => {
-    console.log(value)
-    this.setState({
-      usertypeid: value
-    }, function () {
-      if (this.state.usertypeid === "2") {
-        this.setState({
-          hotllists: JSON.parse(localStorage.getItem('sitelist'))
-        })
-      } else {
-        this.setState({
-          siteid: undefined,
-          hotllists: []
-        })
-      }
-    })
-  }
 
   hotelChange = (value) => {
     console.log(value)
@@ -426,6 +431,8 @@ class App extends React.Component {
       menuvisible: false,
       deletevisible: false,
       codevisible: false,
+      passvisible: false,
+      changevisible: false,
     })
   }
 
@@ -608,59 +615,6 @@ class App extends React.Component {
     });
   }
 
-  //酒店管理员编辑
-  saves(form, key, text) {
-    form.validateFields((error, row) => {
-      if (error) {
-        return;
-      }
-      const newData = [...this.state.hoteluserlist];
-      const index = newData.findIndex(item => key === item.key);
-      console.log(newData[index])
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
-        this.setState({
-          hoteluserlist: newData, editingKey: '',
-          adminname: newData[index].name,
-          username: newData[index].username,
-          phone: newData[index].phone,
-          password: newData[index].password,
-          mail: newData[index].mail,
-        }, () => {
-          puthoteluser([
-            this.state.userid,
-            this.state.adminname,
-            this.state.phone,
-            this.state.mail,
-          ]).then(res => {
-            if (res.data && res.data.message === 'success') {
-              message.success("信息修改成功");
-              userlist([
-                4
-              ]).then(res => {
-                if (res.data && res.data.message === 'success') {
-                  this.setState({
-                    hoteluserlist: res.data.data,
-                  });
-                }
-              });
-            }
-          });
-
-        });
-
-      } else {
-        newData.push(this.state.areauserlist);
-        this.setState({ areauserlist: newData, editingKey: '' });
-      }
-    });
-  }
-
-
   renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {
@@ -731,6 +685,10 @@ class App extends React.Component {
       }
     });
   }
+
+
+
+
 
   //修改权限
   saveOk = () => {
@@ -803,6 +761,123 @@ class App extends React.Component {
     });
   }
 
+  //查看密码
+  showpassword = (text, index, record) => {
+    console.log(record.id)
+    getPassword([
+      record.id
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        this.setState({
+          passvisible: true,
+          password: res.data.data,
+          adminid: record.id
+        })
+      }
+    });
+  }
+
+
+
+  //修改密码
+  passchange = (e) => {
+    this.setState({
+      password: e.target.value
+    })
+  }
+
+  //修改密码确认
+  passOk = () => {
+    changePassword([
+      this.state.adminid,
+      this.state.password
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        message.success('修改成功')
+        this.setState({
+          passvisible: false,
+        })
+      }
+    });
+  }
+
+  //酒店管理员修改
+  hoteledit = (text, record, index) => {
+    console.log(record)
+    this.setState({
+      changevisible: true,
+      adminid: record.id,
+      adminname: record.name,
+      adminphone: record.phone,
+      adminemail: record.mail,
+      siteName: record.siteName,
+      siteid: record.siteId,
+    })
+  }
+
+  //酒店管理员信息修改确认
+  changeOk = () => {
+    puthoteluser([
+      this.state.adminid,
+      this.state.adminname,
+      this.state.phone,
+      this.state.mail,
+      this.state.siteid,
+    ]).then(res => {
+      if (res.data && res.data.message === 'success') {
+        message.success("信息修改成功");
+        this.setState({
+          changevisible: false,
+        })
+        userlist([
+          4
+        ]).then(res => {
+          if (res.data && res.data.message === 'success') {
+            this.setState({
+              hoteluserlist: res.data.data,
+            });
+          }
+        });
+      }
+    });
+  }
+
+  //姓名修改
+  adminnamechange = (e) => {
+    this.setState({
+      adminname: e.target.value
+    })
+  }
+
+  //联系方式修改
+  adminphonechange = (e) => {
+    this.setState({
+      adminphone: e.target.value
+    })
+  }
+
+  //邮箱修改
+  adminemailchange = (e) => {
+    this.setState({
+      adminemail: e.target.value
+    })
+  }
+
+  //所属酒店选择
+  handleChanges = (value, b) => {
+    console.log(value, b);
+    this.setState({
+      siteName: value,
+    })
+    const { sitelist } = this.state
+    for (var i in sitelist) {
+      if (sitelist[i] === value) {
+        this.setState({
+          siteid: i,
+        })
+      }
+    }
+  }
 
   render() {
     const components = {
@@ -909,6 +984,19 @@ class App extends React.Component {
           }
 
         }
+      },
+      {
+        title: "密码",
+        dataIndex: "id",
+        render: (text, record, index) => {
+          return (
+            <div>
+              <span onClick={() => this.showpassword(text, index, record)} style={{ color: 'blue', cursor: 'pointer' }}>
+                查看
+              </span>
+            </div>
+          );
+        }
       }
       ,
       // {
@@ -1011,12 +1099,10 @@ class App extends React.Component {
       {
         title: "姓名",
         dataIndex: "name",
-        editable: true,
       },
       {
         title: "联系方式",
         dataIndex: "phone",
-        editable: true,
         render: (text) => {
           return (
             <div>
@@ -1028,7 +1114,6 @@ class App extends React.Component {
       {
         title: "邮箱",
         dataIndex: "mail",
-        editable: true,
         render: (text) => {
           if (text === null || text === "" || text === undefined) {
             return (
@@ -1047,38 +1132,29 @@ class App extends React.Component {
         }
       }
       , {
+        title: "密码",
+        dataIndex: "id",
+        render: (text, record, index) => {
+          return (
+            <div>
+              <span onClick={() => this.showpassword(text, index, record)} style={{ color: 'blue', cursor: 'pointer' }}>
+                查看
+              </span>
+            </div>
+          );
+        }
+      }
+      , {
         title: "所属酒店",
         dataIndex: "siteName",
         render: (text, record, index) => {
-          const editable = this.isEditing(record);
-          if (text === null) {
-            return (
-              <div>
-                {editable ? (
-                  <Select value={this.state.sitelist[this.state.siteid]} onChange={this.hotelChange} style={{ width: '250px' }} placeholder="请选择所属酒店" >
-                    {typeOptions}
-                  </Select>
-                ) : (
-                    <span>无</span>
-                  )
-                }</div>
-            )
-          } else {
-            return (
-              <div>
-                {editable ? (
-                  <Select value={this.state.sitelist[this.state.siteid]} onChange={this.hotelChange} style={{ width: '250px' }} >
-                    {typeOptions}
-                  </Select>
-                ) : (
-                    <span>
-                      {text}
-                    </span>
-                  )
-                }
-              </div>
-            )
-          }
+          return (
+            <div>
+              <span>
+                {text}
+              </span>
+            </div>
+          );
         }
       },
       {
@@ -1089,32 +1165,11 @@ class App extends React.Component {
         title: '操作',
         dataIndex: 'id',
         render: (text, record, index) => {
-          const editable = this.isEditing(record);
           return (
             <div>
-              {editable ? (
-                <span>
-                  <EditableContext.Consumer>
-                    {form => (
-                      <a
-
-                        onClick={() => this.saves(form, record.key, text)}
-                        style={{ marginRight: 8 }}
-                      >
-                        保存
-                      </a>
-                    )}
-                  </EditableContext.Consumer>
-                  <Popconfirm
-                    title="确认要取消吗?"
-                    onConfirm={() => this.cancel(record.key, text)}
-                  >
-                    <a>取消</a>
-                  </Popconfirm>
-                </span>
-              ) : (
-                  <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
-                )}
+              <span>
+                <a onClick={() => this.hoteledit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
+              </span>
               <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
                 <a><img src={require('./delete.png')} alt="" /></a>
               </span>
@@ -1273,6 +1328,44 @@ class App extends React.Component {
             onCancel={this.handleCancel}
           >
             您确认要删除该用户吗？
+          </Modal>
+          <Modal
+            title="修改密码"
+            visible={this.state.passvisible}
+            onOk={this.passOk}
+            width="400px"
+            okText="确认"
+            centered
+            onCancel={this.handleCancel}
+          >
+            <Input placeholder="请输入密码" style={{ width: '100%' }} value={this.state.password} onChange={this.passchange} />
+          </Modal>
+          <Modal
+            title="修改信息"
+            visible={this.state.changevisible}
+            onOk={this.changeOk}
+            width="400px"
+            okText="确认"
+            centered
+            onCancel={this.handleCancel}
+          >
+            姓名：
+            <Input placeholder="请输入姓名" style={{ width: '100%', marginTop: '10px', marginBottom: '10px' }} value={this.state.adminname} onChange={this.adminnamechange} />
+            联系方式：
+            <Input placeholder="请输入联系方式" style={{ width: '100%', marginTop: '10px', marginBottom: '10px' }} value={this.state.adminphone} onChange={this.adminphonechange} />
+            邮箱：
+            <Input placeholder="请输入邮箱" style={{ width: '100%', marginTop: '10px', marginBottom: '10px' }} value={this.state.adminemail} onChange={this.adminemailchange} />
+            所属酒店：
+            <AutoComplete
+              style={{ width: '100%', marginTop: '10px', marginBottom: '10px' }}
+              dataSource={this.state.hoteloptions}
+              placeholder="请选择所属酒店"
+              onChange={this.handleChanges}
+              value={this.state.siteName}
+              filterOption={(inputValue, option) =>
+                option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+              }
+            />
           </Modal>
           <Modal
             title="免登录地址"

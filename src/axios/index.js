@@ -242,6 +242,7 @@ export const puthoteluser = params =>
     name: params[1],
     phone: params[2],
     mail: params[3],
+    siteId: params[4],
   });
 
 
@@ -1552,6 +1553,18 @@ export const sitedetail = params =>
     siteId: params[0],
   });
 
+//获取用户密码
+export const getPassword = params =>
+  http.put(config.requestIp + "/admin/getPassword", {
+    adminId: params[0],
+  });
+
+//修改用户密码
+export const changePassword = params =>
+  http.put(config.requestIp + "/admin/changePassword", {
+    adminId: params[0],
+    password: params[1],
+  });
 
 
 
