@@ -66,6 +66,8 @@ class App extends React.Component {
       begintime: year + '-' + month + '-' + day,
       devicelists: [],
       devicedis: 'none',
+      tydis: 'none',
+      yddis: 'none',
       pageNum: 1,
       pageNumSize: 10,
       hoteloptions: [],
@@ -376,8 +378,15 @@ class App extends React.Component {
       "board"
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        var list = JSON.parse(res.data.data)
+        var arr = []
+        for (var i in list) {
+          if (list[i].desc === "移动" || list[i].desc === "涂鸦") {
+            arr.push(list[i])
+          }
+        }
         this.setState({
-          boardlist: JSON.parse(res.data.data)
+          boardlist: arr
         })
       }
     });
@@ -852,7 +861,7 @@ class App extends React.Component {
           arr.push({
             "roomid": this.state.roomid,
             "threshold": this.state.threshold,
-            "type": "3",
+            "type": this.state.sockettype,
             "imei": this.state.socketid[i],
           })
         } else {
@@ -860,7 +869,7 @@ class App extends React.Component {
             "mac": this.state.macvalue.split(',')[i],
             "roomid": this.state.roomid,
             "threshold": this.state.threshold,
-            "type": "3",
+            "type": this.state.sockettype,
             "imei": this.state.socketid[i],
           })
         }
@@ -932,36 +941,37 @@ class App extends React.Component {
     })
   }
 
-  // //插座类型选择
-  // typechange = (value) => {
-  //   console.log(value)
-  //   this.setState({
-  //     sockettype: value
-  //   }, function () {
-  //     if (this.state.sockettype === "3") {
-  //       this.setState({
-  //         devicedis: 'block'
-  //       })
-  //     } else {
-  //       this.setState({
-  //         devicedis: 'none'
-  //       })
-  //     }
-  //   })
-  // }
+  //插座类型选择
+  typechange = (value) => {
+    console.log(value)
+    this.setState({
+      sockettype: value
+    }, function () {
+      this.setState({
+        tydis: this.state.sockettype === "2" ? 'block' : "none",
+        yddis: this.state.sockettype === "3" ? 'block' : "none",
+      })
+    })
+  }
 
   //设备选择
-  socketchange = (value, b) => {
-    console.log(value)
-    console.log(b)
-    var arr = []
-    for (var i in b) {
-      arr.push(b[i].props.name)
+  socketchange = (e, b) => {
+    if (this.state.sockettype === "3") {
+      var arr = []
+      for (var i in b) {
+        arr.push(b[i].props.name)
+      }
+      this.setState({
+        socketid: e,
+        macvalue: arr.join(',')
+      })
     }
-    this.setState({
-      socketid: value,
-      macvalue: arr.join(',')
-    })
+    if (this.state.sockettype === "2") {
+      this.setState({
+        socketid: e.target.value,
+      })
+    }
+
   }
 
   //设备输入
@@ -1187,7 +1197,7 @@ class App extends React.Component {
   render() {
     // const prooptions = this.state.sitelist.map((province) => <Option key={province.id}  >{province.value}</Option>);
     const roomoption = this.state.roomlist.map((province) => <Option key={province.id}>{province.name}</Option>);
-    // const borardtypelist = this.state.boardlist.map((province) => <Option key={province.type}>{province.desc}</Option>);
+    const borardtypelist = this.state.boardlist.map((province) => <Option key={province.type}>{province.desc}</Option>);
     const alldevicelist = this.state.devicelists.map((province) => <Option key={province.imei} name={province.id}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
@@ -1363,7 +1373,7 @@ class App extends React.Component {
               mask={false}
             >
               <div>
-                {/* <span>插座类型：</span>
+                <span>插座类型：</span>
                 <Select
                   style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
                   placeholder="请选择连接方式"
@@ -1371,8 +1381,17 @@ class App extends React.Component {
                   value={this.state.sockettype}
                 >
                   {borardtypelist}
-                </Select> */}
-                <div>
+                </Select>
+                <div style={{ display: this.state.tydis }}>
+                  <span>设备ID：</span>
+                  <Input placeholder="请输入设备ID"
+                    style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
+                    autoComplete="off"
+                    onChange={this.socketchange}
+                    value={this.state.socketid}
+                  />
+                </div>
+                <div style={{ display: this.state.yddis }}>
                   <span>IMEI：</span>
                   <Select
                     style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
@@ -1393,8 +1412,8 @@ class App extends React.Component {
                   </Select>
                 </div>
                 <div>
-                  <span>额定功率：</span>
-                  <Input placeholder="请输入额定功率"
+                  <span>上报阈值：</span>
+                  <Input placeholder="请输入上报阈值"
                     style={{ width: '100%', marginBottom: "10px", marginTop: '10px' }}
                     autoComplete="off"
                     onChange={this.threshold}
