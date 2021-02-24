@@ -855,24 +855,24 @@ class App extends React.Component {
     } else if (!this.state.roomid) {
       message.error('请选择所属房间')
     } else {
-      var arr = []
-      for (var i in this.state.socketid) {
-        if (this.state.macvalue === undefined || this.state.macvalue === "" || this.state.macvalue === null) {
+      if (this.state.sockettype === "3") {
+        var arr = []
+        for (var i in this.state.socketid) {
           arr.push({
-            "roomid": this.state.roomid,
-            "threshold": this.state.threshold,
-            "type": this.state.sockettype,
-            "imei": this.state.socketid[i],
-          })
-        } else {
-          arr.push({
-            "mac": this.state.macvalue.split(',')[i],
             "roomid": this.state.roomid,
             "threshold": this.state.threshold,
             "type": this.state.sockettype,
             "imei": this.state.socketid[i],
           })
         }
+      } else {
+        var arr = []
+        arr.push({
+          "mac": this.state.socketid,
+          "roomid": this.state.roomid,
+          "threshold": this.state.threshold,
+          "type": this.state.sockettype,
+        })
       }
 
 
