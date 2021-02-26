@@ -796,7 +796,7 @@ class App extends React.Component {
           }
         }
       }, {
-        title: "处理时长",
+        title: "报警时长",
         dataIndex: "duration",
         // sorter: (a, b) => a.duration - b.duration,
         render: (text, record, index) => {
@@ -819,19 +819,24 @@ class App extends React.Component {
         title: "处理时间",
         dataIndex: "date",
         render: (text, record, index) => {
-          if (text === null || !record.duration) {
-            return (
-              <div style={{ color: 'green' }}>
-                {moment(new Date(record.date)).format('YYYY-MM-DD')}
-              </div>
-            )
-          } else {
-            return (
-              <div style={{ color: 'green' }}>
-                {moment(new Date(text) - 3600 * 24 * 1000 * record.duration).format('YYYY-MM-DD')}
-              </div>
-            )
-          }
+          return (
+            <div style={{ color: 'green' }}>
+            {moment(new Date(record.gmtmodify)).format('YYYY-MM-DD')}
+            </div>
+          )
+          // if (text === null || !record.duration) {
+          //   return (
+          //     <div style={{ color: 'green' }}>
+          //       {moment(new Date(record.date)).format('YYYY-MM-DD')}
+          //     </div>
+          //   )
+          // } else {
+          //   return (
+          //     <div style={{ color: 'green' }}>
+          //       {moment(new Date(text) - 3600 * 24 * 1000 * record.duration).format('YYYY-MM-DD')}
+          //     </div>
+          //   )
+          // }
         }
       }, {
         title: "异常说明",
