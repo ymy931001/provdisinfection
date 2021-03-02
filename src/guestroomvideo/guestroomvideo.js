@@ -80,6 +80,42 @@ class App extends React.Component {
       {
         title: "摄像头名称",
         dataIndex: "cameraName",
+        render: (text, record, index) => {
+          if (text === undefined || text === null) {
+            return (
+              <div>
+                无
+              </div>
+            )
+          } else {
+            if (text === "1668e896b2b64a17a7161f9bb59b949d") {
+              return (
+                <div>
+                  嵊泗华吉酒店1楼(E63953636)_1
+                </div>
+              )
+            } else if (text === "0a8b315cfbc44fd29aa2fb4de2b0b29b") {
+              return (
+                <div>
+                  嵊泗安梵客服中心2楼 (E63953980)_1
+                </div>
+              )
+            } else if (text === "72ae391507834233b56c3cfaa8369871") {
+              return (
+                <div>
+                  嵊泗海景9楼客房部(E63953571)_1
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  {text}
+                </div>
+              )
+            }
+          }
+
+        }
       },
       // {
       //   title: "摄像头名称",

@@ -1416,9 +1416,10 @@ class App extends React.Component {
     console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({
       selectedRowKeys,
-      indexCode: b[0].cameraIndexCode
+      indexCode: b[0].cameraIndexCode,
+      cameraname: b[0].cameraName,
     }, function () {
-      console.log(this.state.indexCode)
+      console.log(this.state.cameraname)
     });
   };
 
@@ -1433,7 +1434,6 @@ class App extends React.Component {
   //摄像头列表选择
   submitcamera = () => {
     this.setState({
-      cameraname: this.state.selectedRowKeys.join(','),
       iscvisible: false,
     })
   }
