@@ -157,7 +157,7 @@ class App extends React.Component {
     let email = document.getElementById('email').value;
     // var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
     var reg = /^([a-zA-Z]|[0-9])(\w)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
-    var telrule = /^[1][3,4,5,7,8][0-9]{9}$/;
+    var telrule = /^[1][3,4,5,7,8,9][0-9]{9}$/;
     var namerule = /^[\u4e00-\u9fa5]+$/;
     if (!namerule.test(realname)) {
       message.error('请输入您的真实姓名');
