@@ -17,7 +17,7 @@
 }
 
 .ant-layout-header{
-  background: url(http://maoyang.terabits.cn/headers.png) no-repeat  !important;
+  background: url(https://mainimg.terabits.cn/headers.png) no-repeat  !important;
   /* background: #1C2B36; */
   background-size:cover !important;
   color:#fff !important;
@@ -35,13 +35,13 @@
 }
 
 .ant-layout-sider-children{
-  background: #727980 url(http://maoyang.terabits.cn/sidebar.png) no-repeat ;
+  background: #727980 url(https://mainimg.terabits.cn/sidebar.png) no-repeat ;
   /* background: #1C2B36; */
   /* background-size: contain  !important; */
 }
 
 .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected{
-background: url(http://maoyang.terabits.cn/select.png) no-repeat;
+background: url(https://mainimg.terabits.cn/select.png) no-repeat;
 color:white;
 }
 
@@ -57,12 +57,12 @@ color:white;
 
 
 .ant-menu-dark.ant-menu-inline, .ant-menu-dark.ant-menu-vertical, .ant-menu-dark.ant-menu-vertical-left, .ant-menu-dark.ant-menu-vertical-right{
-  background: url(http://maoyang.terabits.cn/sidebar.png) no-repeat;
+  background: url(https://mainimg.terabits.cn/sidebar.png) no-repeat;
 }
 
 .ant-menu-dark .ant-menu-inline.ant-menu-sub{
   box-shadow: none;
-  background: url(http://maoyang.terabits.cn/sidebar.png) no-repeat;
+  background: url(https://mainimg.terabits.cn/sidebar.png) no-repeat;
 }
 
 .ant-menu-dark .ant-menu-item-selected span{
@@ -100,11 +100,11 @@ color:white;
 
 
 /* .ant-menu-dark .ant-menu-item:hover{
-  background: url(http://maoyang.terabits.cn/sidebar.png) no-repeat;
+  background: url(https://mainimg.terabits.cn/sidebar.png) no-repeat;
 }
 
 .ant-menu-dark .ant-menu-item-selecte:hover{
-  background: url(http://maoyang.terabits.cn/select.png) no-repeat;
+  background: url(https://mainimg.terabits.cn/select.png) no-repeat;
 } */
 
 .ant-layout-content{
