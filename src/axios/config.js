@@ -7,7 +7,7 @@
 // export const requestIp = "http://192.168.1.94:9090";
 // export const requestIp = "http://192.168.3.21:9090";
 // export const requestIp = "http://2695627dm6.qicp.vip";
-export const requestIp = "http://iva.terabits.cn:9090";
+export const requestIp = "https://zjiva.terabits.cn:9091";
 // export const requestIp = "http://47.110.230.84:9090";
 
 
