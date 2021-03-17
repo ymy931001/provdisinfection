@@ -1397,7 +1397,7 @@ class App extends React.Component {
       this.state.iscplatformid,
       keys.join(',')
     ]).then(res => {
-      if (res.data && res.data.msg === "SUCCESS") {
+      if (res.data && res.data.code === "0") {
         for (var i in res.data.data.list) {
           res.data.data.list[i].key = res.data.data.list[i].cameraIndexCode
         }
