@@ -178,11 +178,11 @@ class App extends React.Component {
         dataIndex: "siteName",
         render: (text, record, index) => {
           return (
-            <div>
+            <span>
               <a onClick={() => this.findhotel(text, record, index)} style={{ color: '#666' }}>
                 {text}
               </a>
-            </div>
+            </span>
           )
         }
       },
@@ -410,6 +410,37 @@ class App extends React.Component {
       this.state.result
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        let arr = res.data.data.detectionVOList
+        for (var i in arr) {
+          if (arr[i].videoAddress && arr[i].videoAddress.indexOf('{') !== -1) {
+            var newarr = []
+            for (var j in JSON.parse(arr[i].videoAddress)) {
+              var videoAddress = JSON.parse(arr[i].videoAddress)[j]
+              var pictureAddress = JSON.parse(arr[i].pictureAddress)[j]
+              newarr.push({
+                "id": arr[i].id,
+                "videoAddress": JSON.parse(arr[i].videoAddress)[j],
+                "pictureAddress": JSON.parse(arr[i].pictureAddress)[j],
+                "siteName": arr[i].siteName,
+                "cameraid": j,
+                "name": arr[i].name,
+                "date": arr[i].date,
+                "result": arr[i].result,
+              })
+            }
+            if (newarr.length > 1) {
+              res.data.data.detectionVOList[i].children = newarr
+              res.data.data.detectionVOList[i].videoAddress = null
+              res.data.data.detectionVOList[i].pictureAddress = null
+            } else {
+              res.data.data.detectionVOList[i].videoAddress = videoAddress
+              res.data.data.detectionVOList[i].pictureAddress = pictureAddress
+            }
+          } else {
+
+          }
+        }
+        console.log(res.data.data.detectionVOList)
         if (res.data.data === null) {
           this.setState({
             videoListDataSource: []
@@ -454,30 +485,31 @@ class App extends React.Component {
       keytext: text,
       siteId: record.siteId,
     }, function () {
-      newdetectionsearch([
-        1,
-        this.state.pageNumSize,
-        null,
-        null,
-        this.state.siteId,
-        this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
-        this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
-        text,
-        this.state.result,
-      ]).then(res => {
-        if (res.data && res.data.message === "success") {
-          if (res.data.data === null) {
-            this.setState({
-              videoListDataSource: []
-            })
-          } else {
-            this.setState({
-              videoListDataSource: res.data.data.detectionVOList,
-              total: res.data.data.total,
-            })
-          }
-        }
-      })
+      this.detectionService()
+      // newdetectionsearch([
+      //   1,
+      //   10,
+      //   null,
+      //   null,
+      //   this.state.siteId,
+      //   this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      //   this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      //   text,
+      //   this.state.result,
+      // ]).then(res => {
+      //   if (res.data && res.data.message === "success") {
+      //     if (res.data.data === null) {
+      //       this.setState({
+      //         videoListDataSource: []
+      //       })
+      //     } else {
+      //       this.setState({
+      //         videoListDataSource: res.data.data.detectionVOList,
+      //         total: res.data.data.total,
+      //       })
+      //     }
+      //   }
+      // })
     })
   }
 
@@ -486,30 +518,31 @@ class App extends React.Component {
     this.setState({
       siteId: record.siteId,
     }, function () {
-      newdetectionsearch([
-        1,
-        this.state.pageNumSize,
-        null,
-        null,
-        this.state.siteId,
-        this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
-        this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
-        this.state.keytext,
-        this.state.result
-      ]).then(res => {
-        if (res.data && res.data.message === "success") {
-          if (res.data.data === null) {
-            this.setState({
-              videoListDataSource: []
-            })
-          } else {
-            this.setState({
-              videoListDataSource: res.data.data.detectionVOList,
-              total: res.data.data.total,
-            })
-          }
-        }
-      })
+      this.detectionService()
+      // newdetectionsearch([
+      //   1,
+      //   10,
+      //   null,
+      //   null,
+      //   this.state.siteId,
+      //   this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      //   this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      //   this.state.keytext,
+      //   this.state.result
+      // ]).then(res => {
+      //   if (res.data && res.data.message === "success") {
+      //     if (res.data.data === null) {
+      //       this.setState({
+      //         videoListDataSource: []
+      //       })
+      //     } else {
+      //       this.setState({
+      //         videoListDataSource: res.data.data.detectionVOList,
+      //         total: res.data.data.total,
+      //       })
+      //     }
+      //   }
+      // })
     })
   }
 
@@ -607,7 +640,7 @@ class App extends React.Component {
     }
     if (arr.length != 0) {  //eslint-disable-line
       this.setState({
-        lookimgurl: 'http://iva.terabits.cn/' + arr[0].file
+        lookimgurl: 'https://iva.terabits.cn/' + arr[0].file
       })
     } else {
       message.error('暂无图片')
@@ -655,41 +688,50 @@ class App extends React.Component {
 
 
   query = () => {
-    newdetectionsearch([
-      1,
-      10,
-      this.state.cityid === 'null' ? null : this.state.cityid,
-      this.state.areaid === 'null' ? null : this.state.areaid,
-      this.state.siteId === 'null' ? null : this.state.siteId,
-      this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
-      this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
-      this.state.keytext,
-      this.state.result
-    ]).then(res => {
-      if (res.data && res.data.message === "success") {
-        if (res.data.data === null) {
-          this.setState({
-            videoListDataSource: []
-          })
-        } else {
-          this.setState({
-            videoListDataSource: res.data.data.detectionVOList,
-            total: res.data.data.total,
-            pageNum: 1,
-          })
-        }
-      }
+    this.setState({
+      pageNum: 1,
+      pageNumSize: 10,
+    }, function () {
+      this.detectionService()
     })
+
+    // newdetectionsearch([
+    //   1,
+    //   10,
+    //   this.state.cityid === 'null' ? null : this.state.cityid,
+    //   this.state.areaid === 'null' ? null : this.state.areaid,
+    //   this.state.siteId === 'null' ? null : this.state.siteId,
+    //   this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+    //   this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+    //   this.state.keytext,
+    //   this.state.result
+    // ]).then(res => {
+    //   if (res.data && res.data.message === "success") {
+    //     if (res.data.data === null) {
+    //       this.setState({
+    //         videoListDataSource: []
+    //       })
+    //     } else {
+    //       this.setState({
+    //         videoListDataSource: res.data.data.detectionVOList,
+    //         total: res.data.data.total,
+    //         pageNum: 1,
+    //       })
+    //     }
+    //   }
+    // })
   }
 
   //工作时长详情
   state = { historyvisible: false }
   showhistory = (text, record, index) => {
-    console.log(record)
+
     detectionvison([
       record.id
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        // console.log( res.data.data.timepairs)
+
         var arr = []
         if (!res.data.data.worktime) {
           this.setState({
@@ -700,6 +742,26 @@ class App extends React.Component {
             peopledis: 'inline'
           })
         }
+
+        var timearr = []
+
+        if (!record.cameraid && !JSON.parse(res.data.data.timepairs).length) {
+          for (var i in JSON.parse(res.data.data.timepairs)) {
+            for (var j in JSON.parse(res.data.data.timepairs)[i]) {
+              timearr.push(JSON.parse(res.data.data.timepairs)[i][j])
+            }
+          }
+          res.data.data.timepairs = JSON.stringify(timearr)
+        } else {
+          for (var i in JSON.parse(res.data.data.timepairs)) {
+            if (i === record.cameraid) {
+              res.data.data.timepairs = JSON.stringify(JSON.parse(res.data.data.timepairs)[i])
+            }
+          }
+        }
+
+
+
 
         if (res.data.data.timepairs !== undefined) {
           for (var i in JSON.parse(res.data.data.timepairs)) {
@@ -831,30 +893,31 @@ class App extends React.Component {
       pageNum: page,
       pageNumSize: num,
     }, function () {
-      newdetectionsearch([
-        this.state.pageNum,
-        this.state.pageNumSize,
-        this.state.cityid === 'null' ? null : this.state.cityid,
-        this.state.areaid === 'null' ? null : this.state.areaid,
-        this.state.siteId === 'null' ? null : this.state.siteId,
-        this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
-        this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
-        this.state.keytext,
-        this.state.result
-      ]).then(res => {
-        if (res.data && res.data.message === "success") {
-          if (res.data.data === null) {
-            this.setState({
-              videoListDataSource: []
-            })
-          } else {
-            this.setState({
-              videoListDataSource: res.data.data.detectionVOList,
-              total: res.data.data.total,
-            })
-          }
-        }
-      })
+      this.detectionService()
+      // newdetectionsearch([
+      //   this.state.pageNum,
+      //   this.state.pageNumSize,
+      //   this.state.cityid === 'null' ? null : this.state.cityid,
+      //   this.state.areaid === 'null' ? null : this.state.areaid,
+      //   this.state.siteId === 'null' ? null : this.state.siteId,
+      //   this.state.begintime === undefined ? undefined : moment(this.state.begintime).format('YYYY-MM-DD'),
+      //   this.state.endtime === undefined ? moment(new Date() - 3600 * 24 * 1000).format("YYYY-MM-DD") : moment(this.state.endtime).format('YYYY-MM-DD'),
+      //   this.state.keytext,
+      //   this.state.result
+      // ]).then(res => {
+      //   if (res.data && res.data.message === "success") {
+      //     if (res.data.data === null) {
+      //       this.setState({
+      //         videoListDataSource: []
+      //       })
+      //     } else {
+      //       this.setState({
+      //         videoListDataSource: res.data.data.detectionVOList,
+      //         total: res.data.data.total,
+      //       })
+      //     }
+      //   }
+      // })
 
     })
   }

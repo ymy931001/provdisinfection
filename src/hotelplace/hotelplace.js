@@ -134,6 +134,30 @@ class App extends React.Component {
       localStorage.getItem('detectionId'),
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        var timelist = res.data.data.timepairs ? JSON.parse(res.data.data.timepairs) : []
+        var timearr = []
+        for (var z in timelist) {
+          timearr.push(timelist[z])
+        }
+        console.log(timearr)
+        console.log(timearr.length)
+        if (timearr.length > 1 && res.data.data.videoAddress.indexOf('{') !== -1) {
+          var final = []
+          for (var x in timearr) {
+            for (var y in timearr[x]) {
+              final.push(timearr[x][y])
+            }
+          }
+          res.data.data.timepairs = JSON.stringify(final)
+        } else {
+          var final = []
+          for (var x in timearr) {
+            final.push(timearr[x])
+          }
+          res.data.data.timepairs = JSON.stringify(final)
+        }
+
+
         this.setState({
           timelist: !res.data.data.readings ? (!res.data.data.readingVOS ? [] : res.data.data.readingVOS) : JSON.parse(res.data.data.readings).sort(function (a, b) {
             return a.begin < b.begin ? -1 : 1
@@ -286,11 +310,10 @@ class App extends React.Component {
             }
           }
         })
-
-
-
-
       }
+
+
+
     })
   }
 

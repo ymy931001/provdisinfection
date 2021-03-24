@@ -160,7 +160,7 @@ class App extends React.Component {
                   <source src="rtmp://58.200.131.2:1935/livetv/hunantv" type="rtmp/mp4" autoPlay="autoplay" loop="loop" />
                 </video> */}
                 <video width="100%" controls="controls" type="video/mp4" autoPlay="autoplay" loop="loop" id="example-video" >
-                  <source src={'http://iva.terabits.cn' + localStorage.getItem('videoid')} type='video/mp4' autoPlay="autoplay" loop="loop" />
+                  <source src={'https://iva.terabits.cn' + localStorage.getItem('videoid')} type='video/mp4' autoPlay="autoplay" loop="loop" />
                 </video>
               </div>
             </Card>
