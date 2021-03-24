@@ -155,7 +155,11 @@ class App extends React.Component {
             </div>
           )
         }
-      }
+      },
+      // {
+      //   title: "报警推送",
+      //   dataIndex: "id",
+      // },
       // , {
       //   title: "操作",
       //   dataIndex: "explain",

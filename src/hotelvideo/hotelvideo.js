@@ -745,20 +745,25 @@ class App extends React.Component {
 
         var timearr = []
 
-        if (!record.cameraid && !JSON.parse(res.data.data.timepairs).length) {
-          for (var i in JSON.parse(res.data.data.timepairs)) {
-            for (var j in JSON.parse(res.data.data.timepairs)[i]) {
-              timearr.push(JSON.parse(res.data.data.timepairs)[i][j])
+
+
+        if (res.data.data.timepairs) {
+          if (!record.cameraid && !JSON.parse(res.data.data.timepairs).length) {
+            for (var i in JSON.parse(res.data.data.timepairs)) {
+              for (var j in JSON.parse(res.data.data.timepairs)[i]) {
+                timearr.push(JSON.parse(res.data.data.timepairs)[i][j])
+              }
             }
-          }
-          res.data.data.timepairs = JSON.stringify(timearr)
-        } else {
-          for (var i in JSON.parse(res.data.data.timepairs)) {
-            if (i === record.cameraid) {
-              res.data.data.timepairs = JSON.stringify(JSON.parse(res.data.data.timepairs)[i])
+            res.data.data.timepairs = JSON.stringify(timearr)
+          } else {
+            for (var i in JSON.parse(res.data.data.timepairs)) {
+              if (i === record.cameraid) {
+                res.data.data.timepairs = JSON.stringify(JSON.parse(res.data.data.timepairs)[i])
+              }
             }
           }
         }
+
 
 
 
