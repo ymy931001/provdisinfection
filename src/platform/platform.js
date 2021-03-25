@@ -7,14 +7,19 @@ import {
   Modal,
   Input,
   Button,
-  message
+  message,
+  Select
 } from "antd";
 
 import {
   allisc,
-  addisc
+  addisc,
+  setCallBackUrl
 } from "../axios";
 import "./platform.css";
+
+const { Option } = Select;
+
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -28,6 +33,7 @@ class App extends React.Component {
     collapsed: false,
     otaInfoTableDataSource: [],
     otaModalVisible: null,
+    backurlhead: 'http',
     historydata: [{
       "sitename": "小移插座",
       "name": "10",
@@ -67,6 +73,7 @@ class App extends React.Component {
   handleCancel = () => {
     this.setState({
       visible: false,
+      backurlvisible: false,
     })
   }
 
@@ -135,6 +142,50 @@ class App extends React.Component {
       appKey: e.target.value
     })
   }
+
+  //打开推送弹窗
+  setCallBackUrl = (text, record, index) => {
+    this.setState({
+      backurlvisible: true,
+      platformid: record.id
+    })
+  }
+
+  //推送地址输入
+  backurl = (e) => {
+    this.setState({
+      backurl: e.target.value,
+
+    })
+  }
+
+  //推送地址http选择
+  backurlhead = (value) => {
+    this.setState({
+      backurlhead: value,
+    })
+  }
+
+
+
+
+
+
+  //报警推送确认
+  handleOk = () => {
+    setCallBackUrl([
+      this.state.backurlhead + this.state.backurl,
+      this.state.platformid,
+    ]).then(res => {
+      if (res.data && res.data.message === "success") {
+        message.success('报警推送成功')
+        this.setState({
+          backurlvisible: false
+        })
+      }
+    })
+  }
+
   render() {
     const otaInfoTableColumns = [
       {
@@ -156,10 +207,17 @@ class App extends React.Component {
           )
         }
       },
-      // {
-      //   title: "报警推送",
-      //   dataIndex: "id",
-      // },
+      {
+        title: "报警推送",
+        dataIndex: "id",
+        render: (text, record, index) => {
+          return (
+            <div onClick={() => this.setCallBackUrl(text, record, index)} style={{ color: '#1890ff', cursor: 'pointer' }}>
+              推送
+            </div>
+          )
+        }
+      },
       // , {
       //   title: "操作",
       //   dataIndex: "explain",
@@ -245,7 +303,34 @@ class App extends React.Component {
               </div>
             </div>
           </Modal>
-
+          <Modal
+            title="添加报警推送"
+            visible={this.state.backurlvisible}
+            onOk={this.backurlOk}
+            onCancel={this.handleCancel}
+            okText="确认"
+            destroyOnClose
+            width="400px"
+            centered
+          >
+            <div>
+              <span>推送地址：</span>
+              <Input.Group compact>
+                <Select defaultValue="http"
+                  style={{ width: '30%', marginBottom: "10px", marginTop: '10px' }}
+                  onChange={this.backurlhead}
+                  value={this.state.backurlhead}
+                >
+                  <Option value="http">http</Option>
+                  <Option value="https">https</Option>
+                </Select>
+                <Input style={{ width: '70%', marginBottom: "10px", marginTop: '10px' }} placeholder="请输入推送地址"
+                  value={this.state.backurl}
+                  autoComplete="off"
+                  onChange={this.backurl} />
+              </Input.Group>
+            </div>
+          </Modal>
         </Layout>
       </Layout>
     );

@@ -229,10 +229,8 @@ export const putuser = params =>
   http.put(config.requestIp + "/admin", {
     id: params[0],
     name: params[1],
-    phone: params[2],
-    username: params[3],
-    mail: params[4],
-    remark: params[5],
+    mail: params[2],
+    remark: params[3],
   });
 
 //修改酒店管理员
@@ -1564,6 +1562,15 @@ export const changePassword = params =>
   http.put(config.requestIp + "/admin/changePassword", {
     adminId: params[0],
     password: params[1],
+  });
+
+
+
+//设置报警推送地址
+export const setCallBackUrl = params =>
+  http.get(config.requestIp + "/isc/setCallBackUrl", {
+    url: params[0],
+    id: params[1],
   });
 
 

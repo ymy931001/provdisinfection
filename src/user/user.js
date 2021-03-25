@@ -564,8 +564,6 @@ class App extends React.Component {
           putuser([
             this.state.userid,
             this.state.adminname,
-            this.state.phone,
-            this.state.username,
             this.state.mail,
           ]).then(res => {
             if (res.data && res.data.message === 'success') {
@@ -945,7 +943,6 @@ class App extends React.Component {
       {
         title: "用户名",
         dataIndex: "username",
-        editable: true,
       },
       {
         title: "姓名",
@@ -955,7 +952,6 @@ class App extends React.Component {
       {
         title: "联系方式",
         dataIndex: "phone",
-        editable: true,
         render: (text) => {
           return (
             <div>

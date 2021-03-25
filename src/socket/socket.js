@@ -1188,7 +1188,7 @@ class App extends React.Component {
 
   //数据导出
   export = () => {
-    window.open("http://iva.terabits.cn:9090/board/getExcel?Authorization=" + localStorage.getItem('authorization') + "&onlineStatus=false", "_self")
+    window.open("https://iva.terabits.cn:9090/board/getExcel?Authorization=" + localStorage.getItem('authorization') + "&onlineStatus=false", "_self")
   }
 
 
