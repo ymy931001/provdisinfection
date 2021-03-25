@@ -1732,7 +1732,7 @@ class App extends React.Component {
 
   //数据导出
   export = () => {
-    window.open("https://iva.terabits.cn:9090/camera/getExcel?Authorization=" + localStorage.getItem('authorization') + "&onlineStatus=false", "_self")
+    window.open("https://iva.terabits.cn:9092/camera/getExcel?Authorization=" + localStorage.getItem('authorization') + "&onlineStatus=false", "_self")
   }
 
 
