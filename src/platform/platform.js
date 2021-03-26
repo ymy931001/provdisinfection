@@ -172,7 +172,7 @@ class App extends React.Component {
 
 
   //报警推送确认
-  handleOk = () => {
+  backurlOk = () => {
     setCallBackUrl([
       this.state.backurlhead + this.state.backurl,
       this.state.platformid,
