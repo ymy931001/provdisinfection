@@ -33,7 +33,8 @@ class App extends React.Component {
     collapsed: false,
     otaInfoTableDataSource: [],
     otaModalVisible: null,
-    backurlhead: 'http',
+    backurlhead: 'http://',
+    backurl:"47.99.125.47:9091/motionAlarm/isc",
     historydata: [{
       "sitename": "小移插座",
       "name": "10",
@@ -310,21 +311,21 @@ class App extends React.Component {
             onCancel={this.handleCancel}
             okText="确认"
             destroyOnClose
-            width="400px"
+            width="450px"
             centered
           >
             <div>
               <span>推送地址：</span>
               <Input.Group compact>
                 <Select defaultValue="http"
-                  style={{ width: '30%', marginBottom: "10px", marginTop: '10px' }}
+                  style={{ width: '25%', marginBottom: "10px", marginTop: '10px' }}
                   onChange={this.backurlhead}
                   value={this.state.backurlhead}
                 >
-                  <Option value="http">http</Option>
-                  <Option value="https">https</Option>
+                  <Option value="http://">http://</Option>
+                  <Option value="https://">https://</Option>
                 </Select>
-                <Input style={{ width: '70%', marginBottom: "10px", marginTop: '10px' }} placeholder="请输入推送地址"
+                <Input style={{ width: '75%', marginBottom: "10px", marginTop: '10px' }} placeholder="请输入推送地址"
                   value={this.state.backurl}
                   autoComplete="off"
                   onChange={this.backurl} />
