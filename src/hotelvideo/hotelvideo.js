@@ -259,7 +259,7 @@ class App extends React.Component {
             if (text === 1) {
               return (
                 <div>
-                  <span style={{ color: 'green' }}>已消毒</span>
+                  <span style={{ color: '#1EB333' }}>已消毒</span>
                 </div>
               )
             }
@@ -301,7 +301,16 @@ class App extends React.Component {
                   <Tooltip placement="topLeft" title={
                     record.result === 0 ? "消毒柜工作时间和洗消时长均未达标" : record.result === 2 ? "消毒柜工作时间未达标" : record.result === 3 ? "洗消时长未达标" : ''
                   }>
-                    <span style={{ color: 'red', cursor: 'pointer' }}>未达标</span>
+                    <span style={{ color: 'red', cursor: 'pointer' }}>
+                      未达标
+                      </span>
+                  </Tooltip>
+                  <Tooltip placement="topLeft" title={
+                    record.remark
+                  }>
+                    <span style={{ color: '#1EB333', cursor: 'pointer', display: record.remark ? 'inline-block' : 'none' }}>
+                      （已说明）
+                      </span>
                   </Tooltip>
                 </div>
               )

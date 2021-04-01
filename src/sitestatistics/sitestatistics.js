@@ -8,11 +8,13 @@ import {
   DatePicker,
   Select,
   Tooltip,
-  Pagination
+  Pagination,
+  message,
+  Cascader
 } from "antd";
 import {
   siteStatistics,
-  sitelist
+  sitelist, getregion
 } from "../axios";
 import "./sitestatistics.css";
 import moment from 'moment';
@@ -218,6 +220,34 @@ class App extends React.Component {
     });
 
 
+    getregion().then(res => {
+      if (res.data && res.data.message === "success") {
+        if (res.data.data.length !== 0) {
+          for (var i in res.data.data[0].children) {
+            for (var j in res.data.data[0].children[i].children) {
+              for (var k in res.data.data[0].children[i].children[j].children) {
+                if (res.data.data[0].children[i].children[j].children[k].children.length === 0) {
+                  res.data.data[0].children[i].children[j].children[k].adcode = res.data.data[0].children[i].children[j].children[k].id
+                  res.data.data[0].children[i].children[j].children[k].children = undefined
+                }
+              }
+            }
+          }
+          this.setState({
+            deviceList: res.data.data[0].children
+          })
+        } else {
+          this.setState({
+            deviceList: []
+          })
+        }
+
+
+      }
+    });
+
+
+
   }
 
   onChange = (date, dateString) => {
@@ -258,6 +288,17 @@ class App extends React.Component {
       visible: false,
       visibles: false,
     })
+  }
+
+  //设备位置选择
+  addresschange = (e) => {
+    console.log(e)
+    this.setState({
+      addresslist: e,
+      cityid: e[0] === undefined ? null : e[0],
+      areaid: e[1] === undefined ? null : e[1],
+      siteId: e[2] === undefined ? null : e[2]
+    });
   }
 
   // nostandardhotel = (province) => {
@@ -312,6 +353,15 @@ class App extends React.Component {
     }
   }
   reset = () => {
+    this.setState({
+      cityid: undefined,
+      areaid: undefined,
+      siteId: undefined,
+      addresslist: [],
+      keytext: undefined,
+      begintime: undefined,
+      endtime: undefined,
+    })
     siteStatistics([
       1,
       10,
@@ -330,7 +380,7 @@ class App extends React.Component {
     siteStatistics([
       this.state.pageNum,
       this.state.pageNumSize,
-      this.state.hotelname,
+      this.state.siteId,
       this.state.begintime,
       this.state.endtime,
     ]).then(res => {
@@ -372,6 +422,25 @@ class App extends React.Component {
       hotelname: value
     })
   }
+
+  //数据导出
+  export = () => {
+    if (!this.state.begintime || !this.state.endtime) {
+      message.error('请选择导出时间范围')
+    } else {
+      if (this.state.siteId) {
+        window.open("https://iva.terabits.cn:9092/statistics/getExcel?Authorization=" + localStorage.getItem('authorization') + "&area=" + this.state.areaid +
+          "&siteIds=" + this.state.siteId
+          + "&start=" + this.state.begintime + "&stop=" + this.state.endtime, "_self")
+      } else {
+        window.open("https://iva.terabits.cn:9092/statistics/getExcel?Authorization=" + localStorage.getItem('authorization') + "&area=" + this.state.areaid +
+          "&start=" + this.state.begintime + "&stop=" + this.state.endtime, "_self")
+      }
+
+    }
+
+  }
+
   render() {
     const options = this.state.allhotel.map((province) => <Option key={province.id}  >{province.name}</Option>);
 
@@ -393,12 +462,15 @@ class App extends React.Component {
                   <span className="titlemid">
                     酒店名称：
                 </span>
-                  <Select placeholder="请选择酒店名称" style={{ width: 230, marginRight: "20px" }}
-                    onChange={this.hotelchange}
-                    value={this.state.hotelname}
-                  >
-                    {options}
-                  </Select>
+                  <Cascader
+                    fieldNames={{ label: 'name', value: 'adcode' }}
+                    options={this.state.deviceList}
+                    onChange={this.addresschange}
+
+                    value={this.state.addresslist}
+                    changeOnSelect
+                    style={{ width: "350px", marginRight: '20px' }}
+                    placeholder="选择酒店" />
                   时间&nbsp;:
                     <RangePicker
                     style={{ marginLeft: '20px', marginRight: '20px' }}
@@ -410,6 +482,7 @@ class App extends React.Component {
                   <Button type="primary" onClick={this.query}>查询</Button>
                   <Button type="primary" onClick={this.reset}
                     style={{ background: 'white', border: '1px solid #999', color: "#999", marginLeft: '20px' }}>重置</Button>
+                  <Button type="primary" onClick={this.export} style={{ marginLeft: '20px' }}>数据导出</Button>
                 </div>
                 <Table
                   dataSource={this.state.sitelist}
