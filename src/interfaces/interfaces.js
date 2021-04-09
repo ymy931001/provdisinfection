@@ -93,6 +93,8 @@ class App extends React.Component {
     thirdpartylist: [],
     permissionlist: [],
     warningListDataSource: [],
+    opensecret: true,
+    editingKeys: []
   };
 
 
@@ -110,8 +112,12 @@ class App extends React.Component {
 
     ]).then(res => {
       if (res.data && res.data.message === "success") {
+        var arr = res.data.data
+        for (var i in arr) {
+          arr[i].secretstatus = true
+        }
         this.setState({
-          warningListDataSource: res.data.data
+          warningListDataSource: arr
         })
       }
     });
@@ -427,6 +433,27 @@ class App extends React.Component {
   }
 
 
+  isEditings = (record) => {
+    return record.id === this.state.editingKeys
+
+  };
+
+  //查看appsecret
+  looksecret = (text, record, index) => {
+    console.log(this.state.editingKeys)
+    if (this.state.editingKeys === record.id) {
+      this.setState({
+        editingKeys: [],
+      });
+    } else {
+      this.setState({
+        editingKeys: record.id,
+      });
+    }
+
+  }
+
+
   render() {
 
 
@@ -463,20 +490,20 @@ class App extends React.Component {
                   </Select>
                 </div>
               ) : (
-                  <div >
-                    <Select
-                      style={{ width: '320px', marginBottom: "10px", marginTop: '10px', marginRight: '20px' }}
-                      placeholder="请选择推送内容"
-                      mode="multiple"
-                      onChange={this.handleChanges}
-                      disabled
-                      defaultValue={text.replace(/\[/g, "").replace(/\]/g, "").split(',')}
-                    // defaultValue={JSON.parse(text)}
-                    >
-                      {prooptions}
-                    </Select>
-                  </div>
-                )
+                <div >
+                  <Select
+                    style={{ width: '320px', marginBottom: "10px", marginTop: '10px', marginRight: '20px' }}
+                    placeholder="请选择推送内容"
+                    mode="multiple"
+                    onChange={this.handleChanges}
+                    disabled
+                    defaultValue={text.replace(/\[/g, "").replace(/\]/g, "").split(',')}
+                  // defaultValue={JSON.parse(text)}
+                  >
+                    {prooptions}
+                  </Select>
+                </div>
+              )
               }</div>
           )
         }
@@ -485,6 +512,35 @@ class App extends React.Component {
         title: "接口地址",
         dataIndex: "host",
         editable: true,
+      },
+      {
+        title: "appid",
+        dataIndex: "appid",
+      },
+      {
+        title: "appSecret",
+        dataIndex: "appSecret",
+        render: (text, record, index) => {
+          const editable = this.isEditings(record);
+          return (
+            <div >
+              {editable ? (
+                <div>
+                  <span onClick={() => this.looksecret(text, record, index)} style={{ cursor: 'pointer' }}>
+                    {text}
+                  </span>
+                </div>
+              ) : (
+                <div>
+                  <a onClick={() => this.looksecret(text, record, index)}>
+                    <img src={require('./eye.png')} alt="" />
+                  </a>
+                </div>
+
+              )}
+            </div>
+          )
+        }
       },
       {
         title: "接口状态",
@@ -538,8 +594,8 @@ class App extends React.Component {
                   <a onClick={() => this.cancel(record.key, text)}>取消</a>
                 </span>
               ) : (
-                  <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
-                )}
+                <a onClick={() => this.edit(text, record, index)}><img src={require('./edit.png')} alt="" /></a>
+              )}
               <span style={{ marginLeft: '20px' }} onClick={() => this.onDelete(text, record, index)}>
                 <a><img src={require('./delete.png')} alt="" /></a>
               </span>

@@ -436,9 +436,7 @@ class App extends React.Component {
         window.open("https://iva.terabits.cn:9092/statistics/getExcel?Authorization=" + localStorage.getItem('authorization') + "&area=" + this.state.areaid +
           "&start=" + this.state.begintime + "&stop=" + this.state.endtime, "_self")
       }
-
     }
-
   }
 
   render() {

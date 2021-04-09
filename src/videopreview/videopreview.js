@@ -206,6 +206,9 @@ class App extends React.Component {
     return encrypt.encrypt(value);
   }
 
+
+
+
   //预览
   startpreivew = () => {
     var cameraIndexCode = this.state.number;
@@ -231,47 +234,48 @@ class App extends React.Component {
   }
 
 
-  //打开全屏
-  openfull = () => {
-    oWebControl.JS_RequestInterface({
-      funcName: "setFullScreen"
-    })
-  }
 
-  download = () => {
-    window.open("https://mainimg.terabits.cn/VideoWebPlugin.exe", '_self')
-  }
+//打开全屏
+openfull = () => {
+  oWebControl.JS_RequestInterface({
+    funcName: "setFullScreen"
+  })
+}
+
+download = () => {
+  window.open("https://mainimg.terabits.cn/VideoWebPlugin.exe", '_self')
+}
 
 
-  render() {
-    return (
-      <Layout>
-        <Layout id="warning">
-          <Content style={{ margin: "16px 16px" }} >
-            <Card title={`${localStorage.getItem('hotelnames')}${localStorage.getItem('roomname')}-实时画面`} headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
-              extra={<Button type="primary" style={{ background: '#0070CC', border: '1px solid #0070CC', marginRight: '20px' }} onClick={this.showModal}
-              >
-                <Link to="/app/equipment">返回</Link>
-              </Button>}>
-              <div id="operate" className="operate">
-                <div className="module">
-                  <div className="item" style={{ marginTop: '10px' }}>
-                    <span className="label"></span>
-                    <Button type="primary" onClick={() => this.startpreivew()}> 预览</Button>
-                    <Button type="primary" onClick={() => this.openfull()} style={{ marginLeft: '15px' }}>全屏</Button>
-                    <Button type="primary" onClick={() => this.download()} style={{ marginLeft: '15px', marginRight: '10px' }}>插件下载</Button>
+render() {
+  return (
+    <Layout>
+      <Layout id="warning">
+        <Content style={{ margin: "16px 16px" }} >
+          <Card title={`${localStorage.getItem('hotelnames')}${localStorage.getItem('roomname')}-实时画面`} headStyle={{ fontWeight: 'bold', fontSize: '18px' }}
+            extra={<Button type="primary" style={{ background: '#0070CC', border: '1px solid #0070CC', marginRight: '20px' }} onClick={this.showModal}
+            >
+              <Link to="/app/equipment">返回</Link>
+            </Button>}>
+            <div id="operate" className="operate">
+              <div className="module">
+                <div className="item" style={{ marginTop: '10px' }}>
+                  <span className="label"></span>
+                  <Button type="primary" onClick={() => this.startpreivew()}> 预览</Button>
+                  <Button type="primary" onClick={() => this.openfull()} style={{ marginLeft: '15px' }}>全屏</Button>
+                  <Button type="primary" onClick={() => this.download()} style={{ marginLeft: '15px', marginRight: '10px' }}>插件下载</Button>
                    （若无插件请点击此按钮进行插件下载并安装）
                   </div>
-                </div>
               </div>
-              <div id="playWnds" className="playWnd"></div>
-            </Card>
-          </Content>
+            </div>
+            <div id="playWnds" className="playWnd"></div>
+          </Card>
+        </Content>
 
-        </Layout>
       </Layout>
-    );
-  }
+    </Layout>
+  );
+}
 }
 
 export default App;

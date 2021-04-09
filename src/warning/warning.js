@@ -394,8 +394,8 @@ class App extends React.Component {
             } else {
               return (
                 <div style={{ color: 'red', cursor: "pointer" }}>
-                  <Tooltip placement="topLeft" title={"未开启天数：" + record.duration + "天"}>
-                    消毒柜未开启
+                  <Tooltip placement="topLeft" title={"未达标天数：" + record.duration + "天"}>
+                    消毒未达标
                   </Tooltip>
                 </div>
 
@@ -557,8 +557,8 @@ class App extends React.Component {
             } else {
               return (
                 <div style={{ color: 'red', cursor: "pointer" }}>
-                  <Tooltip placement="topLeft" title={"未开启天数：" + record.duration + "天"}>
-                    消毒柜未开启
+                  <Tooltip placement="topLeft" title={"未达标天数：" + record.duration + "天"}>
+                    消毒未达标
                   </Tooltip>
                 </div>
 
@@ -739,8 +739,8 @@ class App extends React.Component {
             } else {
               return (
                 <div style={{ color: 'red', cursor: "pointer" }}>
-                  <Tooltip placement="topLeft" title={"未开启天数：" + record.duration + "天"}>
-                    消毒柜未开启
+                  <Tooltip placement="topLeft" title={"未达标：" + record.duration + "天"}>
+                    消毒未达标
                   </Tooltip>
                 </div>
 
@@ -821,7 +821,7 @@ class App extends React.Component {
         render: (text, record, index) => {
           return (
             <div style={{ color: 'green' }}>
-            {moment(new Date(record.gmtmodify)).format('YYYY-MM-DD')}
+              {moment(new Date(record.gmtmodify)).format('YYYY-MM-DD')}
             </div>
           )
           // if (text === null || !record.duration) {

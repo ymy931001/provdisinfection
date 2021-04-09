@@ -212,7 +212,7 @@ class SignIn extends Component {
           <div className="SignIn-body">
             <div className="cover">
               <div className="logo">
-                <img src={require('./logo1.png')} alt="" style={{ width: "70px", marginRight: '20px' }} />
+                <img src={require('./logo1.png')} alt="" style={{ width: "50px", marginRight: '20px' }} />
                 卫生监督管理平台
               </div>
               <div className="loginmain">

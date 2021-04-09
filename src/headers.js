@@ -94,13 +94,13 @@ class Headers extends Component {
         //     </Menu>
         // );
         return (
-            <div style={{ textAlign: 'center', height: '64px', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ textAlign: 'center', height: '64px', display: 'flex', justifyContent: 'space-between'}}>
                 <div style={{
                     lineHeight: '50px', height: '50px',
                     color: 'white', fontSize: "25px", borderRadius: '5px',
                     marginLeft: "1%", marginRight: '10px', marginTop: "6px", display: 'flex', alignItems: 'center'
                 }}>
-                    <img src={require('./logo666.png')} alt="" style={{ marginRight: '20px' }} /> 浙江省住宿场所消毒保洁智能监管平台{this.state.areaname}
+                    <img src={require('./logo666.png')} alt="" style={{ marginRight: '10px' }} /> 浙江省住宿场所消毒保洁智能监管平台{this.state.areaname}
                 </div>
                 <div style={{ marginRight: "20px", float: 'right', height: '64px', display: 'flex', alignItems: 'center', fontSize: '14px' }}>
                     <div style={{ textAlign: 'right' }}>
