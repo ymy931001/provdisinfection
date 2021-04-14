@@ -108,7 +108,7 @@ class App extends React.Component {
         initCount++;
         if (initCount < 3) {
           setTimeout(function () {
-            this.initPlugin();
+            that.initPlugin();
           }, 3000)
         } else {
           $("#playWnds").html("插件启动失败，请检查插件是否安装！");
